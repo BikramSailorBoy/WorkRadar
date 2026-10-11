@@ -17,7 +17,7 @@ export async function POST(req: Request) {
   let reason = undefined as NudgeResponse["fallbackReason"];
   if (key) {
     const r = await liveText(
-      { model: MODELS.fast, system: NUDGE_SYSTEM, user: nudgeUser(body.item, body.ownerName, body.managerName), maxTokens: 120, temperature: 0.4 },
+      { model: MODELS.fast, system: NUDGE_SYSTEM, user: nudgeUser(body.item, body.ownerName, body.managerName), maxTokens: 120 },
       validateNudge
     );
     if (r.ok) return NextResponse.json({ mode: "live", usage: r.usage, message: r.value } satisfies NudgeResponse);

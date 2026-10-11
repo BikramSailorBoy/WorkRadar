@@ -33,7 +33,6 @@ export interface CallOpts {
   user: string;
   maxTokens: number;
   timeoutMs?: number;
-  temperature?: number;
 }
 
 export async function callClaude(o: CallOpts): Promise<{ text: string; usage: Usage }> {
@@ -48,7 +47,6 @@ export async function callClaude(o: CallOpts): Promise<{ text: string; usage: Us
       {
         model: o.model,
         max_tokens: o.maxTokens,
-        temperature: o.temperature ?? 0.2,
         system: o.system,
         messages: [{ role: "user", content: o.user }],
       },
