@@ -48,6 +48,10 @@ export async function callClaude(o: CallOpts): Promise<{ text: string; usage: Us
         model: o.model,
         max_tokens: o.maxTokens,
         system: o.system,
+        // These are short, structured tasks: no extended thinking. Without this the model can spend the
+        // whole max_tokens budget on thinking and return no text (found via /api/diag on the live deploy).
+        // Haiku 5.5 accepts {type:"disabled"}; Sonnet 5.5 requires {type:"between_tools"} for the same effect.
+        ...({ thinking: o.model === MODELS.smart ? { type: "between_tools" } : { type: "disabled" } } as Record<string, unknown>),
         messages: [{ role: "user", content: o.user }],
       },
       { signal: ctrl.signal }
