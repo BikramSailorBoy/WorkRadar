@@ -7,6 +7,7 @@ import { bad, readJson, reasonIfKey } from "@/lib/route-util";
 import type { ExtractRequest, ExtractResponse } from "@/lib/api-types";
 import type { ExtractedSignal } from "@/lib/types";
 
+export const maxDuration = 60;
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 

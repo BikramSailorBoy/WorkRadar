@@ -5,6 +5,7 @@ import { bad, boardIds, isBoard, readJson, reasonIfKey } from "@/lib/route-util"
 import type { BriefRequest, BriefResponse } from "@/lib/api-types";
 import cache from "../../../../data/ai-cache/brief.json";
 
+export const maxDuration = 60;
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 

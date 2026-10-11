@@ -5,6 +5,7 @@ import { bad, boardIds, isBoard, readJson, reasonIfKey } from "@/lib/route-util"
 import type { AskRequest, AskResponse } from "@/lib/api-types";
 import cache from "../../../../data/ai-cache/ask.json";
 
+export const maxDuration = 60;
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 

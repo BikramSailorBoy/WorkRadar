@@ -39,7 +39,7 @@ export interface CallOpts {
 export async function callClaude(o: CallOpts): Promise<{ text: string; usage: Usage }> {
   const client = getClient();
   if (!client) throw new AiError("no_key", "no api key");
-  const timeoutMs = o.timeoutMs ?? 8000;
+  const timeoutMs = o.timeoutMs ?? 20000;
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), timeoutMs);
   const t0 = Date.now();

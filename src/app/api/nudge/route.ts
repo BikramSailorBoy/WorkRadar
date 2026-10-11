@@ -5,6 +5,7 @@ import { bad, readJson, reasonIfKey } from "@/lib/route-util";
 import type { NudgeRequest, NudgeResponse } from "@/lib/api-types";
 import cache from "../../../../data/ai-cache/nudges.json";
 
+export const maxDuration = 60;
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
