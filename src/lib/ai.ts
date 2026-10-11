@@ -174,8 +174,12 @@ export function validateReasons(valid: Set<string>) {
 
 export function validateNudge(text: string): string | null {
   const t = text.trim().replace(/^["`]+|["`]+$/g, "").trim();
-  const words = t.split(/\s+/).length;
-  return t && words <= 60 ? t : null; // prompt asks <= 45; small tolerance, otherwise fall back to cache
+  if (!t) return null;
+  // Never show a message cut off mid-sentence: trim to the last full sentence if needed.
+  const m = t.match(/^[\s\S]*[.!?](?=\s|$)/);
+  const whole = /[.!?]$/.test(t) ? t : m ? m[0].trim() : null;
+  if (!whole) return null;
+  return whole.split(/\s+/).length <= 60 ? whole : null; // prompt asks <= 45; small tolerance, otherwise fall back to cache
 }
 
 const KINDS = new Set(["blocker", "escalation", "decision_request", "priority_conflict", "ooo"]);

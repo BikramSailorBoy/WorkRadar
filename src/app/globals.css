@@ -69,6 +69,20 @@
 
 html {
   background: var(--ink);
+  /* keep scrolled-to content clear of the sticky replay bar */
+  scroll-padding-bottom: 96px;
+  scroll-padding-top: 16px;
+}
+
+@keyframes panel-flash {
+  0%, 40% { box-shadow: 0 0 0 2px var(--signal); }
+  100% { box-shadow: 0 0 0 2px transparent; }
+}
+.panel-flash {
+  animation: panel-flash 1.4s ease-out;
+}
+@media (prefers-reduced-motion: reduce) {
+  .panel-flash { animation: none; outline: 2px solid var(--signal); }
 }
 
 body {

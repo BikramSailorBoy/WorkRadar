@@ -8,6 +8,7 @@ export type BriefState = { status: "loading" } | { status: "ready"; data: BriefR
 
 export function Brief({ state, onSelect, replaying, nowLabel }: { state: BriefState; onSelect: (id: string) => void; replaying: boolean; nowLabel: string }) {
   const [expanded, setExpanded] = useState(false);
+  const [open, setOpen] = useState<Record<number, boolean>>({});
   return (
     <section aria-labelledby="brief-h" className="relative rounded-xl border border-line bg-panel/90">
       <header className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 px-4 pt-4 sm:px-5">
@@ -42,7 +43,12 @@ export function Brief({ state, onSelect, replaying, nowLabel }: { state: BriefSt
           <ol className="grid gap-x-5 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {state.data.sentences.slice(0, 5).map((s, i) => (
               <li key={i} className={`${!expanded && i >= 3 ? "max-sm:hidden" : ""} border-l-2 pl-3 text-[13.5px] leading-[1.5] text-fg ${i === 0 ? "border-crit" : "border-line-strong"}`} style={{ textWrap: "pretty" }}>
-                {s.text}
+                <span className={`block ${open[i] ? "" : "line-clamp-5"}`}>{s.text}</span>
+                {s.text.length > 210 && (
+                  <button type="button" onClick={() => setOpen((o) => ({ ...o, [i]: !o[i] }))} aria-expanded={!!open[i]} className="mt-0.5 text-[12.5px] font-medium text-signal hover:underline">
+                    {open[i] ? "less" : "more"}
+                  </button>
+                )}
                 <span className="mt-1.5 flex flex-wrap gap-1">
                   {s.citations.map((c) => <KeyChip key={c} id={c} onSelect={onSelect} size="xs" />)}
                 </span>

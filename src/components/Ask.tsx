@@ -1,5 +1,5 @@
 "use client";
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import type { AskResponse, CompactBoard, RecentEvent } from "@/lib/api-types";
 import { KeyChip, Kbd, Sparkle } from "./ui";
 import { metaLine, postJson } from "./api";
@@ -17,6 +17,11 @@ export const Ask = forwardRef<HTMLInputElement, { getBoard: () => { board: Compa
   function Ask({ getBoard, onSelect, replaying }, ref) {
     const [q, setQ] = useState("");
     const [state, setState] = useState<State>({ status: "idle" });
+    const answerRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+      // bring the answer fully into view, clear of the replay bar (scroll-padding-bottom on html)
+      if (state.status === "ready" || state.status === "error") answerRef.current?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }, [state.status]);
 
     async function ask(question: string) {
       const text = question.trim();
@@ -68,7 +73,7 @@ export const Ask = forwardRef<HTMLInputElement, { getBoard: () => { board: Compa
         </div>
         {replaying && state.status === "idle" && <p className="mt-3 text-[12.5px] text-faint">Answers use the board at the replay time.</p>}
 
-        <div aria-live="polite">
+        <div aria-live="polite" ref={answerRef} className="scroll-mb-28">
           {state.status === "loading" && (
             <div className="mt-4 space-y-2 border-t border-line pt-4" aria-label="Thinking">
               <div className="skeleton h-3.5 w-[95%]" />
@@ -88,7 +93,7 @@ export const Ask = forwardRef<HTMLInputElement, { getBoard: () => { board: Compa
                   <p className="mt-1 text-[14px] leading-relaxed text-dim">{state.data.answer}</p>
                 </div>
               ) : (
-                <p className="mt-2 text-[14.5px] leading-[1.6] text-fg" style={{ textWrap: "pretty" }}>{state.data.answer}</p>
+                <p className="mt-2 whitespace-pre-line text-[14.5px] leading-[1.6] text-fg" style={{ textWrap: "pretty" }}>{state.data.answer}</p>
               )}
               {state.data.citations.length > 0 && (
                 <div className="mt-2.5 flex flex-wrap gap-1">{state.data.citations.map((c) => <KeyChip key={c} id={c} onSelect={onSelect} size="xs" />)}</div>

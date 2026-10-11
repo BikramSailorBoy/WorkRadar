@@ -26,7 +26,7 @@ Beyond the four panels:
 - **Radar.** Every open item is a blip: the sector is its source tool, distance from the centre is urgency, and blocked items are hollow.
 - **Day replay.** Drag the scrubber, or press play, to rebuild the board at any moment of the week.
 - **Triage mode.** Press T, then use A to acknowledge, D to delegate, S to snooze and N for an AI-drafted nudge to the owner.
-- **Ask.** Press / to ask a question; answers come only from the data, with citations.
+- **Ask.** Press / to ask a question. The prompt restricts answers to the data, and the cited ids are checked against it.
 - **Item drawer.** Click any item for its score breakdown and its full event trail across tools.
 
 ## How the AI is used
@@ -43,7 +43,12 @@ Rules rank, and AI reads and explains. The priority score is computed in code, s
 
 **Live and demo modes.** With `ANTHROPIC_API_KEY` set, calls are live, and the UI shows the model, token count and latency for each one. Without a key, or if a call fails or times out, the app serves precomputed outputs from `data/ai-cache/` and labels them "Demo". The app therefore runs for anyone, with no setup.
 
-**Records.** Where AI was used and what was changed by hand is recorded in `docs/ai-usage-log.md`. Token use is in `docs/token-log.md`.
+**Records.** Where AI was used and what was changed by hand is recorded in `docs/ai-usage-log.md`. Token use is in `docs/token-log.md`; agent and live-call figures are exact, and orchestrator figures are approximate.
+
+## Documents
+
+- `docs/WorkRadar-PRD.pdf`: product requirements
+- `docs/WorkRadar-AI-Workflow.pdf`: how AI was used to build it, and what was changed by hand
 
 ## Proof it works
 
@@ -75,7 +80,7 @@ data/                 mock people, items, events, planted signals, AI cache
 src/lib/board.ts      replay events to any time, score, assign panels
 src/lib/prompts.ts    every prompt the app sends to Claude
 src/lib/ai.ts         Claude client, validation, live/demo fallback
-src/app/api/          brief, ask, reasons, nudge, extract, status, diag
+src/app/api/          brief, ask, reasons, nudge, extract, status (+ diag, disabled unless DIAG_TOKEN is set)
 src/components/       radar, panels, replay, triage, ask, drawer
 scripts/              ground-truth check
 docs/                 AI usage log, token log, screenshots

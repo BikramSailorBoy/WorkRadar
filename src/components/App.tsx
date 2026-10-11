@@ -10,6 +10,7 @@ import { Radar, RadarLegend } from "./Radar";
 import { AttentionPanel, BlockedPanel, HappenedPanel, TopPanel } from "./Panels";
 import type { ReasonText } from "./Panels";
 import { Brief } from "./Brief";
+import { Glance } from "./Glance";
 import type { BriefState } from "./Brief";
 import { Ask } from "./Ask";
 import { Replay } from "./Replay";
@@ -198,11 +199,13 @@ export default function App() {
       <div className="mx-auto w-full max-w-[1520px] flex-1 px-4 sm:px-6 lg:px-8">
         <Header live={live} briefMode={brief.status === "ready" ? brief.data.mode : null} onTriage={() => setTriageOpen(true)} triaged={triagedCount} total={triageQueue.length} />
 
+        <Glance board={board} />
+
         <Brief state={brief} onSelect={setSelectedId} replaying={replaying} nowLabel={nowLabel} />
 
         <div className="mt-5 grid gap-5 lg:grid-cols-[minmax(0,500px)_minmax(0,1fr)] xl:grid-cols-[minmax(0,520px)_minmax(0,1fr)]">
-          <div className="min-w-0 space-y-5">
-            <section aria-labelledby="radar-h" className="rounded-xl border border-line bg-panel/90 p-4 lg:sticky lg:top-4">
+          <div className="min-w-0 space-y-5 lg:sticky lg:top-4 lg:self-start">
+            <section aria-labelledby="radar-h" className="rounded-xl border border-line bg-panel/90 p-4">
               <div className="flex items-baseline justify-between gap-3">
                 <h2 id="radar-h" className="text-[15px] font-semibold">Radar</h2>
                 <p className="text-[12px] text-faint">{board.items.length} open items, closer to the centre is more urgent</p>

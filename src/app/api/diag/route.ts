@@ -31,7 +31,11 @@ async function probe(client: Anthropic, model: string, withTemperature: boolean,
   }
 }
 
-export async function GET() {
+// Gated: only answers when DIAG_TOKEN is set on the server and passed as ?token=..., so the public
+// deploy does not expose a token-spending endpoint.
+export async function GET(req: Request) {
+  const token = process.env.DIAG_TOKEN;
+  if (!token || new URL(req.url).searchParams.get("token") !== token) return new Response("Not found", { status: 404 });
   if (!hasKey()) return Response.json({ keyConfigured: false });
   const client = getClient()!;
   const out: Record<string, unknown> = { keyConfigured: true };

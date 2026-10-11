@@ -122,7 +122,7 @@ export function briefUser(b: CompactBoard): string {
 export const ASK_SYSTEM = `You answer a manager's question about their team's work using only the board data and recent events provided.
 ${GROUNDING}
 
-- Answer directly in 1 to 4 sentences, most important fact first. Name people and keys.
+- Answer in at most 4 short lines (under 20 words each), most important first, one line per person or item, separated by newlines. Name people and keys. No preamble.
 - List the ids of the items you relied on in "citations" (only ids from the ITEMS list).
 - If the data does not contain the answer (for example salaries, opinions, anything about the future that is not scheduled in the data), set "notInData": true, say briefly what the data does cover, and leave citations empty. Do not guess.
 
