@@ -20,3 +20,11 @@ How this is measured: subagent figures are the token totals each agent reported 
 | Morning brief | claude-sonnet-5-5 | 7,185 | 536 | 3.8 s |
 | AI reasons (all board items in one call) | claude-haiku-5-5 | 6,578 | 1,025 | 4.4 s |
 | Triage nudge | claude-haiku-5-5 | 570 | 76 | 1.1 s |
+
+## Review and polish
+
+| Step | Who | Model | Tokens |
+| --- | --- | --- | --- |
+| Independent review of the live app and repo | Subagent | Claude Sonnet 5.5 | 114,351 |
+| UI fixes from the review (at-a-glance strip, sticky radar, brief clamp) | Subagent, resumed | Claude Opus 5.5 | not reported by the tool |
+| AI Workflow doc, PRD v2 edits, review fixes | Main session | Claude Opus 5.5 | ~70,000 (approx.) |
