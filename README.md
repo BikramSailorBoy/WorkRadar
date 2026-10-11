@@ -1,55 +1,89 @@
 # WorkRadar
 
-AI-powered work prioritization dashboard for managers.
+One screen that tells an engineering manager, in under a minute, what to work on today, what happened, what needs attention now and who is blocked, without opening Slack, Jira, GitHub or email.
 
-WorkRadar gives a manager one consolidated view of their team's work, so they do not have to check Slack, Jira, GitHub and email separately.
+Live app: https://work-radar-theta.vercel.app
 
-## What it answers
+![WorkRadar dashboard](docs/screenshots/live-desktop-1440.png)
 
-A manager opening WorkRadar should be able to see, at a glance:
+## The scenario
 
-1. Top work for the day
-2. What happened today
-3. What requires immediate attention
-4. Who is blocked
+Marty McFly is an Engineering Manager at Darb Pay, a fictional fintech headquartered in Cologne on the Rhine. His eight engineers work in two squads across Riyadh, Cairo and Bengaluru. When he logs in at 09:30 Cologne time on Tuesday 13 October, Bengaluru has been working for four hours and the Riyadh team has already had a full Sunday he never saw.
 
-## Scope
+The demo clock is fixed at that moment so every demo shows the same day. All people, companies and banks are fictional.
 
-- Web application with a single dashboard view built around the four questions above.
-- AI is used to rank and summarize work items across sources.
-- Mock data is used for Slack, Jira, GitHub and email activity. Live backend integrations are not part of the required scope and are only included if explicitly noted below.
+## What it does
 
-## Project status
-
-This repository was just created. At the time this README was added, it contained no application code. Sections below describe the intended deliverables and will be updated as the code lands.
-
-## Deliverables
-
-| Item | Format | Status |
+| Question | Where it is answered | How |
 | --- | --- | --- |
-| Product Requirements Document (PRD) | PDF | Pending |
-| AI Workflow document | PDF | Pending |
-| Source code | This repository | Pending |
+| Top work for the day | Top work panel, radar inner rings | Ranked by an explainable 0–100 priority score; includes the manager's own pending decisions and reviews |
+| What happened today | Morning brief, What happened panel, day replay | Meaningful events only (merges, deploys, items done, incidents, escalations); bot, CI and chat noise filtered out |
+| Needs attention now | Needs attention panel, red-ringed blips | Score plus hard triggers: P0/P1 incidents, customer escalations, due within 24h, decisions requested from the manager, silent stalls |
+| Who is blocked | Who is blocked panel, hollow dashed blips | Jira status, stale PR reviews (reviewer out of office), dependency chains, and blockers mentioned only in Slack or email, found by AI |
 
-## Repository layout
+Beyond the four panels:
 
-To be filled in once the code is committed.
+- **Radar.** Every open item is a blip: the sector is its source tool, distance from the centre is urgency, and blocked items are hollow.
+- **Day replay.** Drag the scrubber, or press play, to rebuild the board at any moment of the week.
+- **Triage mode.** Press T, then use A to acknowledge, D to delegate, S to snooze and N for an AI-drafted nudge to the owner.
+- **Ask.** Press / to ask a question; answers come only from the data, with citations.
+- **Item drawer.** Click any item for its score breakdown and its full event trail across tools.
 
-## Getting started
+## How the AI is used
 
-To be filled in once the code is committed (install, run, and mock data notes).
+Rules rank, and AI reads and explains. The priority score is computed in code, so it is reproducible. Claude handles what rules cannot read:
 
-## AI usage and manual changes
+| Task | Model | Notes |
+| --- | --- | --- |
+| Extract blockers, escalations, decision requests and priority conflicts from Slack and email | claude-haiku-5-5 | Strict JSON; every signal must cite a real event id |
+| One-line reason per ranked item | claude-haiku-5-5 | Built from the item's top score factors |
+| Morning brief | claude-sonnet-5-5 | Every sentence must cite item ids; sentences without a valid citation are dropped |
+| Ask WorkRadar | claude-sonnet-5-5 | Answers only from the board; says "not in today's data" otherwise |
+| Triage nudge | claude-haiku-5-5 | Short, specific Slack message from the manager to the owner |
 
-The client requires a clear record of where AI was used and what was modified by hand. The full account will live in the AI Workflow PDF; this section is the short version and should be kept current.
+**Live and demo modes.** With `ANTHROPIC_API_KEY` set, calls are live, and the UI shows the model, token count and latency for each one. Without a key, or if a call fails or times out, the app serves precomputed outputs from `data/ai-cache/` and labels them "Demo". The app therefore runs for anyone, with no setup.
 
-| Area | AI tool used | What AI produced | What was changed manually |
-| --- | --- | --- | --- |
-| README (initial draft) | Claude (Anthropic) | Structure and wording of this file, drafted from the project brief | To be recorded by the author after review |
-| PRD | To be recorded | To be recorded | To be recorded |
-| AI Workflow document | To be recorded | To be recorded | To be recorded |
-| Application code | To be recorded | To be recorded | To be recorded |
-| Mock data | To be recorded | To be recorded | To be recorded |
+**Records.** Where AI was used and what was changed by hand is recorded in `docs/ai-usage-log.md`. Token use is in `docs/token-log.md`.
+
+## Proof it works
+
+The mock data contains 12 situations planted on purpose: one is noise, and 11 should surface. One of those 11 is a blocker that exists only in a Slack message, while its Jira ticket still says "In Progress". `npm run check` replays the data and verifies each one lands in the right panel:
+
+```
+Recall: 11/11
+Noise leaks: 0
+RESULT: OK
+```
+
+## Run it locally
+
+Requires Node.js 20 or later.
+
+```
+npm install
+npm run dev          # http://localhost:3000, demo mode
+npm run check        # ground-truth check
+node data/validate.mjs
+```
+
+For live AI, create `.env.local` in the project root with one line, `ANTHROPIC_API_KEY=...`. The file is git-ignored.
+
+## Project layout
+
+```
+data/                 mock people, items, events, planted signals, AI cache
+src/lib/board.ts      replay events to any time, score, assign panels
+src/lib/prompts.ts    every prompt the app sends to Claude
+src/lib/ai.ts         Claude client, validation, live/demo fallback
+src/app/api/          brief, ask, reasons, nudge, extract, status, diag
+src/components/       radar, panels, replay, triage, ask, drawer
+scripts/              ground-truth check
+docs/                 AI usage log, token log, screenshots
+```
+
+## Stack
+
+Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS 4, Anthropic TypeScript SDK, deployed on Vercel.
 
 ## Author
 

@@ -11,3 +11,12 @@ How this is measured: subagent figures are the token totals each agent reported 
 | Persona change (Marty McFly, Cologne HQ), data and PRD edits | Main session | Claude Opus 5.5 | ~18,500 (approx.) |
 | UI: radar, panels, replay, triage, Ask, drawer, screenshots | Subagent | Claude Opus 5.5 | 245,183 |
 | Integration fixes, Cologne-time outputs, deploy attempt | Main session | Claude Opus 5.5 | ~51,000 (approx.) |
+| Security upgrade, live-AI debugging and fixes | Main session | Claude Opus 5.5 | ~31,000 (approx.) |
+
+## Live app: tokens per call (measured on the deployed app, 12 Oct 2026)
+
+| Call | Model | Input tokens | Output tokens | Latency |
+| --- | --- | --- | --- | --- |
+| Morning brief | claude-sonnet-5-5 | 7,185 | 536 | 3.8 s |
+| AI reasons (all board items in one call) | claude-haiku-5-5 | 6,578 | 1,025 | 4.4 s |
+| Triage nudge | claude-haiku-5-5 | 570 | 76 | 1.1 s |
