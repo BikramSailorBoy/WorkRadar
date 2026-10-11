@@ -9,3 +9,6 @@ How this is measured: subagent figures are the token totals each agent reported 
 | AI layer: prompts, 6 API routes, demo cache | Subagent | Claude Sonnet 5.5 | 144,835 |
 | Board logic, scoring, ground-truth check | Subagent | Claude Sonnet 5.5 | 198,706 |
 | Persona change (Marty McFly, Cologne HQ), data and PRD edits | Main session | Claude Opus 5.5 | ~18,500 (approx.) |
+| Board logic rerun after persona change (first run cancelled) | Subagent | Claude Sonnet 5.5 | 198,706 (replaces the row above) |
+| UI: radar, panels, replay, triage, Ask, drawer, screenshots | Subagent | Claude Opus 5.5 | 245,183 |
+| Integration fixes, Cologne-time outputs, deploy attempt | Main session | Claude Opus 5.5 | ~51,000 (approx.) |
