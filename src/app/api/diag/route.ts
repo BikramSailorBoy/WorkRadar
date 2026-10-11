@@ -7,16 +7,17 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
 
-async function probe(client: Anthropic, model: string, withTemperature: boolean) {
+async function probe(client: Anthropic, model: string, withTemperature: boolean, maxTokens = 16, system?: string, prompt = "Reply with the word ok.") {
   const t0 = Date.now();
   try {
     const res = await client.messages.create({
       model,
-      max_tokens: 16,
+      max_tokens: maxTokens,
+      ...(system ? { system } : {}),
       ...(withTemperature ? { temperature: 0.2 } : {}),
-      messages: [{ role: "user", content: "Reply with the word ok." }],
+      messages: [{ role: "user", content: prompt }],
     });
-    return { ok: true, latencyMs: Date.now() - t0, text: res.content.map((b) => (b.type === "text" ? b.text : "")).join("").slice(0, 20) };
+    return { ok: true, latencyMs: Date.now() - t0, stop: res.stop_reason, blocks: res.content.map((b) => b.type), usage: res.usage, text: res.content.map((b) => (b.type === "text" ? b.text : "")).join("").slice(0, 200) };
   } catch (e) {
     const err = e as { status?: number; error?: { error?: { type?: string; message?: string } } };
     return {
@@ -33,8 +34,7 @@ export async function GET() {
   if (!hasKey()) return Response.json({ keyConfigured: false });
   const client = getClient()!;
   const out: Record<string, unknown> = { keyConfigured: true };
-  for (const m of [MODELS.fast, MODELS.smart]) {
-    out[m] = { withTemperature: await probe(client, m, true), withoutTemperature: await probe(client, m, false) };
-  }
+  for (const m of [MODELS.fast, MODELS.smart]) out[m] = await probe(client, m, false);
+  out.nudgeProbe = await probe(client, MODELS.fast, false, 120, "You draft a short Slack message (max 45 words) from a manager to a colleague. Output only the message.", "Recipient: Omar. Item PAY-412 is blocked waiting on our reply to the vendor. Write the message now.");
   return Response.json(out);
 }
