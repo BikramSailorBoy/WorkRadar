@@ -1,0 +1,1990 @@
+[
+  {
+    "id": "ev-0001",
+    "ts": "2026-10-07T16:45:00+03:00",
+    "itemId": "jira:ONB-70",
+    "actorId": "tariq",
+    "kind": "status_changed",
+    "from": "To Do",
+    "to": "In Progress"
+  },
+  {
+    "id": "ev-0002",
+    "ts": "2026-10-11T08:00:00+03:00",
+    "itemId": "slack:th-0009",
+    "actorId": "ci-bot",
+    "kind": "bot",
+    "text": "Nightly build #1481 passed (14m 44s)"
+  },
+  {
+    "id": "ev-0003",
+    "ts": "2026-10-11T08:05:00+03:00",
+    "itemId": "gh:pr-320",
+    "actorId": "layla",
+    "kind": "created",
+    "text": "PAY-401: CSV export for the reconciliation report"
+  },
+  {
+    "id": "ev-0004",
+    "ts": "2026-10-11T08:06:00+03:00",
+    "itemId": "gh:pr-320",
+    "actorId": "layla",
+    "kind": "review_requested",
+    "text": "Requested review from karim"
+  },
+  {
+    "id": "ev-0005",
+    "ts": "2026-10-11T08:15:00+03:00",
+    "itemId": "slack:th-0002",
+    "actorId": "layla",
+    "kind": "message",
+    "text": "heads up: I'm OOO from today through Wed (family thing in Alexandria), back Thursday. Karim has my reviews if anything is urgent"
+  },
+  {
+    "id": "ev-0006",
+    "ts": "2026-10-11T08:18:00+03:00",
+    "itemId": "slack:th-0002",
+    "actorId": "karim",
+    "kind": "reaction",
+    "text": ":+1:"
+  },
+  {
+    "id": "ev-0007",
+    "ts": "2026-10-11T08:20:00+03:00",
+    "itemId": "slack:th-0002",
+    "actorId": "omar",
+    "kind": "reaction",
+    "text": ":thumbsup:"
+  },
+  {
+    "id": "ev-0008",
+    "ts": "2026-10-11T08:30:00+03:00",
+    "itemId": "jira:ONB-81",
+    "actorId": "meera",
+    "kind": "status_changed",
+    "from": "To Do",
+    "to": "In Progress"
+  },
+  {
+    "id": "ev-0009",
+    "ts": "2026-10-11T08:30:00+03:00",
+    "itemId": "gh:pr-320",
+    "actorId": "ci-bot",
+    "kind": "ci_passed",
+    "text": "All checks passed"
+  },
+  {
+    "id": "ev-0010",
+    "ts": "2026-10-11T08:40:00+03:00",
+    "itemId": "jira:PAY-425",
+    "actorId": "layla",
+    "kind": "comment",
+    "text": "Docs draft done, needs a pass from someone on partner integrations."
+  },
+  {
+    "id": "ev-0011",
+    "ts": "2026-10-11T09:00:00+03:00",
+    "itemId": "slack:th-0004",
+    "actorId": "hamdan",
+    "kind": "message",
+    "text": "Heads up all: release freeze starts Thursday 15 Oct at 12:00 Riyadh for the Q4 audit. Anything not merged and deployed by then waits until Sun 18 Oct. Hotfixes go through your EM."
+  },
+  {
+    "id": "ev-0012",
+    "ts": "2026-10-11T09:00:00+03:00",
+    "itemId": "jira:PAY-412",
+    "actorId": "omar",
+    "kind": "status_changed",
+    "from": "In Progress",
+    "to": "Blocked"
+  },
+  {
+    "id": "ev-0013",
+    "ts": "2026-10-11T09:02:00+03:00",
+    "itemId": "jira:PAY-412",
+    "actorId": "omar",
+    "kind": "comment",
+    "text": "Blocked: KYCly has not issued the production-tier sandbox keys yet. Their side says waiting on us. Need the keys to finish the doc-check integration."
+  },
+  {
+    "id": "ev-0014",
+    "ts": "2026-10-11T09:04:00+03:00",
+    "itemId": "slack:th-0004",
+    "actorId": "karim",
+    "kind": "reaction",
+    "text": ":+1:"
+  },
+  {
+    "id": "ev-0015",
+    "ts": "2026-10-11T09:06:00+03:00",
+    "itemId": "slack:th-0004",
+    "actorId": "sara",
+    "kind": "reaction",
+    "text": ":eyes:"
+  },
+  {
+    "id": "ev-0016",
+    "ts": "2026-10-11T09:10:00+03:00",
+    "itemId": "jira:PAY-398",
+    "actorId": "karim",
+    "kind": "status_changed",
+    "from": "To Do",
+    "to": "In Progress"
+  },
+  {
+    "id": "ev-0017",
+    "ts": "2026-10-11T09:12:00+03:00",
+    "itemId": "slack:th-0004",
+    "actorId": "omar",
+    "kind": "message",
+    "text": "noted, thanks Hamdan"
+  },
+  {
+    "id": "ev-0018",
+    "ts": "2026-10-11T09:20:00+03:00",
+    "itemId": "slack:th-0004",
+    "actorId": "meera",
+    "kind": "reaction",
+    "text": ":+1:"
+  },
+  {
+    "id": "ev-0019",
+    "ts": "2026-10-11T09:20:00+03:00",
+    "itemId": "gh:pr-320",
+    "actorId": "karim",
+    "kind": "review_approved",
+    "text": "ship it"
+  },
+  {
+    "id": "ev-0020",
+    "ts": "2026-10-11T09:25:00+03:00",
+    "itemId": "slack:th-0008",
+    "actorId": "ci-bot",
+    "kind": "bot",
+    "text": "Reminder: standup in 5 min (09:30 Riyadh). Notes: go/standup-notes"
+  },
+  {
+    "id": "ev-0021",
+    "ts": "2026-10-11T09:30:00+03:00",
+    "itemId": "jira:PAY-398",
+    "actorId": "karim",
+    "kind": "comment",
+    "text": "Reproduced: settlement batch for Palmway sits in pending_bank on 2 of the last 5 runs. Looks like scheduler lock contention when one bank leg fails."
+  },
+  {
+    "id": "ev-0022",
+    "ts": "2026-10-11T09:31:00+03:00",
+    "itemId": "slack:th-0008",
+    "actorId": "youssef",
+    "kind": "message",
+    "text": "joining in 2"
+  },
+  {
+    "id": "ev-0023",
+    "ts": "2026-10-11T09:32:00+03:00",
+    "itemId": "slack:th-0008",
+    "actorId": "tariq",
+    "kind": "reaction",
+    "text": ":thumbsup:"
+  },
+  {
+    "id": "ev-0024",
+    "ts": "2026-10-11T09:40:00+03:00",
+    "itemId": "gh:pr-320",
+    "actorId": "layla",
+    "kind": "merged",
+    "from": "open",
+    "to": "merged"
+  },
+  {
+    "id": "ev-0025",
+    "ts": "2026-10-11T09:45:00+03:00",
+    "itemId": "jira:PAY-401",
+    "actorId": "layla",
+    "kind": "status_changed",
+    "from": "In Review",
+    "to": "Done"
+  },
+  {
+    "id": "ev-0026",
+    "ts": "2026-10-11T09:46:00+03:00",
+    "itemId": "gh:pr-320",
+    "actorId": "ci-bot",
+    "kind": "deployed",
+    "text": "Deployed payments-reports 3.8.0 to production"
+  },
+  {
+    "id": "ev-0027",
+    "ts": "2026-10-11T10:00:00+03:00",
+    "itemId": "jira:PAY-409",
+    "actorId": "omar",
+    "kind": "status_changed",
+    "from": "To Do",
+    "to": "In Progress"
+  },
+  {
+    "id": "ev-0028",
+    "ts": "2026-10-11T10:00:00+03:00",
+    "itemId": "gh:pr-316",
+    "actorId": "sara",
+    "kind": "created",
+    "text": "KYC v2 onboarding flow (ONB-64): liveness, doc capture, new status screens"
+  },
+  {
+    "id": "ev-0029",
+    "ts": "2026-10-11T10:05:00+03:00",
+    "itemId": "jira:ONB-64",
+    "actorId": "sara",
+    "kind": "status_changed",
+    "from": "In Progress",
+    "to": "In Review"
+  },
+  {
+    "id": "ev-0030",
+    "ts": "2026-10-11T10:06:00+03:00",
+    "itemId": "gh:pr-316",
+    "actorId": "sara",
+    "kind": "review_requested",
+    "text": "Requested review from youssef"
+  },
+  {
+    "id": "ev-0031",
+    "ts": "2026-10-11T10:10:00+03:00",
+    "itemId": "jira:PAY-398",
+    "actorId": "karim",
+    "kind": "commit",
+    "text": "investigate: add structured logs around settlement scheduler lock"
+  },
+  {
+    "id": "ev-0032",
+    "ts": "2026-10-11T10:20:00+03:00",
+    "itemId": "email:em-0001",
+    "actorId": "jonas",
+    "kind": "email_received",
+    "text": "Hi Omar, Marty, to release the production-tier sandbox keys we need two things in writing: your two egress IPs, and whether you want the key scope limited to Saudi data residency. Could you confirm both by reply? Keys go out within 4 hours of your answer. Thanks, Jonas"
+  },
+  {
+    "id": "ev-0033",
+    "ts": "2026-10-11T10:30:00+03:00",
+    "itemId": "gh:pr-316",
+    "actorId": "sara",
+    "kind": "commit",
+    "text": "kyc v2: liveness step + document capture"
+  },
+  {
+    "id": "ev-0034",
+    "ts": "2026-10-11T10:45:00+03:00",
+    "itemId": "slack:th-0008",
+    "actorId": "sara",
+    "kind": "message",
+    "text": "reminder that Sunday standup notes are in the doc, pls add your blockers there"
+  },
+  {
+    "id": "ev-0035",
+    "ts": "2026-10-11T11:00:00+03:00",
+    "itemId": "jira:PAY-405",
+    "actorId": "arjun",
+    "kind": "status_changed",
+    "from": "To Do",
+    "to": "In Progress"
+  },
+  {
+    "id": "ev-0036",
+    "ts": "2026-10-11T11:20:00+03:00",
+    "itemId": "gh:pr-316",
+    "actorId": "ci-bot",
+    "kind": "ci_passed",
+    "text": "All checks passed"
+  },
+  {
+    "id": "ev-0037",
+    "ts": "2026-10-11T11:20:00+03:00",
+    "itemId": "jira:ONB-81",
+    "actorId": "meera",
+    "kind": "comment",
+    "text": "Handler skeleton done, contract agreed with ledger team. Next: test against staging ledger."
+  },
+  {
+    "id": "ev-0038",
+    "ts": "2026-10-11T11:50:00+03:00",
+    "itemId": "slack:th-0007",
+    "actorId": "omar",
+    "kind": "message",
+    "text": "lunch? thinking shawarma from the place downstairs"
+  },
+  {
+    "id": "ev-0039",
+    "ts": "2026-10-11T11:52:00+03:00",
+    "itemId": "slack:th-0007",
+    "actorId": "sara",
+    "kind": "message",
+    "text": "yes pls. chicken not beef today tho"
+  },
+  {
+    "id": "ev-0040",
+    "ts": "2026-10-11T11:55:00+03:00",
+    "itemId": "slack:th-0007",
+    "actorId": "tariq",
+    "kind": "message",
+    "text": "i'll pass, brought leftovers"
+  },
+  {
+    "id": "ev-0041",
+    "ts": "2026-10-11T11:58:00+03:00",
+    "itemId": "slack:th-0007",
+    "actorId": "karim",
+    "kind": "message",
+    "text": "jealous. its koshari day here and the queue is insane"
+  },
+  {
+    "id": "ev-0042",
+    "ts": "2026-10-11T12:00:00+03:00",
+    "itemId": "gh:pr-317",
+    "actorId": "youssef",
+    "kind": "created",
+    "text": "Arabic OTP copy fixes (ONB-66)"
+  },
+  {
+    "id": "ev-0043",
+    "ts": "2026-10-11T12:05:00+03:00",
+    "itemId": "gh:pr-317",
+    "actorId": "youssef",
+    "kind": "review_requested",
+    "text": "Requested review from sara"
+  },
+  {
+    "id": "ev-0044",
+    "ts": "2026-10-11T12:10:00+03:00",
+    "itemId": "slack:th-0007",
+    "actorId": "tariq",
+    "kind": "reaction",
+    "text": ":joy:"
+  },
+  {
+    "id": "ev-0045",
+    "ts": "2026-10-11T12:20:00+03:00",
+    "itemId": "gh:pr-317",
+    "actorId": "ci-bot",
+    "kind": "ci_passed",
+    "text": "All checks passed"
+  },
+  {
+    "id": "ev-0046",
+    "ts": "2026-10-11T12:30:00+03:00",
+    "itemId": "jira:ONB-64",
+    "actorId": "sara",
+    "kind": "comment",
+    "text": "Final QA pass on staging done, only the RTL layout fix remaining."
+  },
+  {
+    "id": "ev-0047",
+    "ts": "2026-10-11T12:40:00+03:00",
+    "itemId": "slack:th-0009",
+    "actorId": "ci-bot",
+    "kind": "bot",
+    "text": "Flaky test detected: ledger_integration_spec::test_concurrent_posting (passed on retry 2/3)"
+  },
+  {
+    "id": "ev-0048",
+    "ts": "2026-10-11T12:44:00+03:00",
+    "itemId": "slack:th-0007",
+    "actorId": "omar",
+    "kind": "message",
+    "text": "ok that was worth it"
+  },
+  {
+    "id": "ev-0049",
+    "ts": "2026-10-11T12:45:00+03:00",
+    "itemId": "slack:th-0007",
+    "actorId": "sara",
+    "kind": "reaction",
+    "text": ":shawarma:"
+  },
+  {
+    "id": "ev-0050",
+    "ts": "2026-10-11T13:00:00+03:00",
+    "itemId": "email:em-0004",
+    "actorId": "dina",
+    "kind": "email_received",
+    "text": "Hi all, we are picking a date for the Q4 team offsite. Options: 12 Nov, 19 Nov or 3 Dec. Please vote on the poll link by Wednesday."
+  },
+  {
+    "id": "ev-0051",
+    "ts": "2026-10-11T13:20:00+03:00",
+    "itemId": "jira:ONB-83",
+    "actorId": "sara",
+    "kind": "comment",
+    "text": "Bulk-updated labels for onboarding components. Remaining cleanup is cosmetic."
+  },
+  {
+    "id": "ev-0052",
+    "ts": "2026-10-11T13:20:00+03:00",
+    "itemId": "slack:th-0004",
+    "actorId": "youssef",
+    "kind": "reaction",
+    "text": ":+1:"
+  },
+  {
+    "id": "ev-0053",
+    "ts": "2026-10-11T13:40:00+03:00",
+    "itemId": "gh:pr-318",
+    "actorId": "omar",
+    "kind": "created",
+    "text": "Opened draft PR: idempotency keys for refund API (PAY-409)"
+  },
+  {
+    "id": "ev-0054",
+    "ts": "2026-10-11T13:55:00+03:00",
+    "itemId": "gh:pr-318",
+    "actorId": "ci-bot",
+    "kind": "ci_failed",
+    "text": "lint: 3 errors in refund_service.ts"
+  },
+  {
+    "id": "ev-0055",
+    "ts": "2026-10-11T14:00:00+03:00",
+    "itemId": "slack:th-0013",
+    "actorId": "dina",
+    "kind": "message",
+    "text": "Reminder: Meera's birthday is tomorrow. Drop a wish in this thread and I'll make sure she sees them at the start of her day."
+  },
+  {
+    "id": "ev-0056",
+    "ts": "2026-10-11T14:20:00+03:00",
+    "itemId": "jira:PAY-405",
+    "actorId": "arjun",
+    "kind": "comment",
+    "text": "Ledger v3 schema applied locally. Next step is running the migration tests against the staging DB."
+  },
+  {
+    "id": "ev-0057",
+    "ts": "2026-10-11T14:30:00+03:00",
+    "itemId": "gh:pr-316",
+    "actorId": "youssef",
+    "kind": "comment",
+    "text": "Tried the flow on an actual Android device, doc capture is a bit slow on older phones but ok."
+  },
+  {
+    "id": "ev-0058",
+    "ts": "2026-10-11T15:00:00+03:00",
+    "itemId": "slack:th-0009",
+    "actorId": "ci-bot",
+    "kind": "bot",
+    "text": "Security scan: 0 critical, 2 low findings in onboarding-web (no action required)"
+  },
+  {
+    "id": "ev-0059",
+    "ts": "2026-10-11T15:00:00+03:00",
+    "itemId": "jira:ONB-81",
+    "actorId": "meera",
+    "kind": "commit",
+    "text": "status webhook: retry w/ backoff, signed payload"
+  },
+  {
+    "id": "ev-0060",
+    "ts": "2026-10-11T15:05:00+03:00",
+    "itemId": "slack:th-0010",
+    "actorId": "arjun",
+    "kind": "message",
+    "text": "@hamdan need creds for the ledger-v3 staging DB cluster (INFRA-2210). Migration tests for PAY-405 need it."
+  },
+  {
+    "id": "ev-0061",
+    "ts": "2026-10-11T15:30:00+03:00",
+    "itemId": "gh:pr-318",
+    "actorId": "omar",
+    "kind": "commit",
+    "text": "fix lint, add unit tests for key reuse"
+  },
+  {
+    "id": "ev-0062",
+    "ts": "2026-10-11T15:40:00+03:00",
+    "itemId": "gh:pr-316",
+    "actorId": "sara",
+    "kind": "commit",
+    "text": "fix: arabic RTL layout on id capture"
+  },
+  {
+    "id": "ev-0063",
+    "ts": "2026-10-11T15:50:00+03:00",
+    "itemId": "gh:pr-318",
+    "actorId": "ci-bot",
+    "kind": "ci_passed",
+    "text": "All checks passed"
+  },
+  {
+    "id": "ev-0064",
+    "ts": "2026-10-11T16:20:00+03:00",
+    "itemId": "slack:th-0002",
+    "actorId": "omar",
+    "kind": "message",
+    "text": "anyone have a good ledger test fixture for multi currency? not urgent"
+  },
+  {
+    "id": "ev-0065",
+    "ts": "2026-10-11T16:35:00+03:00",
+    "itemId": "slack:th-0002",
+    "actorId": "layla",
+    "kind": "message",
+    "text": "check fixtures/ledger_multi.json, its in the shared dir. last message from me today, off to the airport"
+  },
+  {
+    "id": "ev-0066",
+    "ts": "2026-10-11T16:36:00+03:00",
+    "itemId": "slack:th-0002",
+    "actorId": "omar",
+    "kind": "reaction",
+    "text": ":pray:"
+  },
+  {
+    "id": "ev-0067",
+    "ts": "2026-10-11T16:45:00+03:00",
+    "itemId": "jira:PAY-409",
+    "actorId": "omar",
+    "kind": "comment",
+    "text": "Design note: key is scoped per merchant + refund request id, TTL 24h. Added a unique index migration."
+  },
+  {
+    "id": "ev-0068",
+    "ts": "2026-10-11T17:10:00+03:00",
+    "itemId": "slack:th-0013",
+    "actorId": "tariq",
+    "kind": "message",
+    "text": "is there a cake plan for meera? she is in Bengaluru, we should ship something"
+  },
+  {
+    "id": "ev-0069",
+    "ts": "2026-10-11T17:10:00+03:00",
+    "itemId": "gh:pr-318",
+    "actorId": "omar",
+    "kind": "commit",
+    "text": "scope idempotency key per merchant, add TTL cleanup job"
+  },
+  {
+    "id": "ev-0070",
+    "ts": "2026-10-11T17:20:00+03:00",
+    "itemId": "jira:PAY-405",
+    "actorId": "arjun",
+    "kind": "commit",
+    "text": "migration script: backfill ledger_entries.version column"
+  },
+  {
+    "id": "ev-0071",
+    "ts": "2026-10-11T17:30:00+03:00",
+    "itemId": "jira:PAY-398",
+    "actorId": "karim",
+    "kind": "comment",
+    "text": "Logs confirm it: lock is held for 11 min when one bank leg times out. Fix coming Monday."
+  },
+  {
+    "id": "ev-0072",
+    "ts": "2026-10-11T17:45:00+03:00",
+    "itemId": "slack:th-0002",
+    "actorId": "arjun",
+    "kind": "message",
+    "text": "thanks Karim, got what I needed from the earlier thread"
+  },
+  {
+    "id": "ev-0073",
+    "ts": "2026-10-11T18:00:00+03:00",
+    "itemId": "jira:ONB-79",
+    "actorId": "sara",
+    "kind": "comment",
+    "text": "First draft of retry states ready: three states, new Arabic strings reviewed with content team."
+  },
+  {
+    "id": "ev-0074",
+    "ts": "2026-10-12T03:15:00+03:00",
+    "itemId": "slack:th-0009",
+    "actorId": "ci-bot",
+    "kind": "bot",
+    "text": "Nightly build #1482 passed (14m 52s)"
+  },
+  {
+    "id": "ev-0170",
+    "ts": "2026-10-12T04:30:00+03:00",
+    "itemId": "gh:pr-318",
+    "actorId": "omar",
+    "kind": "review_requested",
+    "text": "Requested review from layla"
+  },
+  {
+    "id": "ev-0075",
+    "ts": "2026-10-12T06:30:00+03:00",
+    "itemId": "slack:th-0013",
+    "actorId": "arjun",
+    "kind": "message",
+    "text": "happy bday @meera!! treats on you today"
+  },
+  {
+    "id": "ev-0076",
+    "ts": "2026-10-12T06:40:00+03:00",
+    "itemId": "slack:th-0013",
+    "actorId": "meera",
+    "kind": "message",
+    "text": "thank you all!! cake is in the office fridge, come eat (arjun that means you)"
+  },
+  {
+    "id": "ev-0077",
+    "ts": "2026-10-12T06:41:00+03:00",
+    "itemId": "slack:th-0013",
+    "actorId": "youssef",
+    "kind": "reaction",
+    "text": ":tada:"
+  },
+  {
+    "id": "ev-0078",
+    "ts": "2026-10-12T07:15:00+03:00",
+    "itemId": "slack:th-0013",
+    "actorId": "karim",
+    "kind": "message",
+    "text": "many happy returns Meera"
+  },
+  {
+    "id": "ev-0079",
+    "ts": "2026-10-12T07:20:00+03:00",
+    "itemId": "jira:ONB-81",
+    "actorId": "meera",
+    "kind": "status_changed",
+    "from": "In Progress",
+    "to": "Blocked"
+  },
+  {
+    "id": "ev-0080",
+    "ts": "2026-10-12T07:22:00+03:00",
+    "itemId": "jira:ONB-81",
+    "actorId": "meera",
+    "kind": "comment",
+    "text": "Blocked by PAY-405: the status webhook needs the ledger v3 migration on staging before I can test it end to end."
+  },
+  {
+    "id": "ev-0081",
+    "ts": "2026-10-12T08:05:00+03:00",
+    "itemId": "slack:th-0013",
+    "actorId": "sara",
+    "kind": "message",
+    "text": "happy birthday!! "
+  },
+  {
+    "id": "ev-0082",
+    "ts": "2026-10-12T08:06:00+03:00",
+    "itemId": "slack:th-0013",
+    "actorId": "omar",
+    "kind": "reaction",
+    "text": ":birthday:"
+  },
+  {
+    "id": "ev-0083",
+    "ts": "2026-10-12T08:10:00+03:00",
+    "itemId": "slack:th-0004",
+    "actorId": "dina",
+    "kind": "message",
+    "text": "Also a reminder that Thursday is the last day before the freeze for any prod access requests"
+  },
+  {
+    "id": "ev-0084",
+    "ts": "2026-10-12T08:30:00+03:00",
+    "itemId": "slack:th-0013",
+    "actorId": "tariq",
+    "kind": "reaction",
+    "text": ":tada:"
+  },
+  {
+    "id": "ev-0085",
+    "ts": "2026-10-12T08:30:00+03:00",
+    "itemId": "email:em-0004",
+    "actorId": "marty",
+    "kind": "email_sent",
+    "text": "Voted for 12 Nov. Would avoid anything close to the freeze period."
+  },
+  {
+    "id": "ev-0086",
+    "ts": "2026-10-12T08:32:00+03:00",
+    "itemId": "slack:th-0013",
+    "actorId": "marty",
+    "kind": "message",
+    "text": "Happy birthday Meera, enjoy the day."
+  },
+  {
+    "id": "ev-0087",
+    "ts": "2026-10-12T08:50:00+03:00",
+    "itemId": "slack:th-0013",
+    "actorId": "dina",
+    "kind": "message",
+    "text": "cake is covered, courier booked for Bengaluru office. Thanks all"
+  },
+  {
+    "id": "ev-0088",
+    "ts": "2026-10-12T08:52:00+03:00",
+    "itemId": "slack:th-0013",
+    "actorId": "meera",
+    "kind": "reaction",
+    "text": ":heart:"
+  },
+  {
+    "id": "ev-0089",
+    "ts": "2026-10-12T08:53:00+03:00",
+    "itemId": "slack:th-0013",
+    "actorId": "arjun",
+    "kind": "reaction",
+    "text": ":cake:"
+  },
+  {
+    "id": "ev-0090",
+    "ts": "2026-10-12T08:54:00+03:00",
+    "itemId": "slack:th-0013",
+    "actorId": "karim",
+    "kind": "reaction",
+    "text": ":cake:"
+  },
+  {
+    "id": "ev-0091",
+    "ts": "2026-10-12T09:00:00+03:00",
+    "itemId": "slack:th-0009",
+    "actorId": "ci-bot",
+    "kind": "bot",
+    "text": "Weekly dependency report: 14 packages have updates available"
+  },
+  {
+    "id": "ev-0092",
+    "ts": "2026-10-12T09:15:00+03:00",
+    "itemId": "jira:ONB-83",
+    "actorId": "sara",
+    "kind": "comment",
+    "text": "Moved 6 stale tickets to the icebox."
+  },
+  {
+    "id": "ev-0093",
+    "ts": "2026-10-12T09:25:00+03:00",
+    "itemId": "slack:th-0008",
+    "actorId": "ci-bot",
+    "kind": "bot",
+    "text": "Reminder: standup in 5 min (09:30 Riyadh). Notes: go/standup-notes"
+  },
+  {
+    "id": "ev-0094",
+    "ts": "2026-10-12T09:32:00+03:00",
+    "itemId": "slack:th-0008",
+    "actorId": "tariq",
+    "kind": "message",
+    "text": "mic is dead today, typing in chat"
+  },
+  {
+    "id": "ev-0095",
+    "ts": "2026-10-12T09:33:00+03:00",
+    "itemId": "slack:th-0008",
+    "actorId": "omar",
+    "kind": "reaction",
+    "text": ":thumbsup:"
+  },
+  {
+    "id": "ev-0096",
+    "ts": "2026-10-12T09:41:00+03:00",
+    "itemId": "slack:th-0008",
+    "actorId": "karim",
+    "kind": "message",
+    "text": "thanks all"
+  },
+  {
+    "id": "ev-0097",
+    "ts": "2026-10-12T10:00:00+03:00",
+    "itemId": "jira:PAY-418",
+    "actorId": "karim",
+    "kind": "comment",
+    "text": "Grooming: p95 alert at 2s would page too often. Parking until after the freeze."
+  },
+  {
+    "id": "ev-0098",
+    "ts": "2026-10-12T10:10:00+03:00",
+    "itemId": "gh:pr-317",
+    "actorId": "sara",
+    "kind": "review_approved",
+    "text": "lgtm"
+  },
+  {
+    "id": "ev-0099",
+    "ts": "2026-10-12T10:30:00+03:00",
+    "itemId": "slack:th-0010",
+    "actorId": "hamdan",
+    "kind": "message",
+    "text": "saw this, queue is long this week. will get to it, maybe Wed"
+  },
+  {
+    "id": "ev-0100",
+    "ts": "2026-10-12T10:30:00+03:00",
+    "itemId": "gh:pr-323",
+    "actorId": "sara",
+    "kind": "created",
+    "text": "ONB-79: friendlier liveness retry copy and states"
+  },
+  {
+    "id": "ev-0101",
+    "ts": "2026-10-12T10:35:00+03:00",
+    "itemId": "jira:ONB-79",
+    "actorId": "sara",
+    "kind": "status_changed",
+    "from": "In Progress",
+    "to": "In Review"
+  },
+  {
+    "id": "ev-0102",
+    "ts": "2026-10-12T10:36:00+03:00",
+    "itemId": "gh:pr-323",
+    "actorId": "sara",
+    "kind": "review_requested",
+    "text": "Requested review from youssef"
+  },
+  {
+    "id": "ev-0103",
+    "ts": "2026-10-12T10:55:00+03:00",
+    "itemId": "gh:pr-323",
+    "actorId": "ci-bot",
+    "kind": "ci_passed",
+    "text": "All checks passed"
+  },
+  {
+    "id": "ev-0104",
+    "ts": "2026-10-12T11:00:00+03:00",
+    "itemId": "jira:ONB-73",
+    "actorId": "tariq",
+    "kind": "comment",
+    "text": "Added a rough checklist for the a11y audit, will start after the freeze."
+  },
+  {
+    "id": "ev-0105",
+    "ts": "2026-10-12T11:15:00+03:00",
+    "itemId": "jira:PAY-398",
+    "actorId": "karim",
+    "kind": "commit",
+    "text": "fix: release scheduler lock on partial bank failure"
+  },
+  {
+    "id": "ev-0106",
+    "ts": "2026-10-12T11:30:00+03:00",
+    "itemId": "gh:pr-316",
+    "actorId": "youssef",
+    "kind": "changes_requested",
+    "text": "Step 3 overflows on small screens in RTL, please check 360px width."
+  },
+  {
+    "id": "ev-0107",
+    "ts": "2026-10-12T11:40:00+03:00",
+    "itemId": "slack:th-0007",
+    "actorId": "omar",
+    "kind": "message",
+    "text": "kabsa at the canteen today, can confirm its good"
+  },
+  {
+    "id": "ev-0108",
+    "ts": "2026-10-12T11:45:00+03:00",
+    "itemId": "gh:pr-316",
+    "actorId": "sara",
+    "kind": "comment",
+    "text": "Fixing the 360px layout now, thanks for catching it."
+  },
+  {
+    "id": "ev-0109",
+    "ts": "2026-10-12T11:46:00+03:00",
+    "itemId": "slack:th-0007",
+    "actorId": "sara",
+    "kind": "message",
+    "text": "saving me a plate?"
+  },
+  {
+    "id": "ev-0110",
+    "ts": "2026-10-12T11:47:00+03:00",
+    "itemId": "slack:th-0007",
+    "actorId": "omar",
+    "kind": "message",
+    "text": "lol no"
+  },
+  {
+    "id": "ev-0111",
+    "ts": "2026-10-12T12:10:00+03:00",
+    "itemId": "slack:th-0005",
+    "actorId": "huda",
+    "kind": "message",
+    "text": "Reminder that the investor demo is Thursday at 4pm. They specifically asked to see the merchant onboarding progress tracker (ONB-77), so it needs to be demo-able by then."
+  },
+  {
+    "id": "ev-0112",
+    "ts": "2026-10-12T12:25:00+03:00",
+    "itemId": "slack:th-0005",
+    "actorId": "sara",
+    "kind": "message",
+    "text": "got it Huda, we will look at what is feasible"
+  },
+  {
+    "id": "ev-0113",
+    "ts": "2026-10-12T12:30:00+03:00",
+    "itemId": "slack:th-0005",
+    "actorId": "youssef",
+    "kind": "reaction",
+    "text": ":eyes:"
+  },
+  {
+    "id": "ev-0114",
+    "ts": "2026-10-12T12:35:00+03:00",
+    "itemId": "slack:th-0005",
+    "actorId": "meera",
+    "kind": "reaction",
+    "text": ":eyes:"
+  },
+  {
+    "id": "ev-0115",
+    "ts": "2026-10-12T12:50:00+03:00",
+    "itemId": "slack:th-0010",
+    "actorId": "arjun",
+    "kind": "message",
+    "text": "thanks Hamdan, any chance of today? two tickets are waiting on it"
+  },
+  {
+    "id": "ev-0116",
+    "ts": "2026-10-12T12:50:00+03:00",
+    "itemId": "gh:pr-317",
+    "actorId": "ci-bot",
+    "kind": "ci_passed",
+    "text": "All checks passed"
+  },
+  {
+    "id": "ev-0117",
+    "ts": "2026-10-12T13:10:00+03:00",
+    "itemId": "gh:pr-322",
+    "actorId": "karim",
+    "kind": "created",
+    "text": "ADR-014: move settlement ledger writes to an async queue consumer"
+  },
+  {
+    "id": "ev-0118",
+    "ts": "2026-10-12T13:20:00+03:00",
+    "itemId": "gh:pr-317",
+    "actorId": "youssef",
+    "kind": "merged",
+    "from": "open",
+    "to": "merged"
+  },
+  {
+    "id": "ev-0119",
+    "ts": "2026-10-12T13:25:00+03:00",
+    "itemId": "jira:ONB-66",
+    "actorId": "youssef",
+    "kind": "status_changed",
+    "from": "In Review",
+    "to": "Done"
+  },
+  {
+    "id": "ev-0120",
+    "ts": "2026-10-12T13:30:00+03:00",
+    "itemId": "slack:th-0014",
+    "actorId": "ci-bot",
+    "kind": "bot",
+    "text": "Deployed onboarding-web 1.14.2 to production (PR #317)"
+  },
+  {
+    "id": "ev-0121",
+    "ts": "2026-10-12T13:30:00+03:00",
+    "itemId": "jira:PAY-405",
+    "actorId": "arjun",
+    "kind": "commit",
+    "text": "add rollback step to migration, dry-run locally against snapshot"
+  },
+  {
+    "id": "ev-0122",
+    "ts": "2026-10-12T13:32:00+03:00",
+    "itemId": "slack:th-0014",
+    "actorId": "karim",
+    "kind": "message",
+    "text": "is the release tag for 1.14.2 up? asking for the changelog"
+  },
+  {
+    "id": "ev-0123",
+    "ts": "2026-10-12T13:34:00+03:00",
+    "itemId": "slack:th-0014",
+    "actorId": "youssef",
+    "kind": "message",
+    "text": "yep, tagged just now"
+  },
+  {
+    "id": "ev-0124",
+    "ts": "2026-10-12T13:40:00+03:00",
+    "itemId": "slack:th-0014",
+    "actorId": "youssef",
+    "kind": "message",
+    "text": "otp copy is live, thanks Sara"
+  },
+  {
+    "id": "ev-0125",
+    "ts": "2026-10-12T13:42:00+03:00",
+    "itemId": "slack:th-0014",
+    "actorId": "sara",
+    "kind": "reaction",
+    "text": ":thumbsup:"
+  },
+  {
+    "id": "ev-0126",
+    "ts": "2026-10-12T13:50:00+03:00",
+    "itemId": "gh:pr-322",
+    "actorId": "karim",
+    "kind": "commit",
+    "text": "ledger writer: queue consumer + idempotent apply"
+  },
+  {
+    "id": "ev-0127",
+    "ts": "2026-10-12T14:00:00+03:00",
+    "itemId": "jira:ONB-72",
+    "actorId": "sara",
+    "kind": "comment",
+    "text": "Not for this sprint, moving priority label to P3 per planning."
+  },
+  {
+    "id": "ev-0128",
+    "ts": "2026-10-12T14:05:00+03:00",
+    "itemId": "slack:th-0002",
+    "actorId": "omar",
+    "kind": "message",
+    "text": "btw does anyone know who owns the NAT egress list? vendor is asking, I dont have it"
+  },
+  {
+    "id": "ev-0129",
+    "ts": "2026-10-12T14:05:00+03:00",
+    "itemId": "gh:pr-322",
+    "actorId": "ci-bot",
+    "kind": "ci_passed",
+    "text": "All checks passed"
+  },
+  {
+    "id": "ev-0130",
+    "ts": "2026-10-12T14:10:00+03:00",
+    "itemId": "gh:pr-318",
+    "actorId": "omar",
+    "kind": "comment",
+    "text": "@layla gentle ping, this is needed before the freeze (PAY-409 due Thursday)"
+  },
+  {
+    "id": "ev-0131",
+    "ts": "2026-10-12T14:10:00+03:00",
+    "itemId": "gh:pr-316",
+    "actorId": "sara",
+    "kind": "commit",
+    "text": "address review feedback: step 3 layout, empty states"
+  },
+  {
+    "id": "ev-0132",
+    "ts": "2026-10-12T14:20:00+03:00",
+    "itemId": "slack:th-0009",
+    "actorId": "ci-bot",
+    "kind": "bot",
+    "text": "dependabot opened PR #325: bump lodash 4.17.21 to 4.17.22"
+  },
+  {
+    "id": "ev-0133",
+    "ts": "2026-10-12T14:20:00+03:00",
+    "itemId": "gh:pr-325",
+    "actorId": "ci-bot",
+    "kind": "created",
+    "text": "Bumps lodash from 4.17.21 to 4.17.22"
+  },
+  {
+    "id": "ev-0134",
+    "ts": "2026-10-12T14:30:00+03:00",
+    "itemId": "gh:pr-322",
+    "actorId": "karim",
+    "kind": "review_requested",
+    "text": "Requested review from marty"
+  },
+  {
+    "id": "ev-0135",
+    "ts": "2026-10-12T14:30:00+03:00",
+    "itemId": "gh:pr-316",
+    "actorId": "ci-bot",
+    "kind": "ci_passed",
+    "text": "All checks passed"
+  },
+  {
+    "id": "ev-0136",
+    "ts": "2026-10-12T14:35:00+03:00",
+    "itemId": "gh:pr-322",
+    "actorId": "karim",
+    "kind": "comment",
+    "text": "@marty this changes the settlement write path (ADR-014), would like your eyes before it merges. Want it in before the freeze."
+  },
+  {
+    "id": "ev-0137",
+    "ts": "2026-10-12T14:35:00+03:00",
+    "itemId": "gh:pr-325",
+    "actorId": "ci-bot",
+    "kind": "ci_passed",
+    "text": "All checks passed"
+  },
+  {
+    "id": "ev-0138",
+    "ts": "2026-10-12T15:10:00+03:00",
+    "itemId": "slack:th-0007",
+    "actorId": "tariq",
+    "kind": "message",
+    "text": "anyone else getting the wifi drop in meeting room 3?"
+  },
+  {
+    "id": "ev-0139",
+    "ts": "2026-10-12T15:14:00+03:00",
+    "itemId": "slack:th-0007",
+    "actorId": "sara",
+    "kind": "message",
+    "text": "yes, IT ticket already open I think"
+  },
+  {
+    "id": "ev-0140",
+    "ts": "2026-10-12T15:20:00+03:00",
+    "itemId": "slack:th-0007",
+    "actorId": "omar",
+    "kind": "message",
+    "text": "use room 5 until they fix it"
+  },
+  {
+    "id": "ev-0141",
+    "ts": "2026-10-12T15:30:00+03:00",
+    "itemId": "gh:pr-322",
+    "actorId": "ci-bot",
+    "kind": "ci_passed",
+    "text": "All checks passed"
+  },
+  {
+    "id": "ev-0142",
+    "ts": "2026-10-12T15:40:00+03:00",
+    "itemId": "jira:PAY-425",
+    "actorId": "omar",
+    "kind": "comment",
+    "text": "Can pick up docs after freeze if Layla wants."
+  },
+  {
+    "id": "ev-0143",
+    "ts": "2026-10-12T15:45:00+03:00",
+    "itemId": "gh:pr-323",
+    "actorId": "youssef",
+    "kind": "changes_requested",
+    "text": "Copy strings are hardcoded in the component, can we move them into the i18n bundle?"
+  },
+  {
+    "id": "ev-0144",
+    "ts": "2026-10-12T15:45:00+03:00",
+    "itemId": "jira:PAY-398",
+    "actorId": "karim",
+    "kind": "commit",
+    "text": "settlement: add lock timeout and per-leg retry"
+  },
+  {
+    "id": "ev-0145",
+    "ts": "2026-10-12T16:10:00+03:00",
+    "itemId": "slack:th-0003",
+    "actorId": "karim",
+    "kind": "message",
+    "text": "arjun how is PAY-405 looking? Onboarding wants it for ONB-81"
+  },
+  {
+    "id": "ev-0146",
+    "ts": "2026-10-12T16:15:00+03:00",
+    "itemId": "gh:pr-323",
+    "actorId": "sara",
+    "kind": "comment",
+    "text": "Ack, will move strings to i18n first thing tomorrow."
+  },
+  {
+    "id": "ev-0147",
+    "ts": "2026-10-12T16:30:00+03:00",
+    "itemId": "jira:ONB-77",
+    "actorId": "sara",
+    "kind": "comment",
+    "text": "Scope note: live status feed needs ledger events (blocked by ONB-81 chain), mock states can be done without it."
+  },
+  {
+    "id": "ev-0148",
+    "ts": "2026-10-12T16:40:00+03:00",
+    "itemId": "gh:pr-316",
+    "actorId": "youssef",
+    "kind": "review_approved",
+    "text": "Looks good now, nice work."
+  },
+  {
+    "id": "ev-0149",
+    "ts": "2026-10-12T16:50:00+03:00",
+    "itemId": "jira:ONB-77",
+    "actorId": "youssef",
+    "kind": "status_changed",
+    "from": "To Do",
+    "to": "In Progress"
+  },
+  {
+    "id": "ev-0150",
+    "ts": "2026-10-12T16:55:00+03:00",
+    "itemId": "jira:ONB-77",
+    "actorId": "youssef",
+    "kind": "comment",
+    "text": "Picking this up. Sara says it is needed for something Thursday, starting with mock states."
+  },
+  {
+    "id": "ev-0151",
+    "ts": "2026-10-12T17:00:00+03:00",
+    "itemId": "email:em-0003",
+    "actorId": "huda",
+    "kind": "email_received",
+    "text": "Team, notes from today's all-hands are in the shared folder. Q4 focus: settlement reliability, KYC v2 rollout, merchant growth. Please read before next week."
+  },
+  {
+    "id": "ev-0152",
+    "ts": "2026-10-12T17:05:00+03:00",
+    "itemId": "jira:PAY-398",
+    "actorId": "karim",
+    "kind": "comment",
+    "text": "Fix is on staging. Will replay the Palmway batches tomorrow before touching prod."
+  },
+  {
+    "id": "ev-0153",
+    "ts": "2026-10-12T17:20:00+03:00",
+    "itemId": "slack:th-0014",
+    "actorId": "dina",
+    "kind": "reaction",
+    "text": ":clap:"
+  },
+  {
+    "id": "ev-0154",
+    "ts": "2026-10-12T17:30:00+03:00",
+    "itemId": "slack:th-0003",
+    "actorId": "arjun",
+    "kind": "message",
+    "text": "still waiting on staging DB creds from infra, cant run the migration tests. pinged Hamdan twice already"
+  },
+  {
+    "id": "ev-0155",
+    "ts": "2026-10-12T17:30:00+03:00",
+    "itemId": "gh:pr-324",
+    "actorId": "youssef",
+    "kind": "created",
+    "text": "Draft PR: progress tracker demo view (ONB-77)"
+  },
+  {
+    "id": "ev-0156",
+    "ts": "2026-10-12T17:36:00+03:00",
+    "itemId": "slack:th-0003",
+    "actorId": "karim",
+    "kind": "message",
+    "text": "ugh ok. will nudge him tomorrow"
+  },
+  {
+    "id": "ev-0157",
+    "ts": "2026-10-12T17:40:00+03:00",
+    "itemId": "slack:th-0003",
+    "actorId": "arjun",
+    "kind": "reaction",
+    "text": ":pray:"
+  },
+  {
+    "id": "ev-0158",
+    "ts": "2026-10-12T18:00:00+03:00",
+    "itemId": "jira:PAY-420",
+    "actorId": "arjun",
+    "kind": "comment",
+    "text": "SDK 4.2 changes the tokenize() signature, updated 6 call sites. Waiting on review tomorrow IST."
+  },
+  {
+    "id": "ev-0159",
+    "ts": "2026-10-12T18:10:00+03:00",
+    "itemId": "gh:pr-324",
+    "actorId": "youssef",
+    "kind": "commit",
+    "text": "demo: progress tracker with mock states"
+  },
+  {
+    "id": "ev-0160",
+    "ts": "2026-10-12T18:20:00+03:00",
+    "itemId": "gh:pr-322",
+    "actorId": "karim",
+    "kind": "comment",
+    "text": "Added a short ADR-014 summary to the PR description with the rollback plan."
+  },
+  {
+    "id": "ev-0161",
+    "ts": "2026-10-12T18:25:00+03:00",
+    "itemId": "gh:pr-324",
+    "actorId": "ci-bot",
+    "kind": "ci_passed",
+    "text": "All checks passed"
+  },
+  {
+    "id": "ev-0162",
+    "ts": "2026-10-12T19:50:00+03:00",
+    "itemId": "jira:PAY-420",
+    "actorId": "arjun",
+    "kind": "commit",
+    "text": "sdk 4.2: update tokenize() call sites"
+  },
+  {
+    "id": "ev-0163",
+    "ts": "2026-10-12T19:55:00+03:00",
+    "itemId": "jira:PAY-420",
+    "actorId": "arjun",
+    "kind": "status_changed",
+    "from": "To Do",
+    "to": "In Progress"
+  },
+  {
+    "id": "ev-0164",
+    "ts": "2026-10-12T20:00:00+03:00",
+    "itemId": "gh:pr-318",
+    "actorId": "omar",
+    "kind": "comment",
+    "text": "Rebased on main, no conflicts."
+  },
+  {
+    "id": "ev-0165",
+    "ts": "2026-10-12T23:30:00+03:00",
+    "itemId": "slack:th-0009",
+    "actorId": "ci-bot",
+    "kind": "bot",
+    "text": "Staging deploy onboarding-web 1.15.0-rc1 succeeded"
+  },
+  {
+    "id": "ev-0166",
+    "ts": "2026-10-13T03:15:00+03:00",
+    "itemId": "slack:th-0009",
+    "actorId": "ci-bot",
+    "kind": "bot",
+    "text": "Nightly build #1483 passed (15m 08s)"
+  },
+  {
+    "id": "ev-0167",
+    "ts": "2026-10-13T03:20:00+03:00",
+    "itemId": "gh:pr-325",
+    "actorId": "ci-bot",
+    "kind": "ci_passed",
+    "text": "All checks passed"
+  },
+  {
+    "id": "ev-0168",
+    "ts": "2026-10-13T03:50:00+03:00",
+    "itemId": "gh:pr-318",
+    "actorId": "omar",
+    "kind": "commit",
+    "text": "add race test for concurrent refund with same key (couldnt sleep, so)"
+  },
+  {
+    "id": "ev-0169",
+    "ts": "2026-10-13T04:12:00+03:00",
+    "itemId": "gh:pr-318",
+    "actorId": "ci-bot",
+    "kind": "ci_passed",
+    "text": "All checks passed"
+  },
+  {
+    "id": "ev-0171",
+    "ts": "2026-10-13T04:35:00+03:00",
+    "itemId": "jira:PAY-409",
+    "actorId": "omar",
+    "kind": "status_changed",
+    "from": "In Progress",
+    "to": "In Review"
+  },
+  {
+    "id": "ev-0172",
+    "ts": "2026-10-13T04:40:00+03:00",
+    "itemId": "jira:ONB-72",
+    "actorId": "meera",
+    "kind": "comment",
+    "text": "Grooming: split this into three smaller event tickets (signup, doc upload, completion). Parking until after the freeze."
+  },
+  {
+    "id": "ev-0173",
+    "ts": "2026-10-13T05:15:00+03:00",
+    "itemId": "gh:pr-321",
+    "actorId": "arjun",
+    "kind": "created",
+    "text": "PAY-420: bump card-token SDK to 4.2"
+  },
+  {
+    "id": "ev-0174",
+    "ts": "2026-10-13T05:30:00+03:00",
+    "itemId": "gh:pr-321",
+    "actorId": "ci-bot",
+    "kind": "ci_passed",
+    "text": "All checks passed"
+  },
+  {
+    "id": "ev-0175",
+    "ts": "2026-10-13T05:32:00+03:00",
+    "itemId": "gh:pr-321",
+    "actorId": "arjun",
+    "kind": "review_requested",
+    "text": "Requested review from karim"
+  },
+  {
+    "id": "ev-0176",
+    "ts": "2026-10-13T05:35:00+03:00",
+    "itemId": "jira:PAY-420",
+    "actorId": "arjun",
+    "kind": "status_changed",
+    "from": "In Progress",
+    "to": "In Review"
+  },
+  {
+    "id": "ev-0177",
+    "ts": "2026-10-13T05:45:00+03:00",
+    "itemId": "slack:th-0012",
+    "actorId": "arjun",
+    "kind": "message",
+    "text": "morning folks, token sdk bump is up as #321. Karim could you review when youre online"
+  },
+  {
+    "id": "ev-0178",
+    "ts": "2026-10-13T06:10:00+03:00",
+    "itemId": "slack:th-0011",
+    "actorId": "meera",
+    "kind": "message",
+    "text": "morning. ONB-81 still blocked on PAY-405 so Im stubbing the ledger client locally to at least finish the handler"
+  },
+  {
+    "id": "ev-0179",
+    "ts": "2026-10-13T06:14:00+03:00",
+    "itemId": "slack:th-0011",
+    "actorId": "sara",
+    "kind": "reaction",
+    "text": ":+1:"
+  },
+  {
+    "id": "ev-0180",
+    "ts": "2026-10-13T06:25:00+03:00",
+    "itemId": "jira:ONB-81",
+    "actorId": "meera",
+    "kind": "commit",
+    "text": "stub ledger client so handler tests can run without staging"
+  },
+  {
+    "id": "ev-0181",
+    "ts": "2026-10-13T06:45:00+03:00",
+    "itemId": "slack:th-0012",
+    "actorId": "arjun",
+    "kind": "message",
+    "text": "also fyi flaky ledger test failed once on the sdk branch, passed on rerun"
+  },
+  {
+    "id": "ev-0182",
+    "ts": "2026-10-13T06:50:00+03:00",
+    "itemId": "slack:th-0009",
+    "actorId": "ci-bot",
+    "kind": "bot",
+    "text": "Coverage report: payments 81.4% (+0.1%), onboarding 76.9% (-0.2%)"
+  },
+  {
+    "id": "ev-0183",
+    "ts": "2026-10-13T07:00:00+03:00",
+    "itemId": "slack:th-0009",
+    "actorId": "ci-bot",
+    "kind": "bot",
+    "text": "Flaky test detected: ledger_integration_spec::test_concurrent_posting (passed on retry 2/3)"
+  },
+  {
+    "id": "ev-0184",
+    "ts": "2026-10-13T07:10:00+03:00",
+    "itemId": "gh:pr-324",
+    "actorId": "youssef",
+    "kind": "commit",
+    "text": "demo: animate step transitions"
+  },
+  {
+    "id": "ev-0185",
+    "ts": "2026-10-13T07:30:00+03:00",
+    "itemId": "gh:pr-324",
+    "actorId": "ci-bot",
+    "kind": "ci_failed",
+    "text": "e2e: snapshot mismatch in tracker.spec.ts"
+  },
+  {
+    "id": "ev-0186",
+    "ts": "2026-10-13T07:30:00+03:00",
+    "itemId": "slack:th-0009",
+    "actorId": "ci-bot",
+    "kind": "bot",
+    "text": "Staging deploy payments-api 5.11.4 succeeded"
+  },
+  {
+    "id": "ev-0187",
+    "ts": "2026-10-13T07:50:00+03:00",
+    "itemId": "gh:pr-323",
+    "actorId": "sara",
+    "kind": "commit",
+    "text": "move retry strings to i18n bundle (ar/en)"
+  },
+  {
+    "id": "ev-0188",
+    "ts": "2026-10-13T07:55:00+03:00",
+    "itemId": "gh:pr-324",
+    "actorId": "youssef",
+    "kind": "commit",
+    "text": "update snapshots"
+  },
+  {
+    "id": "ev-0189",
+    "ts": "2026-10-13T08:05:00+03:00",
+    "itemId": "email:em-0002",
+    "actorId": "mansour",
+    "kind": "email_received",
+    "text": "Marty, this is the third time in October that settlement to the Palmway Retail wallet has landed one to two days late. We now have SAR 4.2M in transit and a supplier payroll on the 15th. I need a root cause and a firm fix date by end of day tomorrow. Otherwise I will take this to our board and we will have to review the contract. Mansour Al-Dosari, CFO"
+  },
+  {
+    "id": "ev-0190",
+    "ts": "2026-10-13T08:05:00+03:00",
+    "itemId": "gh:pr-323",
+    "actorId": "ci-bot",
+    "kind": "ci_passed",
+    "text": "All checks passed"
+  },
+  {
+    "id": "ev-0191",
+    "ts": "2026-10-13T08:10:00+03:00",
+    "itemId": "gh:pr-324",
+    "actorId": "ci-bot",
+    "kind": "ci_passed",
+    "text": "All checks passed"
+  },
+  {
+    "id": "ev-0192",
+    "ts": "2026-10-13T08:15:00+03:00",
+    "itemId": "slack:th-0007",
+    "actorId": "omar",
+    "kind": "message",
+    "text": "ok someone bring me coffee, p0 days are long"
+  },
+  {
+    "id": "ev-0193",
+    "ts": "2026-10-13T08:16:00+03:00",
+    "itemId": "slack:th-0007",
+    "actorId": "sara",
+    "kind": "reaction",
+    "text": ":coffee:"
+  },
+  {
+    "id": "ev-0194",
+    "ts": "2026-10-13T08:20:00+03:00",
+    "itemId": "slack:th-0012",
+    "actorId": "karim",
+    "kind": "message",
+    "text": "will do once the incident calms down"
+  },
+  {
+    "id": "ev-0195",
+    "ts": "2026-10-13T08:20:00+03:00",
+    "itemId": "gh:pr-323",
+    "actorId": "ci-bot",
+    "kind": "ci_passed",
+    "text": "All checks passed"
+  },
+  {
+    "id": "ev-0196",
+    "ts": "2026-10-13T08:20:00+03:00",
+    "itemId": "jira:ONB-77",
+    "actorId": "youssef",
+    "kind": "comment",
+    "text": "Mock tracker works on staging. Live feed would need ONB-81, so not realistic for Thursday."
+  },
+  {
+    "id": "ev-0197",
+    "ts": "2026-10-13T08:30:00+03:00",
+    "itemId": "jira:PAY-425",
+    "actorId": "karim",
+    "kind": "comment",
+    "text": "Pinged Layla for the doc pass, she is OOO till Thursday so this waits."
+  },
+  {
+    "id": "ev-0198",
+    "ts": "2026-10-13T08:35:00+03:00",
+    "itemId": "jira:PAY-420",
+    "actorId": "karim",
+    "kind": "comment",
+    "text": "Will review after the incident. Due Thursday so should be fine."
+  },
+  {
+    "id": "ev-0199",
+    "ts": "2026-10-13T08:38:00+03:00",
+    "itemId": "jira:INC-88",
+    "actorId": "ci-bot",
+    "kind": "bot",
+    "text": "ALERT: card_auth_success_rate{partner=alwasat} < 60% for 5m (current 54%)"
+  },
+  {
+    "id": "ev-0200",
+    "ts": "2026-10-13T08:40:00+03:00",
+    "itemId": "jira:INC-88",
+    "actorId": "omar",
+    "kind": "incident_opened",
+    "text": "P0 opened: card authorizations via Northstar Bank failing at about 45%. Customer facing."
+  },
+  {
+    "id": "ev-0201",
+    "ts": "2026-10-13T08:40:00+03:00",
+    "itemId": "jira:ONB-79",
+    "actorId": "sara",
+    "kind": "comment",
+    "text": "Moved strings to i18n per review, waiting for Youssefs re-review. Needs to be in before Thursday noon."
+  },
+  {
+    "id": "ev-0202",
+    "ts": "2026-10-13T08:41:00+03:00",
+    "itemId": "slack:th-0001",
+    "actorId": "omar",
+    "kind": "message",
+    "text": "@here opening INC-88. card auths via Northstar Bank dropping, success rate ~55% since 08:30. other partners look fine"
+  },
+  {
+    "id": "ev-0203",
+    "ts": "2026-10-13T08:42:00+03:00",
+    "itemId": "jira:INC-88",
+    "actorId": "omar",
+    "kind": "status_changed",
+    "from": "To Do",
+    "to": "In Progress"
+  },
+  {
+    "id": "ev-0204",
+    "ts": "2026-10-13T08:44:00+03:00",
+    "itemId": "slack:th-0001",
+    "actorId": "karim",
+    "kind": "message",
+    "text": "seeing 504s from their auth gateway, nothing on our side so far"
+  },
+  {
+    "id": "ev-0205",
+    "ts": "2026-10-13T08:50:00+03:00",
+    "itemId": "slack:th-0001",
+    "actorId": "sara",
+    "kind": "reaction",
+    "text": ":eyes:"
+  },
+  {
+    "id": "ev-0206",
+    "ts": "2026-10-13T08:50:00+03:00",
+    "itemId": "slack:th-0001",
+    "actorId": "hamdan",
+    "kind": "message",
+    "text": "Infra side looks clean, no network changes on our side overnight. Their gateway latency graph is spiking though."
+  },
+  {
+    "id": "ev-0207",
+    "ts": "2026-10-13T08:52:00+03:00",
+    "itemId": "jira:INC-88",
+    "actorId": "omar",
+    "kind": "incident_update",
+    "text": "Confirmed elevated timeouts from the Northstar gateway. Testing failover to secondary route B."
+  },
+  {
+    "id": "ev-0208",
+    "ts": "2026-10-13T08:55:00+03:00",
+    "itemId": "gh:pr-316",
+    "actorId": "ci-bot",
+    "kind": "ci_passed",
+    "text": "All checks passed"
+  },
+  {
+    "id": "ev-0209",
+    "ts": "2026-10-13T08:58:00+03:00",
+    "itemId": "slack:th-0001",
+    "actorId": "youssef",
+    "kind": "message",
+    "text": "onboarding card verification is hitting this too, ~12 failed attempts in the last 20 min"
+  },
+  {
+    "id": "ev-0210",
+    "ts": "2026-10-13T09:02:00+03:00",
+    "itemId": "slack:th-0007",
+    "actorId": "youssef",
+    "kind": "message",
+    "text": "good morning from cairo, traffic is a nightmare today"
+  },
+  {
+    "id": "ev-0211",
+    "ts": "2026-10-13T09:05:00+03:00",
+    "itemId": "gh:pr-316",
+    "actorId": "sara",
+    "kind": "merged",
+    "from": "open",
+    "to": "merged"
+  },
+  {
+    "id": "ev-0212",
+    "ts": "2026-10-13T09:05:00+03:00",
+    "itemId": "slack:th-0001",
+    "actorId": "omar",
+    "kind": "message",
+    "text": "support already has 9 tickets. status page set to degraded"
+  },
+  {
+    "id": "ev-0213",
+    "ts": "2026-10-13T09:06:00+03:00",
+    "itemId": "slack:th-0001",
+    "actorId": "tariq",
+    "kind": "reaction",
+    "text": ":eyes:"
+  },
+  {
+    "id": "ev-0214",
+    "ts": "2026-10-13T09:12:00+03:00",
+    "itemId": "slack:th-0001",
+    "actorId": "karim",
+    "kind": "message",
+    "text": "FYI incident might make tonights settlement window tight too, let us not deploy the Palmway fix until route B is stable"
+  },
+  {
+    "id": "ev-0215",
+    "ts": "2026-10-13T09:15:00+03:00",
+    "itemId": "gh:pr-316",
+    "actorId": "sara",
+    "kind": "deployed",
+    "text": "Deployed kyc-onboarding v2.0.0 to production"
+  },
+  {
+    "id": "ev-0216",
+    "ts": "2026-10-13T09:15:00+03:00",
+    "itemId": "slack:th-0014",
+    "actorId": "ci-bot",
+    "kind": "bot",
+    "text": "Deployed kyc-onboarding v2.0.0 to production (PR #316)"
+  },
+  {
+    "id": "ev-0217",
+    "ts": "2026-10-13T09:16:00+03:00",
+    "itemId": "jira:ONB-64",
+    "actorId": "sara",
+    "kind": "status_changed",
+    "from": "In Review",
+    "to": "Done"
+  },
+  {
+    "id": "ev-0218",
+    "ts": "2026-10-13T09:20:00+03:00",
+    "itemId": "slack:th-0014",
+    "actorId": "sara",
+    "kind": "message",
+    "text": "KYC v2 is live. Keeping an eye on the drop-off dashboard for the next hour."
+  },
+  {
+    "id": "ev-0219",
+    "ts": "2026-10-13T09:20:00+03:00",
+    "itemId": "slack:th-0001",
+    "actorId": "karim",
+    "kind": "message",
+    "text": "route B works in staging, rolling to 20% in prod"
+  },
+  {
+    "id": "ev-0220",
+    "ts": "2026-10-13T09:22:00+03:00",
+    "itemId": "slack:th-0014",
+    "actorId": "youssef",
+    "kind": "message",
+    "text": "nice!!"
+  },
+  {
+    "id": "ev-0221",
+    "ts": "2026-10-13T09:25:00+03:00",
+    "itemId": "slack:th-0008",
+    "actorId": "ci-bot",
+    "kind": "bot",
+    "text": "Reminder: standup in 5 min (09:30 Riyadh). Notes: go/standup-notes"
+  },
+  {
+    "id": "ev-0222",
+    "ts": "2026-10-13T09:25:00+03:00",
+    "itemId": "slack:th-0014",
+    "actorId": "karim",
+    "kind": "reaction",
+    "text": ":rocket:"
+  },
+  {
+    "id": "ev-0223",
+    "ts": "2026-10-13T09:26:00+03:00",
+    "itemId": "slack:th-0014",
+    "actorId": "tariq",
+    "kind": "reaction",
+    "text": ":tada:"
+  },
+  {
+    "id": "ev-0224",
+    "ts": "2026-10-13T09:31:00+03:00",
+    "itemId": "slack:th-0014",
+    "actorId": "huda",
+    "kind": "message",
+    "text": "Great work Sara and team. This is the one the bank partners were waiting on."
+  },
+  {
+    "id": "ev-0225",
+    "ts": "2026-10-13T09:32:00+03:00",
+    "itemId": "slack:th-0014",
+    "actorId": "meera",
+    "kind": "reaction",
+    "text": ":clap:"
+  },
+  {
+    "id": "ev-0226",
+    "ts": "2026-10-13T09:33:00+03:00",
+    "itemId": "slack:th-0008",
+    "actorId": "omar",
+    "kind": "message",
+    "text": "skipping standup, on the P0"
+  },
+  {
+    "id": "ev-0227",
+    "ts": "2026-10-13T09:34:00+03:00",
+    "itemId": "slack:th-0008",
+    "actorId": "sara",
+    "kind": "reaction",
+    "text": ":+1:"
+  },
+  {
+    "id": "ev-0228",
+    "ts": "2026-10-13T09:34:00+03:00",
+    "itemId": "jira:INC-88",
+    "actorId": "omar",
+    "kind": "incident_update",
+    "text": "Route B at 20%, success rate recovering to about 72%. Northstar contacted, no ETA from them yet."
+  },
+  {
+    "id": "ev-0229",
+    "ts": "2026-10-13T09:40:00+03:00",
+    "itemId": "slack:th-0006",
+    "actorId": "sara",
+    "kind": "message",
+    "text": "@marty need a call on ONB-77. Huda wants the live progress tracker for Thursdays demo. Either we cut the live status feed and ship static states (about 2 days, doable), or we ask Huda to move the demo date, which means a freeze exception."
+  },
+  {
+    "id": "ev-0230",
+    "ts": "2026-10-13T09:41:00+03:00",
+    "itemId": "slack:th-0006",
+    "actorId": "omar",
+    "kind": "reaction",
+    "text": ":eyes:"
+  },
+  {
+    "id": "ev-0231",
+    "ts": "2026-10-13T09:45:00+03:00",
+    "itemId": "jira:PAY-398",
+    "actorId": "karim",
+    "kind": "comment",
+    "text": "Staging replay of the Palmway batches is clean. Need a prod deploy slot before tonights 22:00 settlement run, but we are all on the P0 right now."
+  },
+  {
+    "id": "ev-0232",
+    "ts": "2026-10-13T09:50:00+03:00",
+    "itemId": "jira:PAY-409",
+    "actorId": "omar",
+    "kind": "comment",
+    "text": "PR #318 still has no review. Layla is out, can someone else take it? Due Thu."
+  },
+  {
+    "id": "ev-0233",
+    "ts": "2026-10-13T09:52:00+03:00",
+    "itemId": "slack:th-0006",
+    "actorId": "youssef",
+    "kind": "message",
+    "text": "fwiw the static version is doable by Wed night, Im already on it"
+  },
+  {
+    "id": "ev-0234",
+    "ts": "2026-10-13T09:55:00+03:00",
+    "itemId": "slack:th-0001",
+    "actorId": "huda",
+    "kind": "message",
+    "text": "Need a clear status for the 11am leadership sync please @marty. Is this touching the Palmway settlement issue too?"
+  },
+  {
+    "id": "ev-0235",
+    "ts": "2026-10-13T09:58:00+03:00",
+    "itemId": "gh:pr-318",
+    "actorId": "omar",
+    "kind": "comment",
+    "text": "Still no reviewer, asking in channel."
+  },
+  {
+    "id": "ev-0236",
+    "ts": "2026-10-13T10:00:00+03:00",
+    "itemId": "slack:th-0003",
+    "actorId": "omar",
+    "kind": "message",
+    "text": "can someone besides Layla look at #318 today? refund idempotency, due Thu before freeze"
+  },
+  {
+    "id": "ev-0237",
+    "ts": "2026-10-13T10:02:00+03:00",
+    "itemId": "slack:th-0001",
+    "actorId": "marty",
+    "kind": "message",
+    "text": "On it. Will send you a two-line summary by 10:45."
+  },
+  {
+    "id": "ev-0238",
+    "ts": "2026-10-13T10:05:00+03:00",
+    "itemId": "slack:th-0007",
+    "actorId": "sara",
+    "kind": "message",
+    "text": "coffee run anyone? going to the cafe on ground floor"
+  },
+  {
+    "id": "ev-0239",
+    "ts": "2026-10-13T10:08:00+03:00",
+    "itemId": "slack:th-0007",
+    "actorId": "tariq",
+    "kind": "message",
+    "text": "yes please, flat white"
+  },
+  {
+    "id": "ev-0240",
+    "ts": "2026-10-13T10:09:00+03:00",
+    "itemId": "slack:th-0007",
+    "actorId": "sara",
+    "kind": "reaction",
+    "text": ":coffee:"
+  },
+  {
+    "id": "ev-0241",
+    "ts": "2026-10-13T10:10:00+03:00",
+    "itemId": "slack:th-0007",
+    "actorId": "tariq",
+    "kind": "reaction",
+    "text": ":coffee:"
+  },
+  {
+    "id": "ev-0242",
+    "ts": "2026-10-13T10:10:00+03:00",
+    "itemId": "jira:INC-88",
+    "actorId": "omar",
+    "kind": "incident_update",
+    "text": "Route B at 50%, success rate 78%. Partner says an engineer is assigned. Still unresolved."
+  },
+  {
+    "id": "ev-0243",
+    "ts": "2026-10-13T10:15:00+03:00",
+    "itemId": "jira:INC-88",
+    "actorId": "marty",
+    "kind": "comment",
+    "text": "Leadership summary sent to Huda. Customer comms: support to use the degraded-status macro until partner confirms fix."
+  },
+  {
+    "id": "ev-0244",
+    "ts": "2026-10-13T10:16:00+03:00",
+    "itemId": "slack:th-0001",
+    "actorId": "marty",
+    "kind": "message",
+    "text": "Sent Huda the summary. Support, please keep using the degraded macro until I say otherwise."
+  },
+  {
+    "id": "ev-0245",
+    "ts": "2026-10-13T10:22:00+03:00",
+    "itemId": "slack:th-0001",
+    "actorId": "karim",
+    "kind": "message",
+    "text": "Northstar says root cause is their HSM cluster, fix ETA \"this afternoon\". no firmer than that"
+  },
+  {
+    "id": "ev-0246",
+    "ts": "2026-10-13T10:23:00+03:00",
+    "itemId": "slack:th-0001",
+    "actorId": "omar",
+    "kind": "reaction",
+    "text": ":eyes:"
+  }
+]

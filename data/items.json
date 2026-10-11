@@ -1,0 +1,791 @@
+[
+  {
+    "id": "jira:INC-88",
+    "source": "jira",
+    "type": "incident",
+    "key": "INC-88",
+    "title": "P0: Card payments failing via Northstar Bank gateway",
+    "ownerId": "omar",
+    "squad": null,
+    "priority": "P0",
+    "status": "In Progress",
+    "dueAt": null,
+    "customerFacing": true,
+    "links": [
+      "slack:th-0001"
+    ],
+    "createdAt": "2026-10-13T08:40:00+03:00"
+  },
+  {
+    "id": "jira:PAY-398",
+    "source": "jira",
+    "type": "ticket",
+    "key": "PAY-398",
+    "title": "Settlement batch stuck in pending_bank for Palmway Retail wallet",
+    "ownerId": "karim",
+    "squad": "payments",
+    "priority": "P1",
+    "status": "In Progress",
+    "dueAt": "2026-10-14T17:00:00+03:00",
+    "customerFacing": true,
+    "links": [
+      "email:em-0002"
+    ],
+    "createdAt": "2026-10-09T10:00:00+03:00"
+  },
+  {
+    "id": "jira:PAY-405",
+    "source": "jira",
+    "type": "ticket",
+    "key": "PAY-405",
+    "title": "Ledger v3: run schema migration tests on staging",
+    "ownerId": "arjun",
+    "squad": "payments",
+    "priority": "P2",
+    "status": "In Progress",
+    "dueAt": "2026-10-15T09:00:00+03:00",
+    "customerFacing": false,
+    "links": [
+      "jira:ONB-81",
+      "slack:th-0003",
+      "slack:th-0010"
+    ],
+    "createdAt": "2026-10-08T11:00:00+03:00"
+  },
+  {
+    "id": "jira:PAY-412",
+    "source": "jira",
+    "type": "ticket",
+    "key": "PAY-412",
+    "title": "KYCly KYC integration: production-tier sandbox keys",
+    "ownerId": "omar",
+    "squad": "payments",
+    "priority": "P1",
+    "status": "Blocked",
+    "dueAt": "2026-10-15T10:00:00+03:00",
+    "customerFacing": false,
+    "links": [
+      "email:em-0001"
+    ],
+    "createdAt": "2026-10-05T09:00:00+03:00"
+  },
+  {
+    "id": "jira:PAY-409",
+    "source": "jira",
+    "type": "ticket",
+    "key": "PAY-409",
+    "title": "Refund API: idempotency keys",
+    "ownerId": "omar",
+    "squad": "payments",
+    "priority": "P2",
+    "status": "In Review",
+    "dueAt": "2026-10-15T09:00:00+03:00",
+    "customerFacing": true,
+    "links": [
+      "gh:pr-318"
+    ],
+    "createdAt": "2026-10-06T10:00:00+03:00"
+  },
+  {
+    "id": "jira:PAY-401",
+    "source": "jira",
+    "type": "ticket",
+    "key": "PAY-401",
+    "title": "Reconciliation report: CSV export",
+    "ownerId": "layla",
+    "squad": "payments",
+    "priority": "P2",
+    "status": "Done",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [
+      "gh:pr-320"
+    ],
+    "createdAt": "2026-10-02T10:00:00+03:00"
+  },
+  {
+    "id": "jira:PAY-418",
+    "source": "jira",
+    "type": "ticket",
+    "key": "PAY-418",
+    "title": "Tune p95 latency alert thresholds on payments dashboard",
+    "ownerId": "karim",
+    "squad": "payments",
+    "priority": "P3",
+    "status": "To Do",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [],
+    "createdAt": "2026-10-07T12:00:00+03:00"
+  },
+  {
+    "id": "jira:PAY-420",
+    "source": "jira",
+    "type": "ticket",
+    "key": "PAY-420",
+    "title": "Bump card-token SDK to 4.2",
+    "ownerId": "arjun",
+    "squad": "payments",
+    "priority": "P2",
+    "status": "In Review",
+    "dueAt": "2026-10-15T09:00:00+03:00",
+    "customerFacing": false,
+    "links": [
+      "gh:pr-321"
+    ],
+    "createdAt": "2026-10-08T12:00:00+03:00"
+  },
+  {
+    "id": "jira:PAY-425",
+    "source": "jira",
+    "type": "ticket",
+    "key": "PAY-425",
+    "title": "Rate-limit config docs for partner API",
+    "ownerId": "layla",
+    "squad": "payments",
+    "priority": "P3",
+    "status": "To Do",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [],
+    "createdAt": "2026-10-06T15:00:00+03:00"
+  },
+  {
+    "id": "jira:ONB-64",
+    "source": "jira",
+    "type": "ticket",
+    "key": "ONB-64",
+    "title": "KYC v2 onboarding flow",
+    "ownerId": "sara",
+    "squad": "onboarding",
+    "priority": "P1",
+    "status": "Done",
+    "dueAt": null,
+    "customerFacing": true,
+    "links": [
+      "gh:pr-316"
+    ],
+    "createdAt": "2026-10-01T10:00:00+03:00"
+  },
+  {
+    "id": "jira:ONB-66",
+    "source": "jira",
+    "type": "ticket",
+    "key": "ONB-66",
+    "title": "Arabic copy fixes on OTP screen",
+    "ownerId": "youssef",
+    "squad": "onboarding",
+    "priority": "P3",
+    "status": "Done",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [
+      "gh:pr-317"
+    ],
+    "createdAt": "2026-10-07T10:00:00+03:00"
+  },
+  {
+    "id": "jira:ONB-70",
+    "source": "jira",
+    "type": "ticket",
+    "key": "ONB-70",
+    "title": "Document upload: resume after network timeout",
+    "ownerId": "tariq",
+    "squad": "onboarding",
+    "priority": "P2",
+    "status": "In Progress",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [],
+    "createdAt": "2026-10-06T10:00:00+03:00"
+  },
+  {
+    "id": "jira:ONB-72",
+    "source": "jira",
+    "type": "ticket",
+    "key": "ONB-72",
+    "title": "Onboarding funnel analytics events",
+    "ownerId": "meera",
+    "squad": "onboarding",
+    "priority": "P3",
+    "status": "To Do",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [],
+    "createdAt": "2026-10-06T11:00:00+03:00"
+  },
+  {
+    "id": "jira:ONB-73",
+    "source": "jira",
+    "type": "ticket",
+    "key": "ONB-73",
+    "title": "Accessibility audit of sign-up screens",
+    "ownerId": "tariq",
+    "squad": "onboarding",
+    "priority": "P3",
+    "status": "To Do",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [],
+    "createdAt": "2026-10-06T11:30:00+03:00"
+  },
+  {
+    "id": "jira:ONB-77",
+    "source": "jira",
+    "type": "ticket",
+    "key": "ONB-77",
+    "title": "Merchant onboarding progress tracker (demo view)",
+    "ownerId": "youssef",
+    "squad": "onboarding",
+    "priority": "P3",
+    "status": "In Progress",
+    "dueAt": "2026-10-30T17:00:00+03:00",
+    "customerFacing": false,
+    "links": [
+      "slack:th-0005",
+      "slack:th-0006",
+      "gh:pr-324"
+    ],
+    "createdAt": "2026-10-07T13:00:00+03:00"
+  },
+  {
+    "id": "jira:ONB-79",
+    "source": "jira",
+    "type": "ticket",
+    "key": "ONB-79",
+    "title": "Selfie liveness: friendlier retry copy and states",
+    "ownerId": "sara",
+    "squad": "onboarding",
+    "priority": "P2",
+    "status": "In Review",
+    "dueAt": "2026-10-15T10:00:00+03:00",
+    "customerFacing": true,
+    "links": [
+      "gh:pr-323"
+    ],
+    "createdAt": "2026-10-08T09:00:00+03:00"
+  },
+  {
+    "id": "jira:ONB-81",
+    "source": "jira",
+    "type": "ticket",
+    "key": "ONB-81",
+    "title": "Onboarding status webhook to ledger service",
+    "ownerId": "meera",
+    "squad": "onboarding",
+    "priority": "P2",
+    "status": "Blocked",
+    "dueAt": "2026-10-15T10:00:00+03:00",
+    "customerFacing": false,
+    "links": [
+      "jira:PAY-405",
+      "slack:th-0011"
+    ],
+    "createdAt": "2026-10-08T10:00:00+03:00"
+  },
+  {
+    "id": "jira:ONB-83",
+    "source": "jira",
+    "type": "ticket",
+    "key": "ONB-83",
+    "title": "Backlog grooming: label and component cleanup",
+    "ownerId": "sara",
+    "squad": "onboarding",
+    "priority": "P3",
+    "status": "To Do",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [],
+    "createdAt": "2026-10-09T10:00:00+03:00"
+  },
+  {
+    "id": "gh:pr-316",
+    "source": "github",
+    "type": "pr",
+    "key": "PR #316",
+    "title": "ONB-64: KYC v2 onboarding flow",
+    "ownerId": "sara",
+    "squad": "onboarding",
+    "priority": null,
+    "status": "merged",
+    "dueAt": null,
+    "customerFacing": true,
+    "links": [
+      "jira:ONB-64",
+      "slack:th-0014"
+    ],
+    "createdAt": "2026-10-11T10:00:00+03:00",
+    "reviewers": [
+      "youssef"
+    ]
+  },
+  {
+    "id": "gh:pr-317",
+    "source": "github",
+    "type": "pr",
+    "key": "PR #317",
+    "title": "ONB-66: Arabic OTP copy fixes",
+    "ownerId": "youssef",
+    "squad": "onboarding",
+    "priority": null,
+    "status": "merged",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [
+      "jira:ONB-66",
+      "slack:th-0014"
+    ],
+    "createdAt": "2026-10-11T12:00:00+03:00",
+    "reviewers": [
+      "sara"
+    ]
+  },
+  {
+    "id": "gh:pr-318",
+    "source": "github",
+    "type": "pr",
+    "key": "PR #318",
+    "title": "PAY-409: idempotency keys for refund API",
+    "ownerId": "omar",
+    "squad": "payments",
+    "priority": null,
+    "status": "open",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [
+      "jira:PAY-409"
+    ],
+    "createdAt": "2026-10-11T13:40:00+03:00",
+    "reviewers": [
+      "layla"
+    ]
+  },
+  {
+    "id": "gh:pr-320",
+    "source": "github",
+    "type": "pr",
+    "key": "PR #320",
+    "title": "PAY-401: reconciliation CSV export",
+    "ownerId": "layla",
+    "squad": "payments",
+    "priority": null,
+    "status": "merged",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [
+      "jira:PAY-401"
+    ],
+    "createdAt": "2026-10-11T08:05:00+03:00",
+    "reviewers": [
+      "karim"
+    ]
+  },
+  {
+    "id": "gh:pr-321",
+    "source": "github",
+    "type": "pr",
+    "key": "PR #321",
+    "title": "PAY-420: bump card-token SDK to 4.2",
+    "ownerId": "arjun",
+    "squad": "payments",
+    "priority": null,
+    "status": "open",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [
+      "jira:PAY-420",
+      "slack:th-0012"
+    ],
+    "createdAt": "2026-10-13T05:15:00+03:00",
+    "reviewers": [
+      "karim"
+    ]
+  },
+  {
+    "id": "gh:pr-322",
+    "source": "github",
+    "type": "pr",
+    "key": "PR #322",
+    "title": "ADR-014: async ledger writer on the settlement path",
+    "ownerId": "karim",
+    "squad": "payments",
+    "priority": null,
+    "status": "open",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [],
+    "createdAt": "2026-10-12T13:10:00+03:00",
+    "reviewers": [
+      "marty"
+    ]
+  },
+  {
+    "id": "gh:pr-323",
+    "source": "github",
+    "type": "pr",
+    "key": "PR #323",
+    "title": "ONB-79: liveness retry copy and states",
+    "ownerId": "sara",
+    "squad": "onboarding",
+    "priority": null,
+    "status": "open",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [
+      "jira:ONB-79"
+    ],
+    "createdAt": "2026-10-12T10:30:00+03:00",
+    "reviewers": [
+      "youssef"
+    ]
+  },
+  {
+    "id": "gh:pr-324",
+    "source": "github",
+    "type": "pr",
+    "key": "PR #324",
+    "title": "ONB-77: progress tracker demo view (draft)",
+    "ownerId": "youssef",
+    "squad": "onboarding",
+    "priority": null,
+    "status": "open",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [
+      "jira:ONB-77"
+    ],
+    "createdAt": "2026-10-12T17:30:00+03:00",
+    "reviewers": [
+      "sara"
+    ]
+  },
+  {
+    "id": "gh:pr-325",
+    "source": "github",
+    "type": "pr",
+    "key": "PR #325",
+    "title": "chore(deps): bump lodash 4.17.21 to 4.17.22",
+    "ownerId": "ci-bot",
+    "squad": null,
+    "priority": null,
+    "status": "open",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [
+      "slack:th-0009"
+    ],
+    "createdAt": "2026-10-12T14:20:00+03:00",
+    "reviewers": []
+  },
+  {
+    "id": "slack:th-0001",
+    "source": "slack",
+    "type": "thread",
+    "key": "#incidents thread",
+    "title": "P0: Northstar Bank card auth failures",
+    "ownerId": "omar",
+    "squad": null,
+    "priority": null,
+    "status": "open",
+    "dueAt": null,
+    "customerFacing": true,
+    "links": [
+      "jira:INC-88"
+    ],
+    "createdAt": "2026-10-13T08:41:00+03:00",
+    "channel": "#incidents"
+  },
+  {
+    "id": "slack:th-0002",
+    "source": "slack",
+    "type": "thread",
+    "key": "#payments-eng thread",
+    "title": "Layla OOO note (Sun to Wed)",
+    "ownerId": "layla",
+    "squad": "payments",
+    "priority": null,
+    "status": "resolved",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [],
+    "createdAt": "2026-10-11T08:15:00+03:00",
+    "channel": "#payments-eng"
+  },
+  {
+    "id": "slack:th-0003",
+    "source": "slack",
+    "type": "thread",
+    "key": "#payments-eng thread",
+    "title": "How is PAY-405 looking?",
+    "ownerId": "karim",
+    "squad": "payments",
+    "priority": null,
+    "status": "open",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [
+      "jira:PAY-405"
+    ],
+    "createdAt": "2026-10-12T16:10:00+03:00",
+    "channel": "#payments-eng"
+  },
+  {
+    "id": "slack:th-0004",
+    "source": "slack",
+    "type": "thread",
+    "key": "#eng-announcements thread",
+    "title": "Release freeze starts Thu 15 Oct 12:00",
+    "ownerId": "hamdan",
+    "squad": null,
+    "priority": null,
+    "status": "open",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [],
+    "createdAt": "2026-10-11T09:00:00+03:00",
+    "channel": "#eng-announcements"
+  },
+  {
+    "id": "slack:th-0005",
+    "source": "slack",
+    "type": "thread",
+    "key": "#product thread",
+    "title": "Investor demo Thursday, progress tracker",
+    "ownerId": "huda",
+    "squad": "onboarding",
+    "priority": null,
+    "status": "open",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [
+      "jira:ONB-77"
+    ],
+    "createdAt": "2026-10-12T12:10:00+03:00",
+    "channel": "#product"
+  },
+  {
+    "id": "slack:th-0006",
+    "source": "slack",
+    "type": "thread",
+    "key": "#onboarding-eng thread",
+    "title": "Decision needed on ONB-77 scope vs date",
+    "ownerId": "sara",
+    "squad": "onboarding",
+    "priority": null,
+    "status": "open",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [
+      "jira:ONB-77"
+    ],
+    "createdAt": "2026-10-13T09:40:00+03:00",
+    "channel": "#onboarding-eng"
+  },
+  {
+    "id": "slack:th-0007",
+    "source": "slack",
+    "type": "thread",
+    "key": "#random thread",
+    "title": "Lunch plans",
+    "ownerId": "omar",
+    "squad": null,
+    "priority": null,
+    "status": "resolved",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [],
+    "createdAt": "2026-10-11T11:50:00+03:00",
+    "channel": "#random"
+  },
+  {
+    "id": "slack:th-0008",
+    "source": "slack",
+    "type": "thread",
+    "key": "#standup thread",
+    "title": "Standup reminders",
+    "ownerId": "ci-bot",
+    "squad": null,
+    "priority": null,
+    "status": "open",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [],
+    "createdAt": "2026-10-11T09:25:00+03:00",
+    "channel": "#standup"
+  },
+  {
+    "id": "slack:th-0009",
+    "source": "slack",
+    "type": "thread",
+    "key": "#ci-alerts thread",
+    "title": "CI and nightly build notices",
+    "ownerId": "ci-bot",
+    "squad": null,
+    "priority": null,
+    "status": "resolved",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [
+      "gh:pr-325"
+    ],
+    "createdAt": "2026-10-11T08:00:00+03:00",
+    "channel": "#ci-alerts"
+  },
+  {
+    "id": "slack:th-0010",
+    "source": "slack",
+    "type": "thread",
+    "key": "#infra-requests thread",
+    "title": "Staging DB creds for ledger-v3 cluster",
+    "ownerId": "arjun",
+    "squad": "payments",
+    "priority": null,
+    "status": "open",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [
+      "jira:PAY-405"
+    ],
+    "createdAt": "2026-10-11T15:05:00+03:00",
+    "channel": "#infra-requests"
+  },
+  {
+    "id": "slack:th-0011",
+    "source": "slack",
+    "type": "thread",
+    "key": "#onboarding-eng thread",
+    "title": "ONB-81 status",
+    "ownerId": "meera",
+    "squad": "onboarding",
+    "priority": null,
+    "status": "open",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [
+      "jira:ONB-81"
+    ],
+    "createdAt": "2026-10-13T06:10:00+03:00",
+    "channel": "#onboarding-eng"
+  },
+  {
+    "id": "slack:th-0012",
+    "source": "slack",
+    "type": "thread",
+    "key": "#payments-eng thread",
+    "title": "Token SDK bump is up",
+    "ownerId": "arjun",
+    "squad": "payments",
+    "priority": null,
+    "status": "resolved",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [
+      "gh:pr-321"
+    ],
+    "createdAt": "2026-10-13T05:45:00+03:00",
+    "channel": "#payments-eng"
+  },
+  {
+    "id": "slack:th-0013",
+    "source": "slack",
+    "type": "thread",
+    "key": "#general thread",
+    "title": "Meera's birthday",
+    "ownerId": "dina",
+    "squad": null,
+    "priority": null,
+    "status": "resolved",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [],
+    "createdAt": "2026-10-11T14:00:00+03:00",
+    "channel": "#general"
+  },
+  {
+    "id": "slack:th-0014",
+    "source": "slack",
+    "type": "thread",
+    "key": "#releases thread",
+    "title": "Production deploy notices",
+    "ownerId": "ci-bot",
+    "squad": null,
+    "priority": null,
+    "status": "resolved",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [
+      "gh:pr-316",
+      "gh:pr-317"
+    ],
+    "createdAt": "2026-10-12T13:30:00+03:00",
+    "channel": "#releases"
+  },
+  {
+    "id": "email:em-0001",
+    "source": "email",
+    "type": "email",
+    "key": "Email: Sandbox key release",
+    "title": "KYCly needs egress IPs and data-residency confirmation for sandbox keys",
+    "ownerId": "omar",
+    "squad": "payments",
+    "priority": null,
+    "status": "open",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [
+      "jira:PAY-412"
+    ],
+    "createdAt": "2026-10-11T10:20:00+03:00",
+    "from": "jonas"
+  },
+  {
+    "id": "email:em-0002",
+    "source": "email",
+    "type": "email",
+    "key": "Email: Settlement delays",
+    "title": "Palmway Retail CFO escalates settlement delays (third time this month)",
+    "ownerId": "marty",
+    "squad": "payments",
+    "priority": null,
+    "status": "open",
+    "dueAt": null,
+    "customerFacing": true,
+    "links": [
+      "jira:PAY-398"
+    ],
+    "createdAt": "2026-10-13T08:05:00+03:00",
+    "from": "mansour"
+  },
+  {
+    "id": "email:em-0003",
+    "source": "email",
+    "type": "email",
+    "key": "Email: All-hands notes",
+    "title": "Notes from Monday all-hands",
+    "ownerId": "marty",
+    "squad": null,
+    "priority": null,
+    "status": "resolved",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [],
+    "createdAt": "2026-10-12T17:00:00+03:00",
+    "from": "huda"
+  },
+  {
+    "id": "email:em-0004",
+    "source": "email",
+    "type": "email",
+    "key": "Email: Offsite date poll",
+    "title": "Q4 team offsite date poll",
+    "ownerId": "marty",
+    "squad": null,
+    "priority": null,
+    "status": "resolved",
+    "dueAt": null,
+    "customerFacing": false,
+    "links": [],
+    "createdAt": "2026-10-11T13:00:00+03:00",
+    "from": "dina"
+  }
+]

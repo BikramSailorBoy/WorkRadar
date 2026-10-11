@@ -1,0 +1,23 @@
+{
+  "jira:INC-88": "@Omar thanks for driving INC-88. I've sent Huda the summary, so you can stay heads-down. Is there anything you need from me with Northstar, or from Hamdan on the infra side?",
+  "slack:th-0001": "@Omar when route B reaches 100% or Northstar gives a firm time, post it here so I can update Huda and support. Anything you need me to chase in the meantime?",
+  "gh:pr-318": "@Omar I know PR #318 has sat without a reviewer. Layla is out until Thursday, so I'm asking Karim or Sara to take it today. Please add a two-line summary on the idempotency design to speed them up.",
+  "jira:PAY-409": "@Omar PAY-409 is due Thursday 09:00, before the freeze. I'll find you a reviewer for PR #318 today. Is there anything else outstanding besides the review?",
+  "jira:PAY-412": "@Omar the KYCly keys are waiting on our reply, not theirs. Can you answer Jonas with the egress IPs and residency choice today? I'll get the NAT list from Hamdan if you're missing it.",
+  "email:em-0001": "@Omar Jonas needs two things in writing: the egress IPs and whether to limit keys to Saudi residency. Want me to confirm the residency scope while you get the IPs from Hamdan?",
+  "jira:PAY-405": "@Arjun I saw you're stuck on the staging DB creds for PAY-405. I'll ping Hamdan directly today and push for them before Wednesday. Is there anything you can test locally meanwhile?",
+  "slack:th-0010": "@Arjun I'll escalate the INFRA-2210 creds request to Hamdan myself today, since two Thursday tickets depend on it. Please tell me the minimum access you need so I can be precise.",
+  "slack:th-0003": "@Arjun thanks for flagging this earlier. I'm taking the staging creds to Hamdan today. If they land late, let's decide by Wednesday what ships with PAY-405 before the freeze.",
+  "jira:ONB-81": "@Meera thanks for stubbing the ledger client so the handler isn't idle. I'm pushing Hamdan on the staging creds that unblock PAY-405. What would you still need to finish by Thursday?",
+  "email:em-0002": "@Karim the Palmway CFO wants a root cause and fix date by end of day tomorrow. Can you give me two lines on cause and timing by this afternoon? I'll back you on a prod slot.",
+  "jira:PAY-398": "@Karim great work on the lock fix and clean staging replay. I'll clear a prod slot for tonight's 22:00 run once route B is stable. What rollback plan should I tell the CFO about?",
+  "jira:ONB-77": "@Youssef thanks for starting the static tracker. I'm making the scope versus date call with Sara today. Please keep going on mock states so we can show something Thursday either way.",
+  "slack:th-0006": "@Sara I saw your ONB-77 question and will decide today after talking to Huda. Youssef's static version looks on track for Wednesday night, so I'm leaning toward that. Anything else I should weigh?",
+  "slack:th-0005": "@Sara I'm aware Huda wants the tracker for Thursday at 4pm. I'll confirm the scope with her today so you and Youssef have a clear target before the freeze. Anything blocking you?",
+  "gh:pr-322": "@Karim I'll review ADR-014 today and share comments by end of day. Is there a part, like the rollback plan or the queue consumer, you'd like me to start with?",
+  "jira:ONB-70": "@Tariq ONB-70 hasn't moved since Thursday. How is it going, and is anything in the way? I can help clear a blocker or reprioritise if needed.",
+  "jira:PAY-420": "@Arjun I know PR #321 is waiting on Karim, who is tied up with the incident. I'll find a second reviewer so PAY-420 lands before Thursday. Anything risky I should flag to them?",
+  "gh:pr-321": "@Arjun Karim is on the P0, so I'll ask another reviewer to take #321 today. A short note on the six tokenize() call sites would help them move quickly.",
+  "jira:ONB-79": "@Sara thanks for moving the retry strings into i18n. I'll ask Youssef to re-review PR #323 today so ONB-79 merges well before Thursday noon. Anything else you're waiting on?",
+  "gh:pr-323": "@Sara the i18n change looks done. I'll nudge Youssef for the re-review on #323 now, since it needs to deploy before the freeze at noon Thursday."
+}

@@ -1,0 +1,59 @@
+{
+  "questions": [
+    {
+      "q": "What's at risk before Thursday's freeze?",
+      "answer": "The freeze starts Thursday 12:00, and six items due that morning are exposed. PAY-409 (PR #318) has no reviewer while Layla is out; PAY-412 waits on our reply to KYCly; PAY-405 and ONB-81 depend on staging DB creds Hamdan says may come Wednesday; PAY-420 awaits Karim, who is on the incident. ONB-79 needs Youssef's re-review, and ONB-77 faces the 4pm demo. PR #322 and the PAY-398 prod deploy also need slots.",
+      "citations": [
+        "gh:pr-318",
+        "jira:PAY-409",
+        "jira:PAY-412",
+        "email:em-0001",
+        "jira:PAY-405",
+        "jira:ONB-81",
+        "jira:PAY-420",
+        "jira:ONB-79",
+        "jira:ONB-77",
+        "gh:pr-322",
+        "jira:PAY-398"
+      ],
+      "notInData": false
+    },
+    {
+      "q": "Who needs me today?",
+      "answer": "Sara needs your call on ONB-77, static states (about 2 days) or moving the CEO's Thursday demo. Karim is waiting on your review of PR #322 (ADR-014) and needs a prod slot for the PAY-398 fix before tonight's 22:00 run. Omar needs a reviewer for PR #318 and an answer to KYCly's email, and Arjun needs Hamdan chased for staging creds. The Palmway CFO also expects a root cause and fix date by end of day tomorrow.",
+      "citations": [
+        "jira:ONB-77",
+        "slack:th-0006",
+        "gh:pr-322",
+        "jira:PAY-398",
+        "gh:pr-318",
+        "email:em-0001",
+        "slack:th-0010",
+        "email:em-0002"
+      ],
+      "notInData": false
+    },
+    {
+      "q": "What changed overnight in Bengaluru?",
+      "answer": "Arjun opened PR #321 (PAY-420, card-token SDK 4.2) at 05:15, moved PAY-420 to In Review and asked Karim to review, and noted a flaky ledger test that passed on rerun. Karim replied he will review after the incident. Meera parked ONB-72 until after the freeze and started stubbing the ledger client locally because ONB-81 is still blocked on PAY-405.",
+      "citations": [
+        "gh:pr-321",
+        "jira:PAY-420",
+        "jira:ONB-72",
+        "jira:ONB-81",
+        "jira:PAY-405"
+      ],
+      "notInData": false
+    },
+    {
+      "q": "What's the status of the Northstar incident?",
+      "answer": "INC-88 is open and unresolved. Card authorizations via Northstar Bank have been failing since 08:40, and support has the status page on degraded. Failover route B is at 50% and success has recovered to about 78%. Northstar says the root cause is its HSM cluster, with a fix ETA of only \"this afternoon\". Onboarding card verification was also hit. Karim wants the Palmway fix held until route B is stable.",
+      "citations": [
+        "jira:INC-88",
+        "slack:th-0001",
+        "jira:PAY-398"
+      ],
+      "notInData": false
+    }
+  ]
+}

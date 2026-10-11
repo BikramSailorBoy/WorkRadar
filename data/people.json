@@ -1,0 +1,144 @@
+{
+  "manager": "marty",
+  "people": [
+    {
+      "id": "marty",
+      "name": "Marty McFly",
+      "role": "Engineering Manager",
+      "squad": null,
+      "location": "Cologne, Germany (HQ on the Rhine)",
+      "tz": "Europe/Berlin",
+      "isTeam": false
+    },
+    {
+      "id": "omar",
+      "name": "Omar Al-Qahtani",
+      "role": "Senior Backend Engineer",
+      "squad": "payments",
+      "location": "Riyadh",
+      "tz": "Asia/Riyadh",
+      "isTeam": true
+    },
+    {
+      "id": "layla",
+      "name": "Layla Hassan",
+      "role": "Staff Backend Engineer",
+      "squad": "payments",
+      "location": "Cairo",
+      "tz": "Africa/Cairo",
+      "isTeam": true,
+      "ooo": {
+        "from": "2026-10-11T00:00:00+03:00",
+        "to": "2026-10-14T23:59:00+03:00"
+      }
+    },
+    {
+      "id": "karim",
+      "name": "Karim Nasser",
+      "role": "Tech Lead, Payments",
+      "squad": "payments",
+      "location": "Cairo",
+      "tz": "Africa/Cairo",
+      "isTeam": true
+    },
+    {
+      "id": "arjun",
+      "name": "Arjun Menon",
+      "role": "Backend Engineer",
+      "squad": "payments",
+      "location": "Bengaluru",
+      "tz": "Asia/Kolkata",
+      "isTeam": true
+    },
+    {
+      "id": "sara",
+      "name": "Sara Al-Otaibi",
+      "role": "Tech Lead, Onboarding",
+      "squad": "onboarding",
+      "location": "Riyadh",
+      "tz": "Asia/Riyadh",
+      "isTeam": true
+    },
+    {
+      "id": "youssef",
+      "name": "Youssef Mansour",
+      "role": "Frontend Engineer",
+      "squad": "onboarding",
+      "location": "Cairo",
+      "tz": "Africa/Cairo",
+      "isTeam": true
+    },
+    {
+      "id": "meera",
+      "name": "Meera Krishnan",
+      "role": "Full-stack Engineer",
+      "squad": "onboarding",
+      "location": "Bengaluru",
+      "tz": "Asia/Kolkata",
+      "isTeam": true
+    },
+    {
+      "id": "tariq",
+      "name": "Tariq Saleh",
+      "role": "Mobile Engineer",
+      "squad": "onboarding",
+      "location": "Riyadh",
+      "tz": "Asia/Riyadh",
+      "isTeam": true
+    },
+    {
+      "id": "huda",
+      "name": "Huda Al-Shehri",
+      "role": "CEO",
+      "squad": null,
+      "location": "Riyadh",
+      "tz": "Asia/Riyadh",
+      "isTeam": false
+    },
+    {
+      "id": "hamdan",
+      "name": "Hamdan Al-Zahrani",
+      "role": "Infrastructure Lead (Platform team)",
+      "squad": null,
+      "location": "Riyadh",
+      "tz": "Asia/Riyadh",
+      "isTeam": false
+    },
+    {
+      "id": "dina",
+      "name": "Dina Farouk",
+      "role": "People Operations Manager",
+      "squad": null,
+      "location": "Riyadh",
+      "tz": "Asia/Riyadh",
+      "isTeam": false
+    },
+    {
+      "id": "jonas",
+      "name": "Jonas Weber",
+      "role": "Solutions Engineer, KYCly (KYC vendor)",
+      "squad": null,
+      "location": "Berlin",
+      "tz": "Europe/Berlin",
+      "isTeam": false
+    },
+    {
+      "id": "mansour",
+      "name": "Mansour Al-Dosari",
+      "role": "CFO, Palmway Retail Group (merchant)",
+      "squad": null,
+      "location": "Jeddah",
+      "tz": "Asia/Riyadh",
+      "isTeam": false
+    },
+    {
+      "id": "ci-bot",
+      "name": "ci-bot",
+      "role": "Automation bot (CI, deploys, reminders)",
+      "squad": null,
+      "location": "n/a",
+      "tz": "UTC",
+      "isTeam": false
+    }
+  ]
+}

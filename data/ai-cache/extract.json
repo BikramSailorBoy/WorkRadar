@@ -1,0 +1,190 @@
+[
+  {
+    "sourceItemId": "slack:th-0002",
+    "evidenceEventId": "ev-0005",
+    "evidenceTs": "2026-10-11T08:15:00+03:00",
+    "kind": "ooo",
+    "summary": "Layla is out through Wed 14 Oct and back Thursday; Karim covers her reviews if urgent.",
+    "personId": "layla",
+    "itemIds": [
+      "slack:th-0002"
+    ]
+  },
+  {
+    "sourceItemId": "email:em-0001",
+    "evidenceEventId": "ev-0032",
+    "evidenceTs": "2026-10-11T10:20:00+03:00",
+    "kind": "blocker",
+    "summary": "KYCly will release the sandbox keys within 4 hours once we send our two egress IPs and confirm data-residency scope. No reply has been sent.",
+    "personId": "omar",
+    "itemIds": [
+      "jira:PAY-412",
+      "email:em-0001"
+    ],
+    "blockedBy": "us: reply to KYCly with egress IPs and data-residency scope"
+  },
+  {
+    "sourceItemId": "email:em-0001",
+    "evidenceEventId": "ev-0032",
+    "evidenceTs": "2026-10-11T10:20:00+03:00",
+    "kind": "decision_request",
+    "summary": "Jonas (KYCly) asks Omar and Marty to confirm egress IPs and Saudi data-residency key scope in writing.",
+    "personId": "jonas",
+    "itemIds": [
+      "email:em-0001",
+      "jira:PAY-412"
+    ]
+  },
+  {
+    "sourceItemId": "slack:th-0002",
+    "evidenceEventId": "ev-0128",
+    "evidenceTs": "2026-10-12T14:05:00+03:00",
+    "kind": "blocker",
+    "summary": "Omar does not know who owns the NAT egress list the vendor is asking for, so the KYCly reply is stuck.",
+    "personId": "omar",
+    "itemIds": [
+      "jira:PAY-412",
+      "email:em-0001"
+    ],
+    "blockedBy": "us: reply to KYCly with egress IPs and data-residency scope"
+  },
+  {
+    "sourceItemId": "slack:th-0010",
+    "evidenceEventId": "ev-0060",
+    "evidenceTs": "2026-10-11T15:05:00+03:00",
+    "kind": "blocker",
+    "summary": "Arjun needs staging DB credentials for the ledger-v3 cluster (INFRA-2210) from Hamdan to run PAY-405 migration tests.",
+    "personId": "arjun",
+    "itemIds": [
+      "jira:PAY-405",
+      "slack:th-0010"
+    ],
+    "blockedBy": "infra: staging DB credentials (Hamdan)"
+  },
+  {
+    "sourceItemId": "slack:th-0003",
+    "evidenceEventId": "ev-0154",
+    "evidenceTs": "2026-10-12T17:30:00+03:00",
+    "kind": "blocker",
+    "summary": "Arjun is still waiting on staging DB credentials from infra after pinging Hamdan twice; migration tests cannot run.",
+    "personId": "arjun",
+    "itemIds": [
+      "jira:PAY-405",
+      "slack:th-0003"
+    ],
+    "blockedBy": "infra: staging DB credentials (Hamdan)"
+  },
+  {
+    "sourceItemId": "slack:th-0011",
+    "evidenceEventId": "ev-0178",
+    "evidenceTs": "2026-10-13T06:10:00+03:00",
+    "kind": "blocker",
+    "summary": "Meera says ONB-81 is still blocked on PAY-405; she is stubbing the ledger client locally in the meantime.",
+    "personId": "meera",
+    "itemIds": [
+      "jira:ONB-81",
+      "jira:PAY-405",
+      "slack:th-0011"
+    ],
+    "blockedBy": "PAY-405"
+  },
+  {
+    "sourceItemId": "slack:th-0005",
+    "evidenceEventId": "ev-0111",
+    "evidenceTs": "2026-10-12T12:10:00+03:00",
+    "kind": "priority_conflict",
+    "summary": "CEO says the investor demo is Thursday 4pm and ONB-77 must be demo-able, though Jira has it as P3 due 30 Oct.",
+    "personId": "huda",
+    "itemIds": [
+      "jira:ONB-77",
+      "slack:th-0005"
+    ],
+    "claimedDeadline": "2026-10-15T16:00:00+03:00"
+  },
+  {
+    "sourceItemId": "slack:th-0006",
+    "evidenceEventId": "ev-0229",
+    "evidenceTs": "2026-10-13T09:40:00+03:00",
+    "kind": "decision_request",
+    "summary": "Sara needs Marty to choose: cut the live feed and ship static states (about 2 days), or ask Huda to move the demo, which needs a freeze exception.",
+    "personId": "sara",
+    "itemIds": [
+      "jira:ONB-77",
+      "slack:th-0006"
+    ]
+  },
+  {
+    "sourceItemId": "email:em-0002",
+    "evidenceEventId": "ev-0189",
+    "evidenceTs": "2026-10-13T08:05:00+03:00",
+    "kind": "escalation",
+    "summary": "Palmway CFO says settlements were late for the third time this month (SAR 4.2M in transit), wants a root cause and fix date by end of day tomorrow, and threatens a contract review.",
+    "personId": "mansour",
+    "itemIds": [
+      "email:em-0002",
+      "jira:PAY-398"
+    ]
+  },
+  {
+    "sourceItemId": "slack:th-0001",
+    "evidenceEventId": "ev-0212",
+    "evidenceTs": "2026-10-13T09:05:00+03:00",
+    "kind": "escalation",
+    "summary": "Support already has 9 tickets about the Northstar card failures and the status page is set to degraded.",
+    "personId": "omar",
+    "itemIds": [
+      "jira:INC-88",
+      "slack:th-0001"
+    ]
+  },
+  {
+    "sourceItemId": "slack:th-0001",
+    "evidenceEventId": "ev-0234",
+    "evidenceTs": "2026-10-13T09:55:00+03:00",
+    "kind": "escalation",
+    "summary": "CEO wants a clear incident status from Marty for the 11am leadership sync and asks if it touches the Palmway settlement issue.",
+    "personId": "huda",
+    "itemIds": [
+      "jira:INC-88",
+      "slack:th-0001"
+    ]
+  },
+  {
+    "sourceItemId": "slack:th-0003",
+    "evidenceEventId": "ev-0236",
+    "evidenceTs": "2026-10-13T10:00:00+03:00",
+    "kind": "blocker",
+    "summary": "Omar asks for any reviewer other than Layla (out) on PR #318; PAY-409 is due Thursday before the freeze.",
+    "personId": "omar",
+    "itemIds": [
+      "gh:pr-318",
+      "jira:PAY-409",
+      "slack:th-0003"
+    ],
+    "blockedBy": "layla"
+  },
+  {
+    "sourceItemId": "slack:th-0001",
+    "evidenceEventId": "ev-0214",
+    "evidenceTs": "2026-10-13T09:12:00+03:00",
+    "kind": "escalation",
+    "summary": "Karim warns the P0 may squeeze tonight’s settlement window and is holding the Palmway fix deploy until route B is stable.",
+    "personId": "karim",
+    "itemIds": [
+      "jira:INC-88",
+      "jira:PAY-398",
+      "slack:th-0001"
+    ]
+  },
+  {
+    "sourceItemId": "gh:pr-322",
+    "evidenceEventId": "ev-0136",
+    "evidenceTs": "2026-10-12T14:35:00+03:00",
+    "kind": "decision_request",
+    "summary": "Karim wants Marty’s review of ADR-014 (changes the settlement write path) before it merges and ahead of the freeze.",
+    "personId": "karim",
+    "itemIds": [
+      "gh:pr-322"
+    ]
+  }
+]

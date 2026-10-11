@@ -1,0 +1,262 @@
+[
+  {
+    "id": "S1",
+    "title": "P0 incident: card payments failing for Northstar Bank",
+    "panel": "attention",
+    "itemIds": [
+      "jira:INC-88",
+      "slack:th-0001"
+    ],
+    "hiddenIn": "Jira incident INC-88 plus #incidents thread; CEO asked Marty for a status in the thread (needs reply before 11:00 leadership sync)",
+    "expected": "Top of Needs Attention: P0, customer-facing, opened 08:40 today, still unresolved (route B at 50%, success ~78%, partner ETA only \"this afternoon\"). Flag that Huda is waiting on a summary from Marty.",
+    "eventIds": [
+      "ev-0199",
+      "ev-0200",
+      "ev-0202",
+      "ev-0203",
+      "ev-0204",
+      "ev-0206",
+      "ev-0207",
+      "ev-0209",
+      "ev-0212",
+      "ev-0219",
+      "ev-0228",
+      "ev-0234",
+      "ev-0237",
+      "ev-0242",
+      "ev-0243",
+      "ev-0244",
+      "ev-0245"
+    ]
+  },
+  {
+    "id": "S2",
+    "title": "PR #318 waiting ~30h on a reviewer who is OOO",
+    "panel": "blocked",
+    "itemIds": [
+      "gh:pr-318",
+      "jira:PAY-409",
+      "slack:th-0002"
+    ],
+    "hiddenIn": "Layla OOO note in #payments-eng (Sunday) vs reviewers list on PR #318; PAY-409 due Thursday before freeze",
+    "expected": "Blocked: Omar is waiting since Mon 04:30 on Layla, who is OOO through Wed. Suggested fix: reassign reviewer (e.g. Karim or Sara). Note PAY-409 is due Thu 09:00, before the freeze.",
+    "eventIds": [
+      "ev-0005",
+      "ev-0130",
+      "ev-0170",
+      "ev-0232",
+      "ev-0235",
+      "ev-0236"
+    ]
+  },
+  {
+    "id": "S3",
+    "title": "PAY-412 blocked on KYC vendor keys; vendor question unanswered 2 days",
+    "panel": "blocked",
+    "itemIds": [
+      "jira:PAY-412",
+      "email:em-0001"
+    ],
+    "hiddenIn": "Email from Jonas (KYCly) Sun 10:20 asking for egress IPs and residency scope; no reply sent. Jira only says Blocked.",
+    "expected": "Blocked: the block is on us, not the vendor. Vendor needs egress IPs and data-residency confirmation; email has had no reply for ~2 days. PAY-412 due Thu 10:00 before freeze.",
+    "eventIds": [
+      "ev-0012",
+      "ev-0013",
+      "ev-0032"
+    ]
+  },
+  {
+    "id": "S4",
+    "title": "Hidden blocker: Arjun waiting on staging DB creds from infra (PAY-405 not flagged Blocked)",
+    "panel": "blocked",
+    "itemIds": [
+      "jira:PAY-405",
+      "slack:th-0003",
+      "slack:th-0010"
+    ],
+    "hiddenIn": "Slack: #payments-eng thread (Mon 17:30) and #infra-requests thread. Jira status is In Progress.",
+    "expected": "Blocked: PAY-405 is effectively blocked on infra (Hamdan said \"maybe Wed\"). Surface even though Jira says In Progress; suggest escalating to Hamdan.",
+    "eventIds": [
+      "ev-0056",
+      "ev-0060",
+      "ev-0099",
+      "ev-0115",
+      "ev-0145",
+      "ev-0154",
+      "ev-0156"
+    ]
+  },
+  {
+    "id": "S5",
+    "title": "Palmway Retail CFO escalates settlement delays",
+    "panel": "attention",
+    "itemIds": [
+      "email:em-0002",
+      "jira:PAY-398"
+    ],
+    "hiddenIn": "Email received 08:05 today; linked to PAY-398 (P1, due Wed 17:00). Karim comment says fix is ready but needs a prod slot before tonight 22:00 batch.",
+    "expected": "Needs attention: CFO demands root cause and fix date by end of day tomorrow, threatens contract review. Tie to PAY-398 status and the prod-deploy-slot dependency.",
+    "eventIds": [
+      "ev-0189",
+      "ev-0214",
+      "ev-0231"
+    ]
+  },
+  {
+    "id": "S6",
+    "title": "Priority conflict: ONB-77 is P3 in Jira but CEO needs it for Thursday investor demo",
+    "panel": "top",
+    "itemIds": [
+      "jira:ONB-77",
+      "slack:th-0005"
+    ],
+    "hiddenIn": "Huda post in #product Mon 12:10; Jira shows P3 with due date 30 Oct",
+    "expected": "Top work / attention: re-rank ONB-77 above its Jira priority. Demo is Thu 4pm; the freeze starts Thu 12:00.",
+    "eventIds": [
+      "ev-0111",
+      "ev-0112"
+    ]
+  },
+  {
+    "id": "S7",
+    "title": "Silent stall: ONB-70 In Progress for ~4 days with no activity",
+    "panel": "attention",
+    "itemIds": [
+      "jira:ONB-70"
+    ],
+    "hiddenIn": "Absence of events: last status change Thu 8 Oct 16:45; Tariq active in Slack chat only",
+    "expected": "Needs attention: ONB-70 (P2) shows no commits, comments or status changes since Thu; ask Tariq for status.",
+    "eventIds": [
+      "ev-0001"
+    ]
+  },
+  {
+    "id": "S8",
+    "title": "KYC v2 onboarding flow merged and deployed to production",
+    "panel": "happened",
+    "itemIds": [
+      "gh:pr-316",
+      "jira:ONB-64",
+      "slack:th-0014"
+    ],
+    "hiddenIn": "PR #316 merged 09:05, deployed 09:15; ONB-64 moved to Done 09:16",
+    "expected": "Happened today: KYC v2 live in prod. Also include extras: PR #317 merged and ONB-66 Done (Mon), PR #320 merged and PAY-401 Done (Sun), and overnight Bengaluru updates (PR #321 opened, PAY-420 to In Review, ONB-72 grooming).",
+    "eventIds": [
+      "ev-0024",
+      "ev-0025",
+      "ev-0118",
+      "ev-0119",
+      "ev-0211",
+      "ev-0215",
+      "ev-0216",
+      "ev-0217",
+      "ev-0218",
+      "ev-0224",
+      "ev-0172",
+      "ev-0173",
+      "ev-0175",
+      "ev-0176",
+      "ev-0177"
+    ]
+  },
+  {
+    "id": "S9",
+    "title": "Release freeze starts Thu 15 Oct 12:00; items due before then matter",
+    "panel": "top",
+    "itemIds": [
+      "slack:th-0004",
+      "jira:PAY-409",
+      "jira:PAY-412",
+      "jira:PAY-420",
+      "jira:ONB-79",
+      "jira:ONB-81",
+      "jira:PAY-405"
+    ],
+    "hiddenIn": "#eng-announcements Sunday 09:00 post; due dates on Jira items cluster just before it",
+    "expected": "Top work: surface freeze deadline and rank items due Thu (PAY-405, PAY-409, PAY-412, PAY-420, ONB-79, ONB-81) by risk of missing it. Note PAY-412 and ONB-81 are Blocked.",
+    "eventIds": [
+      "ev-0011",
+      "ev-0083"
+    ]
+  },
+  {
+    "id": "S10",
+    "title": "Blocked chain: ONB-81 -> PAY-405 -> infra staging creds",
+    "panel": "blocked",
+    "itemIds": [
+      "jira:ONB-81",
+      "jira:PAY-405",
+      "slack:th-0010"
+    ],
+    "hiddenIn": "Jira comment on ONB-81 (Mon 07:22) names PAY-405; PAY-405 blockage only visible in Slack (S4)",
+    "expected": "Blocked: show the chain. Root cause is infra creds (Hamdan); unblocking it releases two tickets due Thursday before the freeze.",
+    "eventIds": [
+      "ev-0079",
+      "ev-0080",
+      "ev-0178",
+      "ev-0056",
+      "ev-0060",
+      "ev-0099",
+      "ev-0115",
+      "ev-0145",
+      "ev-0154",
+      "ev-0156"
+    ]
+  },
+  {
+    "id": "S11",
+    "title": "Noise: CI passes, bot posts, reactions, chit-chat, standup reminders, P3 grooming",
+    "panel": "noise",
+    "itemIds": [
+      "slack:th-0007",
+      "slack:th-0008",
+      "slack:th-0009",
+      "slack:th-0013",
+      "jira:PAY-418",
+      "jira:PAY-425",
+      "jira:ONB-83",
+      "gh:pr-325",
+      "email:em-0003",
+      "email:em-0004"
+    ],
+    "hiddenIn": "Spread across the dataset, about 40% of events",
+    "expected": "Must NOT surface as important. Dashboard may summarise as a count at most (e.g. \"N routine events\").",
+    "eventIds": [
+      "ev-0002",
+      "ev-0020",
+      "ev-0041",
+      "ev-0052",
+      "ev-0072",
+      "ev-0084",
+      "ev-0092",
+      "ev-0110",
+      "ev-0125",
+      "ev-0139",
+      "ev-0165",
+      "ev-0183",
+      "ev-0205",
+      "ev-0225"
+    ]
+  },
+  {
+    "id": "S12",
+    "title": "Waiting on Marty: Sara's scope-vs-date decision on ONB-77, plus PR #322 review (20h)",
+    "panel": "attention",
+    "itemIds": [
+      "slack:th-0006",
+      "jira:ONB-77",
+      "gh:pr-322"
+    ],
+    "hiddenIn": "Direct @marty ask in #onboarding-eng Tue 09:40; PR #322 reviewers list has only marty, requested Mon 14:30",
+    "expected": "Needs attention / top (manager's own actions): decide cut-scope vs move-date on ONB-77 (static version feasible by Wed night); review PR #322 (ADR-014, touches settlement path) pending ~20h.",
+    "eventIds": [
+      "ev-0134",
+      "ev-0136",
+      "ev-0147",
+      "ev-0160",
+      "ev-0196",
+      "ev-0229",
+      "ev-0233"
+    ]
+  }
+]
