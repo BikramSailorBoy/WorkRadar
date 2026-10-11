@@ -2,21 +2,21 @@
   "at": "2026-10-13T10:30:00+03:00",
   "sentences": [
     {
-      "text": "P0 INC-88 is still open: card authorizations via Northstar Bank have been failing since 08:40, route B is at 50% with success back to about 78%, and Northstar blames its HSM cluster with only a \"this afternoon\" ETA.",
+      "text": "P0 INC-88: Northstar Bank card payments failing since 07:40; route B restores about 78% success, and Northstar only promises a fix \"this afternoon\".",
       "citations": [
         "jira:INC-88",
         "slack:th-0001"
       ]
     },
     {
-      "text": "Palmway's CFO wants a root cause and firm fix date by end of day tomorrow or he takes it to his board; Karim's PAY-398 fix is clean on staging but needs a prod slot before tonight's 22:00 settlement run, while the team is tied up on the P0.",
+      "text": "Palmway's CFO wants a root cause and fix date by end of day tomorrow; Karim's PAY-398 fix needs a prod slot before tonight's 21:00 settlement run.",
       "citations": [
         "email:em-0002",
         "jira:PAY-398"
       ]
     },
     {
-      "text": "Three Thursday items are stuck: PR #318 (PAY-409) has no reviewer because Layla is out until Thursday, PAY-412 waits on our reply to KYCly's Sunday email asking for egress IPs and data-residency scope, and Arjun's PAY-405 waits on staging DB creds from Hamdan (\"maybe Wed\"), which also holds ONB-81.",
+      "text": "Three pre-freeze items are stuck: PR #318 waits on Layla (out until Thursday), PAY-412 waits on our reply to KYCly, and Arjun's PAY-405, which also holds ONB-81, waits on infra's staging credentials.",
       "citations": [
         "gh:pr-318",
         "jira:PAY-409",
@@ -27,14 +27,14 @@
       ]
     },
     {
-      "text": "KYC v2 (PR #316, ONB-64) shipped to production at 09:15 today, and Huda called it the release the bank partners were waiting on.",
+      "text": "KYC v2 (PR #316, ONB-64) shipped to production at 08:15 today.",
       "citations": [
         "gh:pr-316",
         "jira:ONB-64"
       ]
     },
     {
-      "text": "Two decisions wait on you before the Thursday 12:00 freeze: Sara needs a call on ONB-77, static states (about 2 days, Youssef says doable by Wednesday night) versus moving the CEO's Thursday 4pm demo, and Karim's PR #322 (ADR-014, settlement write path) has been waiting for your review since Monday 14:30.",
+      "text": "Two decisions wait on you before Thursday's 11:00 freeze: ONB-77 scope versus the CEO's 3pm demo, and your review of PR #322, pending since Monday 13:30.",
       "citations": [
         "jira:ONB-77",
         "slack:th-0006",

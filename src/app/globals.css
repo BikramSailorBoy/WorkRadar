@@ -1,26 +1,226 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------ tokens
+   Control room at night: deep navy ink, one amber signal, muted source hues. */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ink: #08111f;
+  --panel: #0c1728;
+  --raised: #122036;
+  --line: #1b2a42;
+  --line-strong: #2b3e5d;
+  --fg: #e4eaf3;
+  --dim: #a7b4c8;
+  --faint: #7f90aa;
+  --signal: #f5b544;
+  --signal-ink: #1c1405;
+  --crit: #f36d60;
+  --ok: #63cba4;
+  --jira: #7ea6f6;
+  --github: #b7a1f2;
+  --slack: #4fc3b1;
+  --email: #e793b4;
+  --grain: 0.035;
+  color-scheme: dark;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --ink: #eef1f5;
+    --panel: #ffffff;
+    --raised: #f3f5f9;
+    --line: #d9dfe8;
+    --line-strong: #b9c3d2;
+    --fg: #0d1a2c;
+    --dim: #43526a;
+    --faint: #5b6a80;
+    --signal: #a8680a;
+    --signal-ink: #ffffff;
+    --crit: #c2382b;
+    --ok: #0f7d58;
+    --jira: #2c5fc4;
+    --github: #6c44c4;
+    --slack: #0b7f70;
+    --email: #b23a6d;
+    --grain: 0.02;
+    color-scheme: light;
   }
 }
 
+@theme inline {
+  --color-ink: var(--ink);
+  --color-panel: var(--panel);
+  --color-raised: var(--raised);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-fg: var(--fg);
+  --color-dim: var(--dim);
+  --color-faint: var(--faint);
+  --color-signal: var(--signal);
+  --color-signal-ink: var(--signal-ink);
+  --color-crit: var(--crit);
+  --color-ok: var(--ok);
+  --color-jira: var(--jira);
+  --color-github: var(--github);
+  --color-slack: var(--slack);
+  --color-email: var(--email);
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+html {
+  background: var(--ink);
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(1200px 600px at 18% -10%, color-mix(in oklab, var(--signal) 7%, transparent), transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, color-mix(in oklab, var(--jira) 6%, transparent), transparent 60%),
+    var(--ink);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "tnum";
+  min-height: 100dvh;
+}
+
+/* fine film grain, almost invisible, keeps the flat navy from banding */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: var(--grain);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+::selection {
+  background: color-mix(in oklab, var(--signal) 40%, transparent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.wordmark {
+  font-variation-settings: "wdth" 125;
+  letter-spacing: -0.01em;
+}
+.condensed {
+  font-variation-settings: "wdth" 88;
+}
+
+/* ------------------------------------------------------------------ radar motion */
+@keyframes sweep {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.radar-sweep {
+  animation: sweep 9s linear infinite;
+  will-change: transform;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 300deg,
+    color-mix(in oklab, var(--signal) 4%, transparent) 320deg,
+    color-mix(in oklab, var(--signal) 20%, transparent) 359deg,
+    transparent 360deg
+  );
+}
+.radar-sweep::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 1px;
+  height: 50%;
+  background: linear-gradient(to top, color-mix(in oklab, var(--signal) 70%, transparent), transparent);
+}
+.mini-sweep {
+  transform-origin: 12px 12px;
+  animation: sweep 4s linear infinite;
+}
+
+@keyframes pulse-ring {
+  0% {
+    r: var(--r0);
+    opacity: 0.8;
+  }
+  100% {
+    r: calc(var(--r0) * 3.2);
+    opacity: 0;
+  }
+}
+.blip-pulse {
+  animation: pulse-ring 1.6s ease-out 1;
+  animation-fill-mode: forwards;
+}
+
+.blip-anim .blip {
+  transition: transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+@media (max-width: 640px) {
+  .radar-key { font-size: 19px; }
+  .radar-src { font-size: 21px; }
+  .radar-ring { font-size: 17px; }
+}
+.blip:focus {
+  outline: none;
+}
+.blip:focus-visible .blip-focus {
+  opacity: 1;
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateX(24px);
+    opacity: 0;
+  }
+}
+.sheet-in {
+  animation: sheet-in 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+@keyframes card-in {
+  from {
+    transform: translateY(10px) scale(0.985);
+    opacity: 0;
+  }
+}
+.card-in {
+  animation: card-in 240ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+@keyframes shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+.skeleton {
+  background: linear-gradient(90deg, var(--raised) 0%, var(--line) 40%, var(--raised) 80%);
+  background-size: 200% 100%;
+  animation: shimmer 1.6s linear infinite;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .radar-sweep,
+  .mini-sweep,
+  .blip-pulse,
+  .skeleton,
+  .sheet-in,
+  .card-in {
+    animation: none !important;
+  }
+  .radar-sweep {
+    display: none;
+  }
+  .blip {
+    transition: none;
+  }
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
 }

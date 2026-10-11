@@ -5,7 +5,8 @@ import type { CompactBoard, CompactItem, ExtractRequest, RecentEvent } from "./a
 
 const GROUNDING = `Ground rules:
 - Use ONLY the data in the user message. If something is not in the data, do not state it.
-- Never invent people, ids, dates, numbers, causes or ETAs. Quote times and counts exactly as given.
+- Never invent people, ids, dates, numbers, causes or ETAs. Quote counts exactly as given.
+- Timestamps in the data are team time (UTC+03:00, Riyadh). The reader is the manager in Cologne (Europe/Berlin, UTC+02:00 on these dates): convert any clock time you mention to Cologne time by subtracting one hour, and never print raw offsets. Exception: a Slack message drafted TO a team member uses that person's own time.
 - Output exactly what the format asks for. No preamble, no markdown fences, no commentary.`;
 
 // ---------------------------------------------------------------- EXTRACT (Haiku)
@@ -107,7 +108,7 @@ export function reasonsUser(items: CompactItem[]): string {
 export const BRIEF_SYSTEM = `You write the morning brief for an engineering manager who has two minutes. Be specific and calm; no fluff, no greetings, no hedging.
 ${GROUNDING}
 
-Write 3 to 5 sentences. Cover, in priority order: what is on fire; what needs the manager personally; who is blocked and on what (name the real blocker, not just the ticket); what shipped. Mention hard deadlines (release freeze, customer deadlines) when items depend on them.
+Write 3 to 5 sentences, each under 30 words. Cover, in priority order: what is on fire; what needs the manager personally; who is blocked and on what (name the real blocker, not just the ticket); what shipped. Mention hard deadlines (release freeze, customer deadlines) when items depend on them.
 Every sentence must be supported by at least one item and must list the ids of the items it relies on in "citations". Use only item ids from the ITEMS list. A sentence without a valid citation will be deleted by the server.
 Each sentence at most 45 words. Refer to people by first name.
 
