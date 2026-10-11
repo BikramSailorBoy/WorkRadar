@@ -2,6 +2,8 @@
 // Returns, per model, whether a tiny call works, its latency, and the API's error type/message if not.
 import Anthropic from "@anthropic-ai/sdk";
 import { MODELS, getClient, hasKey } from "@/lib/ai";
+import { NUDGE_SYSTEM, nudgeUser } from "@/lib/prompts";
+import type { CompactItem } from "@/lib/api-types";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -36,5 +38,7 @@ export async function GET() {
   const out: Record<string, unknown> = { keyConfigured: true };
   for (const m of [MODELS.fast, MODELS.smart]) out[m] = await probe(client, m, false);
   out.nudgeProbe = await probe(client, MODELS.fast, false, 120, "You draft a short Slack message (max 45 words) from a manager to a colleague. Output only the message.", "Recipient: Omar. Item PAY-412 is blocked waiting on our reply to the vendor. Write the message now.");
+  const item = { id: "jira:PAY-412", key: "PAY-412", title: "KYCly integration: production-tier sandbox keys", type: "ticket", status: "Blocked", owner: "Omar Al-Qahtani", priority: "P1", dueAt: "2026-10-15T09:00:00+03:00", score: { total: 70, urgency: 20, impact: 18, fanout: 14, staleness: 8, escalation: 10 }, ring: "today", blocked: true, blockedReason: "Waiting on our reply to KYCly", reasons: ["Blocked on vendor keys"], signals: [] } as unknown as CompactItem;
+  out.realNudge = await probe(client, MODELS.fast, false, 120, NUDGE_SYSTEM, nudgeUser(item, "Omar", "Marty"));
   return Response.json(out);
 }
