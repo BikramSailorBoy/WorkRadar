@@ -27,7 +27,7 @@ Engineering managers and team leads running 5 to 15 people who work across Slack
 | 2. Understand | Pieces together what changed overnight | Reads a 60-second AI brief; every line cites its source item |
 | 3. Spot risk | Scans for incidents and escalations | Sees urgent items closest to the radar's centre, with the reason for each |
 | 4. Unblock | Hunts for who is stuck, often too late | Sees each blocked person and the chain behind the block |
-| 5. Act | Writes follow-ups by hand | Triage mode: acknowledge, delegate, snooze, or send an AI-drafted nudge |
+| 5. Act | Writes follow-ups by hand | Assigns, marks done or snoozes from the feed or the item's page; triage mode walks the urgent list |
 
 ## 5. Key pain points
 
@@ -50,7 +50,7 @@ Engineering managers and team leads running 5 to 15 people who work across Slack
 
 ## 7. MVP scope
 
-**In:** the four answers on one screen; radar with an explainable 0 to 100 score; AI brief, item reasons, Ask and nudges calling Claude live; demo mode when no API key is set; mock data with 12 planted test situations.
+**In:** dashboard with the four answers on one screen; AI-generated summary; priority feed; search; a detail page per item; Assign, Mark Done and Snooze with undo; radar with an explainable 0 to 100 score; AI reasons, Ask and nudges calling Claude live; demo mode when no API key is set; mock data with 12 planted test situations.
 
 **Out:** live connectors to Slack, Jira, GitHub and email; write-back to those tools; sign-in; multi-team views.
 
@@ -65,13 +65,17 @@ Engineering managers and team leads running 5 to 15 people who work across Slack
 
 | Feature | Priority | Why |
 | --- | --- | --- |
-| Four answer tiles that expand on click | Must-have | The brief's core ask, readable in 10 seconds |
+| Dashboard: four answer tiles that expand on click | Must-have | The brief's core ask, readable in 10 seconds |
+| Priority feed: every open item ranked, with filters | Must-have | One ordered list of what to do next |
+| Search across items, people and message text | Must-have | Find anything without opening four tools |
+| Detail page per item, with its full cross-tool timeline | Must-have | Shareable context behind every ranking |
+| Basic actions: Assign, Mark Done, Snooze, with undo | Must-have | Act where the insight is |
 | Radar: distance shows urgency, sector shows source tool | Must-have | Shows the shape of the day at a glance |
 | Explainable priority score with a reason on every item | Must-have | Rules rank, so the ranking is auditable |
-| AI morning brief with validated citations | Must-have | Summary the manager can trust and check |
+| AI-generated summary (morning brief) with validated citations | Must-have | Summary the manager can trust and check |
 | Blocker detection, including blockers mentioned only in Slack or email | Must-have | Finds what the trackers miss |
-| Triage mode with AI-drafted nudges | Must-have | Turns insight into action |
 | Live AI with automatic, labelled demo fallback | Must-have | Works for any reviewer, with or without a key |
+| Triage mode with AI-drafted nudges (built) | Nice-to-have | Fast pass through urgent items |
 | Day replay with track trails (built) | Nice-to-have | Makes "what happened" visible |
 | Ask WorkRadar, with answers from the data only (built) | Nice-to-have | Ad hoc questions without new screens |
 | Noise shown as suppressible clutter (built) | Nice-to-have | Makes the filtering visible |

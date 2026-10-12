@@ -21,6 +21,17 @@ The demo clock is fixed at that moment so every demo shows the same day. All peo
 | Needs attention now | Needs attention panel, red-ringed blips | Score plus hard triggers: P0/P1 incidents, customer escalations, due within 24h, decisions requested from the manager, silent stalls |
 | Who is blocked | Who is blocked panel, hollow dashed blips | Jira status, stale PR reviews (reviewer out of office), dependency chains, and blockers mentioned only in Slack or email, found by AI |
 
+Client MVP checklist, and where each item lives:
+
+| Requirement | In the app |
+| --- | --- |
+| Dashboard | The radar console at `/`, with four answer tiles that expand on click |
+| AI-generated summary | "AI summary · Morning brief" tile; every sentence cites its source items |
+| Priority feed | "Priority feed · Top work" tile: all open items ranked, with filters and inline actions |
+| Search | Search box in the top bar (⌘K / Ctrl+K): items, people and message text |
+| Detail page | `/item/<id>`, e.g. `/item/jira-PAY-412`: score breakdown, AI reasons, blocker chain, full timeline |
+| Assign, Mark Done, Snooze | On the detail page, feed rows, quick-view drawer and triage; every action can be undone |
+
 Beyond the four panels:
 
 - **Radar.** Every open item is a blip: the sector is its source tool, distance from the centre is urgency, and blocked items are hollow.
