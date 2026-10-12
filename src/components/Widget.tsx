@@ -33,12 +33,11 @@ export function Widget({ id, side, sector, count, countColor, hot, summary, visu
         className={`frame brackets group flex w-full flex-col p-3.5 lg:h-full text-left transition-[filter] hover:brightness-125 ${hot ? "frame-hot" : ""} ${open ? "brightness-125" : ""}`}
       >
         <span className="scanline flex items-center justify-between gap-2">
-          <span className="hud truncate text-[10.5px] text-holo/90">
-            <span className="text-faint">Sector · </span>
+          <span className="hud truncate text-[10.5px] text-holo/90" title={sector}>
             {sector}
           </span>
           <span aria-hidden className={`hud text-[10px] transition-transform ${open ? "text-signal" : "text-faint"}`}>
-            {open ? "Close ▣" : side === "left" ? "Open ▸" : "◂ Open"}
+            {open ? "▣" : side === "left" ? "▸" : "◂"}
           </span>
         </span>
         <span className="mt-2 flex min-h-0 items-start gap-3">

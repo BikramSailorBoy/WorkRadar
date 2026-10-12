@@ -3,8 +3,8 @@ import type { BoardItem, BoardState, HappenedEntry } from "@/lib/types";
 import { formatInManagerTz } from "@/lib/board";
 import { getItem, getPerson, items as ALL_ITEMS } from "@/lib/data";
 import { Avatar, KeyChip, ScoreChip, SourceIcon, Sparkle, fmtDuration, hoursSince } from "./ui";
-import type { Decision } from "./triage-store";
-import { decisionLabel } from "./triage-store";
+import type { ItemActions } from "./actions-store";
+import { actionLabel, primaryAction } from "./actions-store";
 
 export interface ReasonText {
   text: string;
@@ -17,15 +17,16 @@ export interface Common {
   onSelect: (id: string) => void;
   onHover: (id: string | null) => void;
   reasonFor: (b: BoardItem) => ReasonText;
-  decisions: Record<string, Decision>;
+  decisions: Record<string, ItemActions>;
 }
 
-function DecisionChip({ d }: { d?: Decision }) {
+function DecisionChip({ d: all }: { d?: ItemActions }) {
+  const d = primaryAction(all);
   if (!d) return null;
   return (
     <span className="inline-flex items-center gap-1 rounded-[2px] border border-ok/40 bg-ok/10 px-1.5 py-[1px] text-[11px] font-medium text-ok whitespace-nowrap">
       <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden><path d="M1.5 5.3 4 7.6 8.6 2.4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
-      {decisionLabel(d)}
+      {actionLabel(d)}{d.action === "assign" ? " by you" : ""}
     </span>
   );
 }

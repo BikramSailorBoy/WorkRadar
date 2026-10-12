@@ -364,7 +364,7 @@ function RadarImpl({ placed, attentionIds, selectedId, hoverId, onHover, onSelec
           const color = contactColor(b);
           const attn = attentionIds.has(id);
           const tagged = id === tagId;
-          const showKey = !tagged && b.ring !== "watch";
+          const showKey = b.ring !== "watch";
           const owner = getPerson(b.item.ownerId)?.name ?? "unowned";
           const right = p.x >= C;
           return (
@@ -401,6 +401,8 @@ function RadarImpl({ placed, attentionIds, selectedId, hoverId, onHover, onSelec
               {showKey && (
                 <text
                   className="radar-key"
+                  pointerEvents="none"
+                  opacity={tagged ? 0 : 1}
                   x={right ? p.r + 9 : -(p.r + 9)}
                   y={4}
                   textAnchor={right ? "start" : "end"}

@@ -7,21 +7,20 @@ import { getPerson, people } from "@/lib/data";
 import { toCompactItem } from "@/lib/compact";
 import { Avatar, Kbd, ScoreBar, ScoreChip, SOURCE_META, SourceIcon, Sparkle } from "./ui";
 import { metaLine, postJson } from "./api";
-import type { Decision, DecisionAction } from "./triage-store";
-import { decisionLabel } from "./triage-store";
+import type { ActionKind, ItemActions } from "./actions-store";
+import { SNOOZE_OPTIONS, act, actionLabel, primaryAction } from "./actions-store";
 
 interface Props {
   queue: { b: BoardItem; why: "attention" | "blocked" }[];
   at: string;
-  decisions: Record<string, Decision>;
-  onDecide: (id: string, d: Decision) => void;
+  decisions: Record<string, ItemActions>;
   onClose: () => void;
   aiReasons: Record<string, string>;
 }
 
 type NudgeState = { status: "loading" } | { status: "ready"; text: string; meta: NudgeResponse } | { status: "error" };
 
-export function Triage({ queue, at, decisions, onDecide, onClose, aiReasons }: Props) {
+export function Triage({ queue, at, decisions, onClose, aiReasons }: Props) {
   const firstOpen = Math.max(0, queue.findIndex((q) => !decisions[q.b.item.id]));
   const [idx, setIdx] = useState(firstOpen === -1 ? 0 : firstOpen);
   const [delegating, setDelegating] = useState(false);
@@ -50,12 +49,12 @@ export function Triage({ queue, at, decisions, onDecide, onClose, aiReasons }: P
   }, []);
 
   const decide = useCallback(
-    (action: DecisionAction, extra?: Partial<Decision>) => {
+    (action: ActionKind, extra?: { to?: string }) => {
       if (!cur) return;
-      onDecide(cur.b.item.id, { action, at, ...extra });
+      act(cur.b.item.id, action, action === "snooze" ? { until: SNOOZE_OPTIONS[0].until } : extra);
       if (action !== "nudge") next();
     },
-    [cur, at, onDecide, next]
+    [cur, next]
   );
 
   const nudge = useCallback(async () => {
@@ -66,11 +65,11 @@ export function Triage({ queue, at, decisions, onDecide, onClose, aiReasons }: P
     try {
       const r = await postJson<NudgeResponse>("/api/nudge", { item: toCompactItem(cur.b), ownerName: owner?.name ?? "team", managerName: "Marty" });
       setNudges((n) => ({ ...n, [id]: { status: "ready", text: r.message, meta: r } }));
-      onDecide(id, { action: "nudge", at, message: r.message });
+      act(id, "nudge", { message: r.message });
     } catch {
       setNudges((n) => ({ ...n, [id]: { status: "error" } }));
     }
-  }, [cur, at, onDecide]);
+  }, [cur]);
 
   useEffect(() => {
     dialogRef.current?.focus();
@@ -91,7 +90,7 @@ export function Triage({ queue, at, decisions, onDecide, onClose, aiReasons }: P
       const k = e.key.toLowerCase();
       if (delegating && /^[1-9]$/.test(k)) {
         const p = team[Number(k) - 1];
-        if (p) decide("delegate", { to: p.id });
+        if (p) decide("assign", { to: p.id });
         e.preventDefault();
         return;
       }
@@ -101,6 +100,7 @@ export function Triage({ queue, at, decisions, onDecide, onClose, aiReasons }: P
       else if (k === "a") { e.preventDefault(); decide("ack"); }
       else if (k === "d") { e.preventDefault(); setDelegating((v) => !v); }
       else if (k === "s") { e.preventDefault(); decide("snooze"); }
+      else if (k === "m") { e.preventDefault(); decide("done"); }
       else if (k === "n") { e.preventDefault(); void nudge(); }
     };
     window.addEventListener("keydown", onKey, true);
@@ -169,16 +169,16 @@ export function Triage({ queue, at, decisions, onDecide, onClose, aiReasons }: P
             </div>
 
             {decisions[cur.b.item.id] && (
-              <p className="mt-4 text-[13px] font-medium text-ok">{decisionLabel(decisions[cur.b.item.id])}. Press J for the next card.</p>
+              <p className="mt-4 text-[13px] font-medium text-ok">{actionLabel(primaryAction(decisions[cur.b.item.id])!)}. Press J for the next card.</p>
             )}
 
             {delegating && (
               <div className="mt-5 rounded-[2px] border border-line-strong p-3">
-                <p className="text-[12.5px] text-dim">Delegate to. Press a number.</p>
+                <p className="text-[12.5px] text-dim">Assign to. Press a number.</p>
                 <ul className="mt-2 grid gap-1 sm:grid-cols-2">
                   {team.map((p, i) => (
                     <li key={p.id}>
-                      <button type="button" onClick={() => decide("delegate", { to: p.id })} className="flex w-full items-center gap-2 rounded-[2px] px-2 py-1.5 text-left text-[13px] hover:bg-raised">
+                      <button type="button" onClick={() => decide("assign", { to: p.id })} className="flex w-full items-center gap-2 rounded-[2px] px-2 py-1.5 text-left text-[13px] hover:bg-raised">
                         <Kbd>{i + 1}</Kbd>
                         <span className="text-fg">{p.name}</span>
                         <span className="truncate text-faint">{p.role}</span>
@@ -225,10 +225,11 @@ export function Triage({ queue, at, decisions, onDecide, onClose, aiReasons }: P
               </div>
             )}
 
-            <div className="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-4">
+            <div className="mt-6 grid grid-cols-2 gap-2 sm:grid-cols-5">
               <Action k="A" label="Acknowledge" onClick={() => decide("ack")} />
-              <Action k="D" label="Delegate" onClick={() => setDelegating((v) => !v)} active={delegating} />
-              <Action k="S" label="Snooze to Wed" onClick={() => decide("snooze")} />
+              <Action k="D" label="Assign" onClick={() => setDelegating((v) => !v)} active={delegating} />
+              <Action k="M" label="Mark done" onClick={() => decide("done")} />
+              <Action k="S" label="Snooze to tomorrow" onClick={() => decide("snooze")} />
               <Action k="N" label="Draft nudge" onClick={() => void nudge()} />
             </div>
             <div className="mt-4 flex items-center justify-between text-[12px] text-faint">
@@ -252,15 +253,15 @@ function Action({ k, label, onClick, active }: { k: string; label: string; onCli
   );
 }
 
-function Finish({ queue, decisions, onClose, onRestart }: { queue: Props["queue"]; decisions: Record<string, Decision>; onClose: () => void; onRestart: () => void }) {
-  const decided = queue.filter((q) => decisions[q.b.item.id]);
+function Finish({ queue, decisions, onClose, onRestart }: { queue: Props["queue"]; decisions: Record<string, ItemActions>; onClose: () => void; onRestart: () => void }) {
+  const decided = queue.filter((q) => primaryAction(decisions[q.b.item.id]));
   const open = queue.length - decided.length;
-  const by = (a: DecisionAction) => decided.filter((q) => decisions[q.b.item.id].action === a).length;
+  const by = (a: ActionKind) => decided.filter((q) => decisions[q.b.item.id]?.[a]).length;
   return (
     <div className="card-in frame brackets mt-6 p-6">
       <h3 className="text-[22px] font-semibold">{open === 0 ? "Everything triaged." : `${decided.length} decided, ${open} left open.`}</h3>
       <p className="mt-1 text-[14px] text-dim">
-        {by("ack")} acknowledged, {by("delegate")} delegated, {by("snooze")} snoozed, {by("nudge")} nudged.
+        {by("ack")} acknowledged, {by("assign")} assigned, {by("done")} marked done, {by("snooze")} snoozed, {by("nudge")} nudged.
       </p>
       <ul className="mt-4 divide-y divide-line border-y border-line">
         {queue.map((q) => (
@@ -268,7 +269,7 @@ function Finish({ queue, decisions, onClose, onRestart }: { queue: Props["queue"
             <SourceIcon source={q.b.item.source} />
             <span className="w-16 shrink-0 font-mono text-[12.5px] text-dim">{q.b.item.key}</span>
             <span className="min-w-0 flex-1 truncate text-fg">{q.b.item.title}</span>
-            <span className={`shrink-0 text-[12.5px] ${decisions[q.b.item.id] ? "text-ok" : "text-faint"}`}>{decisions[q.b.item.id] ? decisionLabel(decisions[q.b.item.id]) : "Open"}</span>
+            <span className={`shrink-0 text-[12.5px] ${decisions[q.b.item.id] ? "text-ok" : "text-faint"}`}>{primaryAction(decisions[q.b.item.id]) ? actionLabel(primaryAction(decisions[q.b.item.id])!) : "Open"}</span>
           </li>
         ))}
       </ul>

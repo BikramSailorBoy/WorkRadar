@@ -4,8 +4,9 @@ import type { BoardState } from "@/lib/types";
 import { formatInManagerTz } from "@/lib/board";
 import { eventsByItem, getItem, getPerson, items as ALL_ITEMS } from "@/lib/data";
 import { KeyChip, ScoreBar, ScoreChip, SOURCE_META, SourceIcon, Sparkle } from "./ui";
-import type { Decision } from "./triage-store";
-import { decisionLabel } from "./triage-store";
+import Link from "next/link";
+import { ActionBar } from "./ActionBar";
+import { itemHref } from "./slug";
 
 const NOISE = new Set(["reaction", "ci_passed", "ci_failed", "bot"]);
 const KIND_LABEL: Record<string, string> = {
@@ -33,12 +34,11 @@ interface Props {
   id: string;
   board: BoardState;
   aiReason?: string;
-  decision?: Decision;
   onClose: () => void;
   onSelect: (id: string) => void;
 }
 
-export function Drawer({ id, board, aiReason, decision, onClose, onSelect }: Props) {
+export function Drawer({ id, board, aiReason, onClose, onSelect, live }: Props & { live: boolean }) {
   const closeRef = useRef<HTMLButtonElement>(null);
   const item = getItem(id);
   const bi = board.items.find((b) => b.item.id === id);
@@ -59,7 +59,7 @@ export function Drawer({ id, board, aiReason, decision, onClose, onSelect }: Pro
   }, [onClose]);
 
   if (!item) return null;
-  const owner = getPerson(item.ownerId);
+  const owner = getPerson(bi?.item.ownerId ?? item.ownerId);
   const trail = (eventsByItem.get(id) ?? []).filter((e) => Date.parse(e.ts) <= t).slice().reverse();
   const linked = Array.from(new Set([...item.links, ...ALL_ITEMS.filter((o) => o.links.includes(id)).map((o) => o.id)])).filter((l) => l !== id && getItem(l));
   const visible = Date.parse(item.createdAt) <= t || trail.length > 0;
@@ -87,7 +87,14 @@ export function Drawer({ id, board, aiReason, decision, onClose, onSelect }: Pro
             <Field k="Priority" v={item.priority ?? "None"} />
             <Field k="Due" v={item.dueAt ? formatInManagerTz(item.dueAt) : "No date"} mono={!!item.dueAt} />
           </dl>
-          {decision && <p className="mt-3 text-[12.5px] text-ok">Triage: {decisionLabel(decision)} at {formatInManagerTz(decision.at)}</p>}
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
+            <Link href={itemHref(id)} className="hud text-[11px] text-holo underline decoration-holo/40 underline-offset-4 hover:decoration-holo">Open detail page →</Link>
+          </div>
+          {live ? (
+            <div className="mt-3"><ActionBar b={bi} itemId={id} ownerId={item.ownerId} /></div>
+          ) : (
+            <p className="mt-3 text-[12px] text-faint">Replaying history: actions are available at Now.</p>
+          )}
         </header>
 
         <div className="scrollbar-thin flex-1 overflow-y-auto px-5 py-4">

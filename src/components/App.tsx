@@ -23,8 +23,12 @@ import { Kbd, RadarMark, SOURCE_META, Sparkle, fmtDuration, hoursSince } from ".
 import { clutterAt, place } from "./scope";
 import type { Placed } from "./scope";
 import { metaLine, postJson } from "./api";
-import type { Decision } from "./triage-store";
-import { loadDecisions, saveDecisions } from "./triage-store";
+import { useRouter } from "next/navigation";
+import { applyActions, useActions } from "./actions-store";
+import { PriorityFeed } from "./Feed";
+import { SearchBox } from "./Search";
+import { ActionToast } from "./Toast";
+import { itemHref } from "./slug";
 
 const LO = Date.parse(WEEK_START);
 const HI = Date.parse(DEMO_NOW);
@@ -65,14 +69,18 @@ export default function App() {
   const [triageOpen, setTriageOpen] = useState(false);
   const [openW, setOpenW] = useState<WidgetId | null>(null);
   const [suppress, setSuppress] = useState(true);
-  const [decisions, setDecisions] = useState<Record<string, Decision>>({});
   const [live, setLive] = useState<boolean | null>(null);
   const [brief, setBrief] = useState<BriefState>({ status: "loading" });
   const [aiReasons, setAiReasons] = useState<Record<string, string>>({});
   const [reasonsMode, setReasonsMode] = useState<ReasonsResponse | null>(null);
   const askRef = useRef<HTMLInputElement>(null);
 
-  const board = useMemo(() => boardAt(t), [t]);
+  const router = useRouter();
+  const store = useActions();
+  const decisions = store.items;
+  const rawBoard = useMemo(() => boardAt(t), [t]);
+  // user actions (done, snooze, assign) apply to the live view only; replay shows history untouched
+  const board = useMemo(() => applyActions(rawBoard, store, t >= HI), [rawBoard, store, t]);
   const nowBoard = useMemo(() => boardAt(HI), []);
   const replaying = t < HI;
   const placed = useMemo(() => placedAt(board), [board]);
@@ -95,19 +103,11 @@ export default function App() {
         setReasonsMode(r);
       })
       .catch(() => {});
-    setDecisions(loadDecisions());
     return () => {
       alive = false;
     };
   }, [nowBoard]);
 
-  const onDecide = useCallback((id: string, d: Decision) => {
-    setDecisions((prev) => {
-      const nextD = { ...prev, [id]: d };
-      saveDecisions(nextD);
-      return nextD;
-    });
-  }, []);
 
   // ---------- replay: scrub throttled to one board per animation frame
   const pending = useRef<number | null>(null);
@@ -207,25 +207,6 @@ export default function App() {
     }, 60);
   }, []);
 
-  // ---------- keyboard: T triage, / ask
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (triageOpen || drawerId) return;
-      const el = e.target as HTMLElement;
-      if (el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.isContentEditable)) return;
-      if (e.metaKey || e.ctrlKey || e.altKey) return;
-      if (e.key === "t" || e.key === "T") {
-        e.preventDefault();
-        setOpenW(null);
-        setTriageOpen(true);
-      } else if (e.key === "/") {
-        e.preventDefault();
-        openAsk();
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [triageOpen, drawerId, openAsk]);
 
   const reasonFor = useCallback(
     (b: BoardItem): ReasonText => {
@@ -243,14 +224,41 @@ export default function App() {
   }, []);
 
   const attentionIds = useMemo(() => new Set(board.attention.map((b) => b.item.id)), [board]);
+  const openDetail = useCallback((id: string) => router.push(itemHref(id)), [router]);
+  const [triageSnap, setTriageSnap] = useState<{ b: BoardItem; why: "attention" | "blocked" }[] | null>(null);
   const triageQueue = useMemo(() => {
     const seen = new Set<string>();
     const q: { b: BoardItem; why: "attention" | "blocked" }[] = [];
-    for (const b of board.attention) if (!seen.has(b.item.id)) { seen.add(b.item.id); q.push({ b, why: "attention" }); }
-    for (const p of board.blocked) for (const b of p.items) if (!seen.has(b.item.id)) { seen.add(b.item.id); q.push({ b, why: "blocked" }); }
+    // from the raw board, so items you mark done or snooze stay in the queue and count as triaged
+    for (const b of rawBoard.attention) if (!seen.has(b.item.id)) { seen.add(b.item.id); q.push({ b, why: "attention" }); }
+    for (const p of rawBoard.blocked) for (const b of p.items) if (!seen.has(b.item.id)) { seen.add(b.item.id); q.push({ b, why: "blocked" }); }
     return q;
-  }, [board]);
+  }, [rawBoard]);
+  const startTriage = useCallback(() => {
+    setOpenW(null);
+    setTriageSnap(triageQueue);
+    setTriageOpen(true);
+  }, [triageQueue]);
   const triagedCount = triageQueue.filter((q) => decisions[q.b.item.id]).length;
+
+  // ---------- keyboard: T triage, / ask
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (triageOpen || drawerId) return;
+      const el = e.target as HTMLElement;
+      if (el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.isContentEditable)) return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      if (e.key === "t" || e.key === "T") {
+        e.preventDefault();
+        startTriage();
+      } else if (e.key === "/") {
+        e.preventDefault();
+        openAsk();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [triageOpen, drawerId, openAsk, startTriage]);
 
   const common = { selectedId, hoverId, onSelect: openItem, onHover: setHoverId, reasonFor, decisions };
   const getAskBoard = useCallback(() => ({ board: toCompactBoard(board), recentEvents: recentEvents(board.at) }), [board]);
@@ -283,7 +291,7 @@ export default function App() {
         <BlockedList board={board} c={common} />
       </Widget>
       <Widget
-        id="brief" side="left" sector="Morning brief" title="Morning brief" hint={brief.status === "ready" ? metaLine(brief.data) : undefined}
+        id="brief" side="left" sector="AI summary · Morning brief" title="AI summary · Morning brief" hint={brief.status === "ready" ? metaLine(brief.data) : undefined}
         count={brief.status === "ready" ? Math.min(5, brief.data.sentences.length) : undefined} countColor="var(--holo)" open={openW === "brief"} onToggle={toggleW}
         summary={
           brief.status === "loading" ? <span className="block space-y-1.5"><span className="skeleton block h-3 w-[90%]" /><span className="skeleton block h-3 w-[70%]" /></span>
@@ -299,12 +307,12 @@ export default function App() {
   const right = (
     <>
       <Widget
-        id="top" side="right" sector="Top work" title="Top work today" hint="Ranked by rule-based score"
-        count={board.top.length} countColor="var(--holo)" open={openW === "top"} onToggle={toggleW}
-        summary={board.top[0] ? <><span className="font-mono text-holo">#1 {board.top[0].item.key}</span> {board.top[0].item.title}</> : "No open work ranked yet."}
+        id="top" side="right" sector="Priority feed · Top work" title="Priority feed · Top work" hint="All open items, ranked by rule-based score"
+        count={board.items.length} countColor="var(--holo)" open={openW === "top"} onToggle={toggleW}
+        summary={board.top[0] ? <><span className="font-mono text-holo">#1 {board.top[0].item.key}</span> {board.top[0].item.title}<span className="mt-1 block text-[11.5px] text-faint">{board.items.length} open items ranked. Top 5 below.</span></> : "No open work ranked yet."}
         visual={<ScoreBars items={board.top} />}
       >
-        <TopList board={board} c={common} />
+        <PriorityFeed items={board.items} snoozed={board.snoozed} attentionIds={attentionIds} reasonFor={reasonFor} onOpen={openDetail} onHover={setHoverId} hoverId={hoverId} live={!replaying} />
       </Widget>
       <Widget
         id="happened" side="right" sector="What happened" title="What happened today" hint="Since 08:00 team time, newest first"
@@ -334,25 +342,19 @@ export default function App() {
     <div className="relative flex min-h-dvh flex-col lg:h-dvh lg:min-h-[760px]">
       {/* ---------------- top bar */}
       <header className="relative z-20 border-b border-line bg-ink/60 backdrop-blur-sm">
-        <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 px-4 py-2.5 lg:px-5">
-          <div className="flex min-w-0 flex-wrap items-center gap-x-5 gap-y-1">
-            <div className="flex items-center gap-2.5">
-              <RadarMark size={28} />
-              <span className="font-display text-[20px] font-bold tracking-[0.08em] text-fg glow-text">WORKRADAR</span>
-              <span className="hud text-[10px] text-faint">CIC</span>
-            </div>
-            <p className="hud text-[11px] text-dim">
-              <span className="text-faint">Own ship </span><span className="text-fg">Marty McFly</span>
-              <span className="text-faint"> · CGN </span><span className="font-mono text-holo">{formatInManagerTz(t).slice(4)}</span>
-              <span className="text-faint"> · Team </span>RUH · CAI · BLR
-            </p>
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2.5 px-4 py-2.5 lg:flex-nowrap lg:px-5">
+          <div className="flex shrink-0 items-center gap-2.5">
+            <RadarMark size={28} />
+            <span className="font-display text-[20px] font-bold tracking-[0.08em] text-fg glow-text">WORKRADAR</span>
+            <span className="hud text-[10px] text-faint">CIC</span>
           </div>
-          <div className="flex flex-wrap items-center gap-2.5">
+          <div className="order-last w-full lg:order-none lg:mx-auto lg:w-auto"><SearchBox /></div>
+          <div className="ml-auto flex shrink-0 flex-wrap items-center gap-2.5 lg:ml-0">
             <AiBadge live={live} brief={brief} />
             <button type="button" onClick={openAsk} className="hud flex h-8 items-center gap-2 rounded-[2px] border border-line-strong px-3 text-[11px] text-holo hover:border-holo hover:shadow-[0_0_14px_rgba(63,208,255,0.35)]">
               Ask <Kbd>/</Kbd>
             </button>
-            <button type="button" onClick={() => { setOpenW(null); setTriageOpen(true); }} className="hud flex h-8 items-center gap-2 rounded-[2px] bg-signal px-3 text-[11px] text-signal-ink shadow-[0_0_16px_rgba(255,181,71,0.35)] hover:brightness-110">
+            <button type="button" onClick={startTriage} className="hud flex h-8 items-center gap-2 rounded-[2px] bg-signal px-3 text-[11px] text-signal-ink shadow-[0_0_16px_rgba(255,181,71,0.35)] hover:brightness-110">
               Triage <span className="font-mono">{triagedCount}/{triageQueue.length}</span>
               <kbd className="inline-flex h-5 min-w-5 items-center justify-center rounded-[2px] border border-signal-ink/40 px-1 font-mono text-[11px]">T</kbd>
             </button>
@@ -360,6 +362,8 @@ export default function App() {
         </div>
         <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-1 border-t border-line px-4 py-1.5 lg:px-5">
           <p className="hud flex flex-wrap gap-x-4 gap-y-0.5 text-[10.5px] text-faint" aria-label="System status">
+            <span><span className="text-faint">Own ship </span><span className="text-fg">Marty McFly</span> · CGN <span className="font-mono text-holo">{formatInManagerTz(t).slice(4)}</span> · Team <span className="text-dim">RUH · CAI · BLR</span></span>
+            <span aria-hidden className="text-line-strong">|</span>
             <span>Contacts <b className="font-mono font-semibold text-holo">{board.items.length}</b></span>
             <span>Act now <b className="font-mono font-semibold text-signal">{actNow}</b></span>
             <span>Attention <b className="font-mono font-semibold text-signal">{attn.length}</b></span>
@@ -367,7 +371,7 @@ export default function App() {
             <span>Clutter filtered <b className="font-mono font-semibold text-dim">{clutter.count}</b></span>
           </p>
           <p className="text-[11px] text-faint">
-            Mock data, all people and companies fictional. Built with Claude.{" "}
+            Mock data, fictional people and companies. Built with Claude.{" "}
             <Link href="/docs" className="text-dim underline decoration-line-strong underline-offset-4 hover:text-fg">How AI was used</Link>
           </p>
         </div>
@@ -436,11 +440,12 @@ export default function App() {
       </div>
 
       {drawerId && (
-        <Drawer id={drawerId} board={board} aiReason={!replaying ? aiReasons[drawerId] : undefined} decision={decisions[drawerId]} onClose={() => setDrawerId(null)} onSelect={openItem} />
+        <Drawer id={drawerId} board={board} aiReason={!replaying ? aiReasons[drawerId] : undefined} live={!replaying} onClose={() => setDrawerId(null)} onSelect={openItem} />
       )}
       {triageOpen && (
-        <Triage queue={triageQueue} at={board.at} decisions={decisions} onDecide={onDecide} onClose={() => setTriageOpen(false)} aiReasons={replaying ? {} : aiReasons} />
+        <Triage queue={triageSnap ?? triageQueue} at={board.at} decisions={decisions} onClose={() => setTriageOpen(false)} aiReasons={replaying ? {} : aiReasons} />
       )}
+      <ActionToast />
       {reasonsMode && <span className="sr-only">Reason lines marked with a spark are written by AI ({reasonsMode.mode}).</span>}
     </div>
   );
