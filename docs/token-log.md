@@ -28,3 +28,4 @@ How this is measured: subagent figures are the token totals each agent reported 
 | Independent review of the live app and repo | Subagent | Claude Sonnet 5.5 | 114,351 |
 | UI fixes from the review (at-a-glance strip, sticky radar, brief clamp) | Subagent, resumed | Claude Opus 5.5 | not reported by the tool |
 | AI Workflow doc, PRD v2 edits, review fixes | Main session | Claude Opus 5.5 | ~70,000 (approx.) |
+| UI redesign v2: holographic radar console | Subagent, resumed | Claude Opus 5.5 | not reported by the tool |
