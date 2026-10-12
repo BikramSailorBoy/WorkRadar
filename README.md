@@ -47,7 +47,8 @@ Rules rank, and AI reads and explains. The priority score is computed in code, s
 
 ## Documents
 
-- `docs/WorkRadar-PRD.pdf`: product requirements
+- `docs/WorkRadar-PRD.pdf`: product requirements (2 pages)
+- `docs/WorkRadar-Product-Spec.pdf`: full spec behind the PRD: scoring rules, AI design, options considered, risks
 - `docs/WorkRadar-AI-Workflow.pdf`: how AI was used to build it, and what was changed by hand
 
 ## Proof it works
