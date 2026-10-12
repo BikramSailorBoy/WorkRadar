@@ -1,178 +1,372 @@
 "use client";
-import { memo, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import type { BoardItem, Source } from "@/lib/types";
+import { formatInManagerTz } from "@/lib/board";
 import { getPerson } from "@/lib/data";
-import { SOURCE_META, SOURCE_ORDER, SourceGlyph } from "./ui";
+import { ContactShape, SOURCE_META } from "./ui";
+import { BANDS, C, QUAD, R, SIZE, toXY } from "./scope";
+import type { Placed, Speck } from "./scope";
 
-const SIZE = 600;
-const C = SIZE / 2;
-const R = 238;
-const BANDS = { now: [0, 0.36], today: [0.36, 0.68], watch: [0.68, 1] } as const;
-// quadrant start angle, clockwise from 12 o'clock
-const QUAD: Record<Source, number> = { jira: 0, github: 90, slack: 180, email: 270 };
-const PAD = 7; // degrees kept clear at quadrant edges
+const PERIOD = 6000; // ms per sweep revolution
+const PERSIST = 3.0; // seconds of phosphor afterglow
 
-function hash(s: string): number {
-  let h = 2166136261;
-  for (let i = 0; i < s.length; i++) {
-    h ^= s.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  return (h >>> 0) / 4294967295;
-}
-
-function radiusFor(b: BoardItem): number {
-  const s = b.score.total;
-  // higher score sits closer to the centre within its ring band
-  if (b.ring === "now") return R * (0.34 - (Math.min(100, Math.max(75, s)) - 75) / 25 * 0.24);
-  if (b.ring === "today") return R * (0.655 - (Math.min(74, Math.max(50, s)) - 50) / 24 * 0.25);
-  return R * (0.965 - Math.min(49, Math.max(0, s)) / 49 * 0.24);
-}
-const blipR = (b: BoardItem) => 4.5 + (b.score.impact / 25) * 6;
-
-interface Placed {
-  b: BoardItem;
-  x: number;
-  y: number;
-  r: number;
-  rad: number;
-  ang: number;
-}
-
-/** Deterministic placement: angle from a hash of the id, then a few relaxation passes to stop overlaps. */
-function place(items: BoardItem[]): Placed[] {
-  const out: Placed[] = [];
-  for (const src of SOURCE_ORDER) {
-    const group = items.filter((b) => b.item.source === src);
-    const lo = QUAD[src] + PAD;
-    const hi = QUAD[src] + 90 - PAD;
-    const ps = group.map((b) => ({ b, rad: radiusFor(b), r: blipR(b), ang: lo + hash(b.item.id) * (hi - lo) }));
-    for (let iter = 0; iter < 60; iter++) {
-      let moved = false;
-      for (let i = 0; i < ps.length; i++)
-        for (let j = i + 1; j < ps.length; j++) {
-          const a = ps[i], c = ps[j];
-          const ax = Math.sin((a.ang * Math.PI) / 180) * a.rad, ay = Math.cos((a.ang * Math.PI) / 180) * a.rad;
-          const cx = Math.sin((c.ang * Math.PI) / 180) * c.rad, cy = Math.cos((c.ang * Math.PI) / 180) * c.rad;
-          const d = Math.hypot(ax - cx, ay - cy);
-          const need = a.r + c.r + 7;
-          if (d < need) {
-            const meanR = (a.rad + c.rad) / 2;
-            const push = (((need - d) / meanR) * 180) / Math.PI / 2 + 0.2;
-            const dir = a.ang <= c.ang ? -1 : 1;
-            a.ang = Math.min(hi, Math.max(lo, a.ang + dir * push));
-            c.ang = Math.min(hi, Math.max(lo, c.ang - dir * push));
-            moved = true;
-          }
-        }
-      if (!moved) break;
-    }
-    for (const p of ps) {
-      const th = (p.ang * Math.PI) / 180;
-      out.push({ ...p, x: C + Math.sin(th) * p.rad, y: C - Math.cos(th) * p.rad });
-    }
-  }
-  return out;
+export interface Trail {
+  id: string;
+  pts: { x: number; y: number }[]; // oldest first, ends at the current position
+  color: string;
 }
 
 export interface RadarProps {
-  items: BoardItem[];
+  placed: Placed[];
   attentionIds: Set<string>;
   selectedId: string | null;
   hoverId: string | null;
   onHover: (id: string | null) => void;
   onSelect: (id: string) => void;
-  topReason: (b: BoardItem) => string;
   replaying: boolean;
+  specks: Speck[];
+  suppress: boolean;
+  trails: Trail[];
 }
 
-function RadarImpl({ items, attentionIds, selectedId, hoverId, onHover, onSelect, topReason, replaying }: RadarProps) {
-  const placed = useMemo(() => place(items), [items]);
+function useReducedMotion() {
+  const [r, setR] = useState(false);
+  useEffect(() => {
+    const m = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setR(m.matches);
+    const on = () => setR(m.matches);
+    m.addEventListener("change", on);
+    return () => m.removeEventListener("change", on);
+  }, []);
+  return r;
+}
+
+const COLOR_HEX: Record<Source, string> = { jira: "63,208,255", github: "154,166,255", slack: "46,230,197", email: "227,244,255" };
+const isP0 = (b: BoardItem) => b.item.priority === "P0";
+const contactColor = (b: BoardItem) => (isP0(b) ? "var(--crit)" : SOURCE_META[b.item.source].color);
+const contactRgb = (b: BoardItem) => (isP0(b) ? "255,90,95" : COLOR_HEX[b.item.source]);
+
+// ---------------------------------------------------------------- canvas layer: sweep, afterglow, clutter, trails
+
+function ScopeCanvas({ placed, specks, suppress, trails, reduced }: { placed: Placed[]; specks: Speck[]; suppress: boolean; trails: Trail[]; reduced: boolean }) {
+  const ref = useRef<HTMLCanvasElement>(null);
+  const data = useRef({ placed, specks, suppress, trails, reduced });
+  data.current = { placed, specks, suppress, trails, reduced };
+
+  useEffect(() => {
+    const cv = ref.current!;
+    const ctx = cv.getContext("2d");
+    if (!ctx) return;
+    let w = 0;
+    const resize = () => {
+      const px = cv.clientWidth;
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      w = px;
+      cv.width = Math.round(px * dpr);
+      cv.height = Math.round(px * dpr);
+      ctx.setTransform((px * dpr) / SIZE, 0, 0, (px * dpr) / SIZE, 0, 0);
+    };
+    resize();
+    const ro = new ResizeObserver(() => {
+      resize();
+      if (data.current.reduced) draw(performance.now());
+    });
+    ro.observe(cv);
+
+    const draw = (now: number) => {
+      if (!w) return;
+      const d = data.current;
+      const sweep = d.reduced ? 45 : ((now / PERIOD) * 360) % 360; // bearing
+      ctx.clearRect(0, 0, SIZE, SIZE);
+
+      // afterglow wedge trailing the sweep line
+      const a0 = ((sweep - 90) * Math.PI) / 180;
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(C, C, R, 0, Math.PI * 2);
+      ctx.clip();
+      const wedge = 70;
+      if (typeof ctx.createConicGradient === "function") {
+        const g = ctx.createConicGradient(a0 - (wedge * Math.PI) / 180, C, C);
+        g.addColorStop(0, "rgba(63,208,255,0)");
+        g.addColorStop(wedge / 360 - 0.002, "rgba(63,208,255,0.30)");
+        g.addColorStop(wedge / 360, "rgba(63,208,255,0)");
+        g.addColorStop(1, "rgba(63,208,255,0)");
+        ctx.fillStyle = g;
+        ctx.fillRect(0, 0, SIZE, SIZE);
+      } else {
+        for (let i = 0; i < 28; i++) {
+          const s = a0 - ((wedge * (i + 1)) / 28) * (Math.PI / 180);
+          ctx.beginPath();
+          ctx.moveTo(C, C);
+          ctx.arc(C, C, R, s, s + ((wedge / 28) * Math.PI) / 180);
+          ctx.fillStyle = `rgba(63,208,255,${0.3 * (1 - i / 28) * 0.4})`;
+          ctx.fill();
+        }
+      }
+      // leading edge
+      const tip = toXY(sweep, R);
+      const lg = ctx.createLinearGradient(C, C, tip.x, tip.y);
+      lg.addColorStop(0, "rgba(160,235,255,0.15)");
+      lg.addColorStop(1, "rgba(160,235,255,0.95)");
+      ctx.strokeStyle = lg;
+      ctx.lineWidth = 1.6;
+      ctx.shadowColor = "rgba(63,208,255,0.9)";
+      ctx.shadowBlur = 10;
+      ctx.beginPath();
+      ctx.moveTo(C, C);
+      ctx.lineTo(tip.x, tip.y);
+      ctx.stroke();
+      ctx.shadowBlur = 0;
+
+      const since = (bearing: number) => (((sweep - bearing) % 360) + 360) % 360 / 360 * (PERIOD / 1000);
+      const glow = (bearing: number) => (d.reduced ? 0.5 : Math.max(0, 1 - since(bearing) / PERSIST) ** 2);
+
+      // sea clutter: tiny desaturated specks, never interactive
+      const base = d.suppress ? 0.05 : 0.45;
+      for (const s of d.specks) {
+        const brg = (Math.atan2(s.x - C, C - s.y) * 180) / Math.PI;
+        const a = base + (d.suppress ? 0.04 : 0.35) * glow((brg + 360) % 360);
+        ctx.fillStyle = `rgba(150,180,200,${a})`;
+        const sz = d.suppress ? 1.6 : 2.2;
+        ctx.fillRect(s.x - sz / 2, s.y - sz / 2, sz, sz);
+      }
+
+      // track history: fading trail of earlier positions
+      for (const tr of d.trails) {
+        const n = tr.pts.length;
+        for (let i = 1; i < n; i++) {
+          const p = tr.pts[i - 1], q = tr.pts[i];
+          ctx.strokeStyle = `rgba(${tr.color},${0.25 + 0.6 * (i / n)})`;
+          ctx.lineWidth = 2;
+          ctx.setLineDash([4, 2]);
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(q.x, q.y);
+          ctx.stroke();
+        }
+        ctx.setLineDash([]);
+        for (let i = 0; i < n - 1; i++) {
+          const p = tr.pts[i];
+          ctx.fillStyle = `rgba(${tr.color},${0.3 + 0.5 * (i / n)})`;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 3.2, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+      ctx.restore();
+
+      // phosphor persistence: contacts flare as the sweep passes, then decay over ~3s
+      for (const p of d.placed) {
+        const g = glow(p.ang);
+        const rr = p.r * (2.6 + g * 1.6);
+        const rg = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, rr);
+        const rgb = contactRgb(p.b);
+        rg.addColorStop(0, `rgba(${rgb},${0.18 + 0.5 * g})`);
+        rg.addColorStop(1, `rgba(${rgb},0)`);
+        ctx.fillStyle = rg;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, rr, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    };
+
+    const onRedraw = () => draw(performance.now());
+    cv.addEventListener("redraw", onRedraw);
+    let raf = 0;
+    const loop = (now: number) => {
+      draw(now);
+      if (!data.current.reduced) raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      cv.removeEventListener("redraw", onRedraw);
+    };
+  }, [reduced]);
+
+  // reduced motion: redraw when the data changes instead of every frame
+  useEffect(() => {
+    if (!reduced) return;
+    const id = requestAnimationFrame(() => ref.current?.dispatchEvent(new Event("redraw")));
+    return () => cancelAnimationFrame(id);
+  }, [reduced, placed, specks, suppress, trails]);
+
+  return <canvas ref={ref} aria-hidden className="pointer-events-none absolute inset-0 h-full w-full" />;
+}
+
+// ---------------------------------------------------------------- static scope: grid, rings, bearing ring, sector names
+
+const ScopeBase = memo(function ScopeBase() {
+  const ticks = [];
+  for (let b = 0; b < 360; b += 5) {
+    const major = b % 30 === 0;
+    const mid = b % 10 === 0;
+    const len = major ? 10 : mid ? 6 : 3.5;
+    const p = toXY(b, R + 2), q = toXY(b, R + 2 + len);
+    ticks.push(<line key={b} x1={p.x} y1={p.y} x2={q.x} y2={q.y} stroke="var(--holo)" strokeOpacity={major ? 0.9 : 0.45} strokeWidth={major ? 1.3 : 1} />);
+  }
+  const labels = [];
+  for (let b = 0; b < 360; b += 30) {
+    const p = toXY(b, R + 23);
+    labels.push(
+      <text key={b} x={p.x} y={p.y + 3.5} textAnchor="middle" className="radar-brg" fontSize="10.5" fontFamily="var(--font-mono)" fill="var(--holo)" fillOpacity="0.8">
+        {String(b).padStart(3, "0")}
+      </text>
+    );
+  }
+  const arc = (r: number, a0: number, a1: number) => {
+    const p = toXY(a0, r), q = toXY(a1, r);
+    return `M${p.x} ${p.y} A${r} ${r} 0 0 1 ${q.x} ${q.y}`;
+  };
+  const arcRev = (r: number, a0: number, a1: number) => {
+    const p = toXY(a1, r), q = toXY(a0, r);
+    return `M${p.x} ${p.y} A${r} ${r} 0 0 0 ${q.x} ${q.y}`;
+  };
+  return (
+    <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="absolute inset-0 h-full w-full overflow-visible" aria-hidden>
+      <defs>
+        <pattern id="hex" width="18" height="31.18" patternUnits="userSpaceOnUse" patternTransform="scale(1.1)">
+          <path d="M9 0 L18 5.2 L18 15.6 L9 20.8 L0 15.6 L0 5.2 Z M9 20.8 L9 31.18" fill="none" stroke="var(--holo)" strokeOpacity="0.07" strokeWidth="0.8" />
+        </pattern>
+        <radialGradient id="scope-bg" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#0b3352" stopOpacity="0.55" />
+          <stop offset="70%" stopColor="#06213a" stopOpacity="0.45" />
+          <stop offset="100%" stopColor="#031322" stopOpacity="0.7" />
+        </radialGradient>
+        <filter id="rim-glow" x="-10%" y="-10%" width="120%" height="120%">
+          <feGaussianBlur stdDeviation="2.4" result="b" />
+          <feMerge>
+            <feMergeNode in="b" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+        {(Object.keys(QUAD) as Source[]).map((s) => {
+          const mid = QUAD[s] + 45;
+          const bottom = mid > 90 && mid < 270;
+          return <path key={s} id={`sec-${s}`} d={bottom ? arcRev(R + 41, mid - 30, mid + 30) : arc(R + 38, mid - 30, mid + 30)} />;
+        })}
+      </defs>
+      <circle cx={C} cy={C} r={R} fill="url(#scope-bg)" />
+      <circle cx={C} cy={C} r={R} fill="url(#hex)" />
+      {/* spokes every 30 degrees */}
+      {Array.from({ length: 12 }, (_, i) => {
+        const p = toXY(i * 30, R);
+        const major = i % 3 === 0;
+        return <line key={i} x1={C} y1={C} x2={p.x} y2={p.y} stroke="var(--holo)" strokeOpacity={major ? 0.32 : 0.1} strokeWidth={major ? 1 : 0.8} />;
+      })}
+      {/* range rings: act now (amber), today, watch */}
+      {[0.18, 0.52, 0.84].map((f) => (
+        <circle key={f} cx={C} cy={C} r={R * f} fill="none" stroke="var(--holo)" strokeOpacity="0.14" strokeDasharray="2 5" />
+      ))}
+      <circle cx={C} cy={C} r={R * BANDS.now} fill="rgba(255,181,71,0.05)" stroke="var(--signal)" strokeOpacity="0.75" strokeWidth="1.2" />
+      <circle cx={C} cy={C} r={R * BANDS.today} fill="none" stroke="var(--holo)" strokeOpacity="0.45" strokeWidth="1" />
+      <circle cx={C} cy={C} r={R} fill="none" stroke="var(--holo)" strokeWidth="1.6" filter="url(#rim-glow)" />
+      <circle cx={C} cy={C} r={R + 1.6} fill="none" stroke="rgba(255,90,140,0.25)" strokeWidth="0.8" />
+      <circle cx={C} cy={C} r={R - 1.6} fill="none" stroke="rgba(120,255,240,0.2)" strokeWidth="0.8" />
+      {ticks}
+      {labels}
+      {/* decorative arc segments, slowly rotating, outside everything that carries data */}
+      <g className="deco-spin">
+        <path d={arc(R + 52, 20, 70)} fill="none" stroke="var(--holo)" strokeOpacity="0.35" strokeWidth="2" />
+        <path d={arc(R + 52, 200, 232)} fill="none" stroke="var(--holo)" strokeOpacity="0.35" strokeWidth="2" />
+      </g>
+      <g className="deco-spin-rev">
+        <path d={arc(R + 56, 110, 160)} fill="none" stroke="var(--holo)" strokeOpacity="0.18" strokeWidth="1" strokeDasharray="1 4" />
+        <path d={arc(R + 56, 290, 340)} fill="none" stroke="var(--holo)" strokeOpacity="0.18" strokeWidth="1" strokeDasharray="1 4" />
+      </g>
+      {/* sector names on the rim */}
+      {(Object.keys(QUAD) as Source[]).map((s) => (
+        <text key={s} className="radar-src hud" fontSize="11.5" fill={SOURCE_META[s].color} style={{ letterSpacing: "0.32em" }}>
+          <textPath href={`#sec-${s}`} startOffset="50%" textAnchor="middle">{SOURCE_META[s].label.toUpperCase()}</textPath>
+        </text>
+      ))}
+      {/* ring names along the west spoke */}
+      {[
+        { t: "ACT NOW", e: BANDS.now, c: "var(--signal)" },
+        { t: "TODAY", e: BANDS.today, c: "var(--holo)" },
+        { t: "WATCH", e: 1, c: "var(--dim)" },
+      ].map((l) => (
+        <text key={l.t} className="radar-ring hud" x={C - R * l.e + 7} y={C - 7} fontSize="9.5" fill={l.c} paintOrder="stroke" stroke="#04182b" strokeWidth="3.5" strokeLinejoin="round" style={{ letterSpacing: "0.16em" }}>
+          {l.t}
+        </text>
+      ))}
+      {/* own ship */}
+      <path d={`M${C - 6} ${C}h12M${C} ${C - 6}v12`} stroke="var(--holo)" strokeWidth="1.2" />
+      <circle cx={C} cy={C} r="2.2" fill="var(--holo)" />
+    </svg>
+  );
+});
+
+// ---------------------------------------------------------------- contacts
+
+function Brackets({ s, color, width = 1.5, len = 5 }: { s: number; color: string; width?: number; len?: number }) {
+  const d = `M${-s} ${-s + len}V${-s}H${-s + len} M${s - len} ${-s}H${s}V${-s + len} M${s} ${s - len}V${s}H${s - len} M${-s + len} ${s}H${-s}V${s - len}`;
+  return <path d={d} fill="none" stroke={color} strokeWidth={width} />;
+}
+
+function tagLines(b: BoardItem) {
+  const owner = getPerson(b.item.ownerId)?.name.split(" ")[0].toUpperCase() ?? "UNOWNED";
+  const last = b.lastActivityTs ? formatInManagerTz(b.lastActivityTs).slice(4) : "--:--";
+  const l1 = `TRK ${b.item.key} · SCR ${b.score.total} · ${owner} · ${last}`;
+  const t = b.item.title;
+  const l2 = (b.blocked ? "BLOCKED · " : "") + (t.length > 38 ? t.slice(0, 37) + "…" : t);
+  return [l1, l2];
+}
+
+function DataTag({ p, locked }: { p: Placed; locked: boolean }) {
+  const [l1, l2] = tagLines(p.b);
+  const wBox = Math.max(l1.length * 6.6, l2.length * 6.3) + 16;
+  // tags point outward from the scope centre, flipping only if they would leave the console
+  const right = p.x >= C ? p.x + 46 + wBox <= SIZE + 24 : p.x - 46 - wBox < -24;
+  const up = p.y > 80;
+  const dx = right ? 1 : -1;
+  const dy = up ? -1 : 1;
+  const s = p.r + 10;
+  const x1 = p.x + dx * s, y1 = p.y + dy * s;
+  const x2 = x1 + dx * 22, y2 = y1 + dy * 22;
+  const x3 = x2 + dx * 12;
+  const bx = right ? x3 : x3 - wBox;
+  const by = y2 - 19;
+  return (
+    <g pointerEvents="none" className={locked ? "pop-in" : ""}>
+      <polyline points={`${x1},${y1} ${x2},${y2} ${x3},${y2}`} fill="none" stroke="var(--holo)" strokeWidth="1.1" />
+      <rect x={bx} y={by} width={wBox} height={38} fill="rgba(3,14,28,0.92)" stroke="var(--holo)" strokeOpacity="0.8" strokeWidth="1" />
+      <rect x={bx} y={by} width={3} height={38} fill="var(--holo)" />
+      <text x={bx + 10} y={by + 15} fontSize="11" fontFamily="var(--font-mono)" fill="var(--fg)" className="radar-tag">{l1}</text>
+      <text x={bx + 10} y={by + 30} fontSize="10.5" fontFamily="var(--font-sans)" fill="var(--dim)" className="radar-tag">{l2}</text>
+    </g>
+  );
+}
+
+function RadarImpl({ placed, attentionIds, selectedId, hoverId, onHover, onSelect, replaying, specks, suppress, trails }: RadarProps) {
+  const reduced = useReducedMotion();
   const ordered = useMemo(() => [...placed].sort((a, b) => b.b.score.total - a.b.score.total), [placed]);
   const [focusId, setFocusId] = useState<string | null>(null);
-  const tipId = hoverId ?? focusId;
-  const tip = tipId ? placed.find((p) => p.b.item.id === tipId) : undefined;
-  const counts = useMemo(() => {
-    const m: Record<Source, number> = { jira: 0, github: 0, slack: 0, email: 0 };
-    for (const b of items) m[b.item.source]++;
-    return m;
-  }, [items]);
-
-  const corner: Record<Source, { x: number; y: number; anchor: "start" | "end" }> = {
-    jira: { x: SIZE - 14, y: 26, anchor: "end" },
-    github: { x: SIZE - 14, y: SIZE - 14, anchor: "end" },
-    slack: { x: 14, y: SIZE - 14, anchor: "start" },
-    email: { x: 14, y: 26, anchor: "start" },
-  };
+  const tagId = hoverId ?? focusId ?? selectedId;
+  const tagP = tagId ? placed.find((p) => p.b.item.id === tagId) : undefined;
+  const selP = selectedId ? placed.find((p) => p.b.item.id === selectedId) : undefined;
 
   return (
-    <div className="relative mx-auto aspect-square w-full max-w-[600px] select-none">
-      {/* sweep: a rotating conic wedge behind the scope */}
-      <div aria-hidden className="pointer-events-none absolute rounded-full" style={{ inset: `${((C - R) / SIZE) * 100}%` }}>
-        <div className="radar-sweep absolute inset-0 rounded-full" style={{ opacity: replaying ? 0.35 : 1 }} />
-      </div>
-      <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className={`relative block h-full w-full overflow-visible ${replaying ? "blip-anim" : ""}`} role="group" aria-label={`Radar of ${items.length} open items. Inner ring: act now. Middle: today. Outer: watch.`}>
-        <defs>
-          <radialGradient id="scope" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="var(--signal)" stopOpacity="0.07" />
-            <stop offset="55%" stopColor="var(--panel)" stopOpacity="0.0" />
-            <stop offset="100%" stopColor="var(--panel)" stopOpacity="0.0" />
-          </radialGradient>
-        </defs>
-        <circle cx={C} cy={C} r={R} fill="url(#scope)" />
-        {/* ring bands */}
-        <circle cx={C} cy={C} r={R * BANDS.now[1]} fill="color-mix(in oklab, var(--crit) 6%, transparent)" stroke="color-mix(in oklab, var(--crit) 45%, var(--line-strong))" strokeWidth="1" />
-        <circle cx={C} cy={C} r={R * BANDS.today[1]} fill="none" stroke="var(--line-strong)" strokeWidth="1" />
-        <circle cx={C} cy={C} r={R} fill="none" stroke="var(--line-strong)" strokeWidth="1.2" />
-        {[0.18, 0.52, 0.84].map((f) => (
-          <circle key={f} cx={C} cy={C} r={R * f} fill="none" stroke="var(--line)" strokeWidth="0.8" strokeDasharray="1 5" />
-        ))}
-        {/* quadrant axes */}
-        <line x1={C} y1={C - R - 8} x2={C} y2={C + R + 8} stroke="var(--line-strong)" strokeWidth="1" />
-        <line x1={C - R - 8} y1={C} x2={C + R + 8} y2={C} stroke="var(--line-strong)" strokeWidth="1" />
-        {/* degree ticks on the rim */}
-        {Array.from({ length: 72 }, (_, i) => {
-          const th = (i * 5 * Math.PI) / 180;
-          const len = i % 6 === 0 ? 7 : 3;
-          return <line key={i} x1={C + Math.sin(th) * R} y1={C - Math.cos(th) * R} x2={C + Math.sin(th) * (R + len)} y2={C - Math.cos(th) * (R + len)} stroke="var(--line-strong)" strokeWidth="1" />;
-        })}
-        {/* ring labels along the 9 o'clock axis, just inside each ring edge */}
-        {[
-          { t: "Act now", e: BANDS.now[1], c: "var(--crit)" },
-          { t: "Today", e: BANDS.today[1], c: "var(--signal)" },
-          { t: "Watch", e: 1, c: "var(--dim)" },
-        ].map((l) => (
-          <text className="radar-ring" key={l.t} x={C - R * l.e + 6} y={C - 6} fontSize="11.5" fontWeight={600} fill={l.c} paintOrder="stroke" stroke="var(--panel)" strokeWidth="4" strokeLinejoin="round" style={{ letterSpacing: "0.01em" }}>{l.t}</text>
-        ))}
-        {/* source labels in the four corners */}
-        {SOURCE_ORDER.map((s) => {
-          const k = corner[s];
-          const iconX = k.anchor === "end" ? k.x - 16 : k.x;
-          const textX = k.anchor === "end" ? k.x - 22 : k.x + 22;
-          return (
-            <g key={s} style={{ color: SOURCE_META[s].color }}>
-              <g transform={`translate(${iconX} ${k.y - 13})`}>
-                <SourceGlyph source={s} />
-              </g>
-              <text className="radar-src" x={textX} y={k.y - 1} textAnchor={k.anchor} fontSize="14" fontWeight={600} fill="currentColor">
-                {SOURCE_META[s].label}
-                <tspan fill="var(--faint)" fontWeight={500} dx="6" fontFamily="var(--font-mono)" fontSize="12.5">{counts[s]}</tspan>
-              </text>
-            </g>
-          );
-        })}
-
-        {/* blips, in score order so Tab walks from hottest to coolest */}
+    <div className="relative mx-auto aspect-square h-full max-h-full w-full max-w-full select-none">
+      <ScopeBase />
+      <ScopeCanvas placed={placed} specks={specks} suppress={suppress} trails={trails} reduced={reduced} />
+      <svg
+        viewBox={`0 0 ${SIZE} ${SIZE}`}
+        className={`absolute inset-0 h-full w-full overflow-visible ${replaying ? "blip-anim" : ""}`}
+        role="group"
+        aria-label={`Radar with ${placed.length} contacts. Inner ring: act now. Middle: today. Outer: watch. Tab through contacts by score; Enter opens details.`}
+      >
         {ordered.map((p) => {
           const { b } = p;
           const id = b.item.id;
-          const color = SOURCE_META[b.item.source].color;
+          const color = contactColor(b);
           const attn = attentionIds.has(id);
-          const sel = id === selectedId;
-          const hot = id === hoverId;
-          const showLabel = b.ring !== "watch" || sel || hot;
+          const tagged = id === tagId;
+          const showKey = !tagged && b.ring !== "watch";
           const owner = getPerson(b.item.ownerId)?.name ?? "unowned";
-          const labelRight = p.x >= C;
+          const right = p.x >= C;
           return (
             <g
               key={id}
@@ -181,7 +375,7 @@ function RadarImpl({ items, attentionIds, selectedId, hoverId, onHover, onSelect
               tabIndex={0}
               role="button"
               aria-label={`${b.item.key}, ${b.item.title}. Score ${b.score.total}. ${b.blocked ? "Blocked. " : ""}${attn ? "Needs attention. " : ""}Owner ${owner}.`}
-              aria-pressed={sel}
+              aria-pressed={id === selectedId}
               onMouseEnter={() => onHover(id)}
               onMouseLeave={() => onHover(null)}
               onFocus={() => setFocusId(id)}
@@ -194,28 +388,27 @@ function RadarImpl({ items, attentionIds, selectedId, hoverId, onHover, onSelect
                 }
               }}
             >
-              <circle r={p.r + 10} fill="transparent" />
-              {b.changedRecently && !replaying && <circle className="blip-pulse" r={p.r} fill="none" stroke={color} strokeWidth="1.5" style={{ ["--r0" as string]: `${p.r}px` }} />}
-              {attn && <circle r={p.r + 4.5} fill="none" stroke="var(--crit)" strokeOpacity="0.75" strokeWidth="1.2" />}
-              {(sel || hot) && <circle r={p.r + 8} fill="none" stroke="var(--signal)" strokeWidth="1.6" />}
-              <circle className="blip-focus" r={p.r + 8} fill="none" stroke="var(--signal)" strokeWidth="2" opacity="0" />
-              {b.blocked ? (
-                <circle r={p.r} fill="var(--panel)" stroke={color} strokeWidth="2" strokeDasharray="3 2.4" />
-              ) : (
-                <circle r={p.r} fill={color} stroke="var(--panel)" strokeWidth="1.5" />
-              )}
-              {showLabel && (
+              <circle r={p.r + 12} fill="transparent" />
+              {attn && <Brackets s={p.r + 6} color="var(--signal)" width={1.3} len={4} />}
+              {focusId === id && <circle r={p.r + 14} fill="none" stroke="var(--holo)" strokeWidth="1.5" strokeDasharray="3 3" />}
+              <g style={{ filter: `drop-shadow(0 0 4px ${color})` }} className={b.blocked ? "contact-blocked" : ""}>
+                {b.blocked ? (
+                  <ContactShape type={b.item.type} r={p.r} fill="rgba(3,14,28,0.85)" stroke={color} strokeWidth={1.8} strokeDasharray="3 2.4" />
+                ) : (
+                  <ContactShape type={b.item.type} r={p.r} fill={color} fillOpacity={0.92} stroke="#e8fbff" strokeOpacity={0.55} strokeWidth={0.8} />
+                )}
+              </g>
+              {showKey && (
                 <text
                   className="radar-key"
-                  x={labelRight ? p.r + 6 : -(p.r + 6)}
+                  x={right ? p.r + 9 : -(p.r + 9)}
                   y={4}
-                  textAnchor={labelRight ? "start" : "end"}
-                  fontSize="12"
+                  textAnchor={right ? "start" : "end"}
+                  fontSize="11"
                   fontFamily="var(--font-mono)"
-                  fontWeight={500}
-                  fill={sel || hot ? "var(--fg)" : "var(--dim)"}
+                  fill="var(--dim)"
                   paintOrder="stroke"
-                  stroke="var(--ink)"
+                  stroke="#04182b"
                   strokeWidth="3.5"
                   strokeLinejoin="round"
                 >
@@ -225,27 +418,15 @@ function RadarImpl({ items, attentionIds, selectedId, hoverId, onHover, onSelect
             </g>
           );
         })}
+        {selP && (
+          <g transform={`translate(${selP.x} ${selP.y})`} pointerEvents="none">
+            <g key={selP.b.item.id} className="lock-box">
+              <Brackets s={selP.r + 10} color="#e8fbff" width={1.6} len={6} />
+            </g>
+          </g>
+        )}
+        {tagP && <DataTag p={tagP} locked={tagP.b.item.id === selectedId} />}
       </svg>
-
-      {tip && (
-        <div
-          role="tooltip"
-          className="pointer-events-none absolute z-20 w-64 rounded-lg border border-line-strong bg-raised/95 px-3 py-2.5 text-[12.5px] shadow-[0_12px_32px_-12px_rgba(0,0,0,0.6)] backdrop-blur"
-          style={{
-            left: `${(tip.x / SIZE) * 100}%`,
-            top: `${(tip.y / SIZE) * 100}%`,
-            transform: `translate(${tip.x > C ? "calc(-100% - 16px)" : "16px"}, ${tip.y > C ? "calc(-100% + 8px)" : "-8px"})`,
-          }}
-        >
-          <div className="flex items-center justify-between gap-2">
-            <span className="font-mono text-[12px]" style={{ color: SOURCE_META[tip.b.item.source].color }}>{tip.b.item.key}</span>
-            <span className="font-mono text-[12px] text-fg">{tip.b.score.total}<span className="text-faint">/100</span></span>
-          </div>
-          <div className="mt-1 font-medium leading-snug text-fg">{tip.b.item.title}</div>
-          <div className="mt-1 text-dim">{getPerson(tip.b.item.ownerId)?.name ?? "Unowned"}{tip.b.blocked ? " · blocked" : ""}</div>
-          <div className="mt-1.5 border-t border-line pt-1.5 leading-snug text-dim">{topReason(tip.b)}</div>
-        </div>
-      )}
     </div>
   );
 }
@@ -253,23 +434,29 @@ function RadarImpl({ items, attentionIds, selectedId, hoverId, onHover, onSelect
 export const Radar = memo(RadarImpl);
 
 export function RadarLegend() {
+  const item = (shape: string, label: string) => (
+    <li className="flex items-center gap-1.5">
+      <svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden><ContactShape type={shape} r={4.5} fill="var(--holo)" /></svg>
+      {label}
+    </li>
+  );
   return (
-    <ul className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12px] text-dim" aria-label="Radar legend">
+    <ul className="flex flex-wrap items-center justify-center gap-x-3.5 gap-y-1.5 text-[11.5px] text-dim" aria-label="Radar legend" title="Contact size shows impact">
+      {item("ticket", "Ticket")}
+      {item("pr", "PR")}
+      {item("thread", "Thread")}
+      {item("email", "Email")}
       <li className="flex items-center gap-1.5">
-        <svg width="18" height="14" aria-hidden><circle cx="5" cy="7" r="3" fill="var(--dim)" /><circle cx="13" cy="7" r="5" fill="var(--dim)" /></svg>
-        Size is impact
+        <svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden><ContactShape type="ticket" r={4.5} fill="none" stroke="var(--holo)" strokeWidth={1.4} strokeDasharray="2 1.6" /></svg>
+        Blocked
       </li>
       <li className="flex items-center gap-1.5">
-        <svg width="14" height="14" aria-hidden><circle cx="7" cy="7" r="5" fill="none" stroke="var(--dim)" strokeWidth="1.6" strokeDasharray="2.6 2" /></svg>
-        Hollow and dashed is blocked
+        <svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden><Brackets s={5.5} color="var(--signal)" width={1.2} len={3} /><circle r="2.5" fill="var(--holo)" /></svg>
+        Attention
       </li>
       <li className="flex items-center gap-1.5">
-        <svg width="16" height="16" aria-hidden><circle cx="8" cy="8" r="3.5" fill="var(--dim)" /><circle cx="8" cy="8" r="6.5" fill="none" stroke="var(--crit)" strokeWidth="1.2" /></svg>
-        Outer ring needs attention
-      </li>
-      <li className="flex items-center gap-1.5">
-        <svg width="16" height="16" aria-hidden><circle cx="8" cy="8" r="3.5" fill="var(--dim)" /><circle cx="8" cy="8" r="6.5" fill="none" stroke="var(--dim)" strokeOpacity="0.5" strokeWidth="1" /></svg>
-        Pulse is new activity in the last hour
+        <svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden><ContactShape type="ticket" r={4.5} fill="var(--crit)" /></svg>
+        P0
       </li>
     </ul>
   );

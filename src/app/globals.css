@@ -1,60 +1,47 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------ tokens
-   Control room at night: deep navy ink, one amber signal, muted source hues. */
+   WorkRadar CIC: a holographic command console. Deep navy-black, cyan hologram light,
+   amber only for "act now" and attention, red only for P0. Dark by design. */
 :root {
-  --ink: #08111f;
-  --panel: #0c1728;
-  --raised: #122036;
-  --line: #1b2a42;
-  --line-strong: #2b3e5d;
-  --fg: #e4eaf3;
-  --dim: #a7b4c8;
-  --faint: #7f90aa;
-  --signal: #f5b544;
-  --signal-ink: #1c1405;
-  --crit: #f36d60;
-  --ok: #63cba4;
-  --jira: #7ea6f6;
-  --github: #b7a1f2;
-  --slack: #4fc3b1;
-  --email: #e793b4;
-  --grain: 0.035;
+  --ink: #030914;
+  --ink-2: #061223;
+  --panel: rgba(7, 22, 42, 0.72);
+  --panel-solid: #071629;
+  --raised: rgba(30, 155, 255, 0.09);
+  --line: rgba(63, 208, 255, 0.16);
+  --line-strong: rgba(63, 208, 255, 0.36);
+  --fg: #e6f6ff;
+  --dim: #a4c6dd;
+  --faint: #7e9fb9;
+  --holo: #3fd0ff;
+  --holo-2: #1e9bff;
+  --holo-ink: #02121f;
+  --signal: #ffb547; /* amber: act now, attention */
+  --signal-ink: #1d1203;
+  --crit: #ff5a5f; /* red: P0 only, and blocked roots */
+  --ok: #46e6b0;
+  --jira: #3fd0ff;
+  --github: #9aa6ff;
+  --slack: #2ee6c5;
+  --email: #e3f4ff;
   color-scheme: dark;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --ink: #eef1f5;
-    --panel: #ffffff;
-    --raised: #f3f5f9;
-    --line: #d9dfe8;
-    --line-strong: #b9c3d2;
-    --fg: #0d1a2c;
-    --dim: #43526a;
-    --faint: #5b6a80;
-    --signal: #a8680a;
-    --signal-ink: #ffffff;
-    --crit: #c2382b;
-    --ok: #0f7d58;
-    --jira: #2c5fc4;
-    --github: #6c44c4;
-    --slack: #0b7f70;
-    --email: #b23a6d;
-    --grain: 0.02;
-    color-scheme: light;
-  }
 }
 
 @theme inline {
   --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
   --color-panel: var(--panel);
+  --color-panel-solid: var(--panel-solid);
   --color-raised: var(--raised);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
   --color-fg: var(--fg);
   --color-dim: var(--dim);
   --color-faint: var(--faint);
+  --color-holo: var(--holo);
+  --color-holo-2: var(--holo-2);
+  --color-holo-ink: var(--holo-ink);
   --color-signal: var(--signal);
   --color-signal-ink: var(--signal-ink);
   --color-crit: var(--crit);
@@ -63,178 +50,160 @@
   --color-github: var(--github);
   --color-slack: var(--slack);
   --color-email: var(--email);
-  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-chakra), var(--font-inter), ui-sans-serif, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, monospace;
 }
 
 html {
   background: var(--ink);
-  /* keep scrolled-to content clear of the sticky replay bar */
-  scroll-padding-bottom: 96px;
+  scroll-padding-bottom: 120px;
   scroll-padding-top: 16px;
 }
 
-@keyframes panel-flash {
-  0%, 40% { box-shadow: 0 0 0 2px var(--signal); }
-  100% { box-shadow: 0 0 0 2px transparent; }
-}
-.panel-flash {
-  animation: panel-flash 1.4s ease-out;
-}
-@media (prefers-reduced-motion: reduce) {
-  .panel-flash { animation: none; outline: 2px solid var(--signal); }
-}
-
 body {
-  background:
-    radial-gradient(1200px 600px at 18% -10%, color-mix(in oklab, var(--signal) 7%, transparent), transparent 60%),
-    radial-gradient(900px 500px at 100% 0%, color-mix(in oklab, var(--jira) 6%, transparent), transparent 60%),
-    var(--ink);
   color: var(--fg);
   font-family: var(--font-sans);
-  font-feature-settings: "ss01", "tnum";
   min-height: 100dvh;
-}
-
-/* fine film grain, almost invisible, keeps the flat navy from banding */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  opacity: var(--grain);
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 45%, rgba(30, 155, 255, 0.13), transparent 70%),
+    radial-gradient(ellipse 120% 90% at 50% 50%, transparent 55%, rgba(0, 0, 0, 0.75) 100%),
+    linear-gradient(rgba(63, 208, 255, 0.045) 1px, transparent 1px) 0 0 / 32px 32px,
+    linear-gradient(90deg, rgba(63, 208, 255, 0.045) 1px, transparent 1px) 0 0 / 32px 32px,
+    var(--ink);
+  background-attachment: fixed;
 }
 
 ::selection {
-  background: color-mix(in oklab, var(--signal) 40%, transparent);
+  background: rgba(63, 208, 255, 0.35);
 }
 
 :focus-visible {
-  outline: 2px solid var(--signal);
+  outline: 2px solid var(--holo);
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
-.wordmark {
-  font-variation-settings: "wdth" 125;
-  letter-spacing: -0.01em;
+/* ------------------------------------------------------------------ type */
+.hud {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-weight: 600;
 }
-.condensed {
-  font-variation-settings: "wdth" 88;
+.glow-text {
+  text-shadow: 0 0 12px rgba(63, 208, 255, 0.55);
+}
+
+/* ------------------------------------------------------------------ frames: cut corners, 1px light, corner brackets */
+.frame {
+  --cut: 12px;
+  position: relative;
+  background: linear-gradient(180deg, rgba(10, 34, 62, 0.78), rgba(5, 16, 32, 0.78));
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut));
+}
+/* the 1px border follows the cut: a pseudo element with the same clip and a mask */
+.frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  padding: 1px;
+  background: linear-gradient(160deg, rgba(63, 208, 255, 0.6), rgba(63, 208, 255, 0.14) 40%, rgba(63, 208, 255, 0.14) 70%, rgba(63, 208, 255, 0.45));
+  clip-path: inherit;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+.frame-hot::before {
+  background: linear-gradient(160deg, rgba(255, 181, 71, 0.75), rgba(63, 208, 255, 0.16) 45%, rgba(63, 208, 255, 0.16) 70%, rgba(255, 181, 71, 0.5));
+}
+.brackets::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  pointer-events: none;
+  --b: rgba(63, 208, 255, 0.85);
+  background:
+    linear-gradient(var(--b), var(--b)) top right / 10px 1px no-repeat,
+    linear-gradient(var(--b), var(--b)) top right / 1px 10px no-repeat,
+    linear-gradient(var(--b), var(--b)) bottom left / 10px 1px no-repeat,
+    linear-gradient(var(--b), var(--b)) bottom left / 1px 10px no-repeat;
+}
+.frame-hot.brackets::after {
+  --b: rgba(255, 181, 71, 0.9);
+}
+
+/* header scanline shimmer, headers only */
+@keyframes scan {
+  from { background-position: -120% 0; }
+  to { background-position: 220% 0; }
+}
+.scanline {
+  position: relative;
+}
+.scanline::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(63, 208, 255, 0.14), transparent) no-repeat;
+  background-size: 40% 100%;
+  animation: scan 6s linear infinite;
 }
 
 /* ------------------------------------------------------------------ radar motion */
-@keyframes sweep {
-  to {
-    transform: rotate(360deg);
-  }
-}
-.radar-sweep {
-  animation: sweep 9s linear infinite;
-  will-change: transform;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0deg,
-    transparent 300deg,
-    color-mix(in oklab, var(--signal) 4%, transparent) 320deg,
-    color-mix(in oklab, var(--signal) 20%, transparent) 359deg,
-    transparent 360deg
-  );
-}
-.radar-sweep::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 0;
-  width: 1px;
-  height: 50%;
-  background: linear-gradient(to top, color-mix(in oklab, var(--signal) 70%, transparent), transparent);
-}
-.mini-sweep {
-  transform-origin: 12px 12px;
-  animation: sweep 4s linear infinite;
-}
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin-rev { to { transform: rotate(-360deg); } }
+.deco-spin { transform-origin: 320px 320px; animation: spin 90s linear infinite; }
+.deco-spin-rev { transform-origin: 320px 320px; animation: spin-rev 140s linear infinite; }
+.mini-sweep { transform-origin: 12px 12px; animation: spin 4s linear infinite; }
 
-@keyframes pulse-ring {
-  0% {
-    r: var(--r0);
-    opacity: 0.8;
-  }
-  100% {
-    r: calc(var(--r0) * 3.2);
-    opacity: 0;
-  }
-}
-.blip-pulse {
-  animation: pulse-ring 1.6s ease-out 1;
-  animation-fill-mode: forwards;
-}
+@keyframes blink { 0%, 55% { opacity: 1; } 75%, 100% { opacity: 0.3; } }
+.contact-blocked { animation: blink 2.2s ease-in-out infinite; }
 
-.blip-anim .blip {
-  transition: transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1);
+@keyframes lock-in {
+  0% { transform: scale(2.2); opacity: 0; }
+  60% { opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
 }
-@media (max-width: 640px) {
-  .radar-key { font-size: 19px; }
-  .radar-src { font-size: 21px; }
-  .radar-ring { font-size: 17px; }
-}
-.blip:focus {
-  outline: none;
-}
-.blip:focus-visible .blip-focus {
-  opacity: 1;
-}
+.lock-box { animation: lock-in 380ms cubic-bezier(0.2, 0.8, 0.2, 1) both; transform-box: fill-box; transform-origin: center; }
 
-@keyframes sheet-in {
-  from {
-    transform: translateX(24px);
-    opacity: 0;
-  }
-}
-.sheet-in {
-  animation: sheet-in 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-@keyframes card-in {
-  from {
-    transform: translateY(10px) scale(0.985);
-    opacity: 0;
-  }
-}
-.card-in {
-  animation: card-in 240ms cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-@keyframes shimmer {
-  to {
-    background-position: -200% 0;
-  }
-}
+.blip-anim .blip { transition: transform 420ms cubic-bezier(0.2, 0.7, 0.2, 1); }
+.blip:focus { outline: none; }
+
+@keyframes sheet-in { from { transform: translateX(24px); opacity: 0; } }
+.sheet-in { animation: sheet-in 220ms cubic-bezier(0.2, 0.7, 0.2, 1); }
+@keyframes card-in { from { transform: translateY(10px) scale(0.985); opacity: 0; } }
+.card-in { animation: card-in 240ms cubic-bezier(0.2, 0.7, 0.2, 1); }
+@keyframes pop-in { from { transform: scale(0.97); opacity: 0; } }
+.pop-in { animation: pop-in 200ms cubic-bezier(0.2, 0.7, 0.2, 1); transform-origin: var(--origin, left center); }
+
+@keyframes shimmer { to { background-position: -200% 0; } }
 .skeleton {
-  background: linear-gradient(90deg, var(--raised) 0%, var(--line) 40%, var(--raised) 80%);
+  background: linear-gradient(90deg, rgba(63, 208, 255, 0.06) 0%, rgba(63, 208, 255, 0.16) 40%, rgba(63, 208, 255, 0.06) 80%);
   background-size: 200% 100%;
   animation: shimmer 1.6s linear infinite;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .radar-sweep,
-  .mini-sweep,
-  .blip-pulse,
-  .skeleton,
-  .sheet-in,
-  .card-in {
+  .scanline::after, .deco-spin, .deco-spin-rev, .mini-sweep, .contact-blocked, .lock-box, .skeleton, .sheet-in, .card-in, .pop-in {
     animation: none !important;
   }
-  .radar-sweep {
-    display: none;
-  }
-  .blip {
-    transition: none;
-  }
+  .blip-anim .blip { transition: none; }
+}
+
+@media (max-width: 640px) {
+  .radar-brg { font-size: 17px; }
+  .radar-src { font-size: 20px; }
+  .radar-ring { font-size: 15px; }
+  .radar-key { font-size: 17px; }
 }
 
 .scrollbar-thin {
   scrollbar-width: thin;
-  scrollbar-color: var(--line-strong) transparent;
+  scrollbar-color: rgba(63, 208, 255, 0.35) transparent;
 }

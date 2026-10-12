@@ -54,7 +54,7 @@ export function KeyChip({ id, onSelect, size = "sm" }: { id: string; onSelect?: 
   const item = getItem(id);
   if (!item) return null;
   const c = SOURCE_META[item.source].color;
-  const cls = `inline-flex items-center gap-1 rounded-[5px] border font-mono leading-none whitespace-nowrap align-middle transition-colors ${size === "xs" ? "px-1.5 py-[3px] text-[11px]" : "px-1.5 py-1 text-[12px]"}`;
+  const cls = `inline-flex items-center gap-1 rounded-[2px] border font-mono leading-none whitespace-nowrap align-middle transition-colors ${size === "xs" ? "px-1.5 py-[3px] text-[11px]" : "px-1.5 py-1 text-[12px]"}`;
   const style = { color: c, borderColor: `color-mix(in oklab, ${c} 38%, transparent)`, background: `color-mix(in oklab, ${c} 9%, transparent)` };
   const label = <span className="max-w-[190px] truncate py-[1px] -my-[1px]">{item.key}</span>;
   if (!onSelect) return <span className={cls} style={style}>{label}</span>;
@@ -68,7 +68,7 @@ export function KeyChip({ id, onSelect, size = "sm" }: { id: string; onSelect?: 
 export function Sparkle({ className = "" }: { className?: string }) {
   return (
     <svg viewBox="0 0 12 12" width="11" height="11" className={`inline-block shrink-0 ${className}`} aria-label="Written by AI" role="img">
-      <path d="M6 0.8c.4 2.6 1.6 3.8 4.2 4.2v.4c-2.6.4-3.8 1.6-4.2 4.2h-.4C5.2 7 4 5.8 1.4 5.4V5C4 4.6 5.2 3.4 5.6.8z" fill="var(--signal)" />
+      <path d="M6 0.8c.4 2.6 1.6 3.8 4.2 4.2v.4c-2.6.4-3.8 1.6-4.2 4.2h-.4C5.2 7 4 5.8 1.4 5.4V5C4 4.6 5.2 3.4 5.6.8z" fill="var(--holo)" />
     </svg>
   );
 }
@@ -87,8 +87,8 @@ export function ScoreBar({ score, showLabels = false }: { score: ScoreBreakdown;
     <div>
       <div className="flex gap-[3px]" role="img" aria-label={`Score ${score.total} of 100: ${SEGMENTS.map((s) => `${s.label} ${score[s.k]} of ${s.max}`).join(", ")}`}>
         {SEGMENTS.map((s) => (
-          <div key={s.k} className="h-2 rounded-[2px] bg-line overflow-hidden" style={{ flexGrow: s.max, flexBasis: 0 }}>
-            <div className="h-full rounded-[2px] bg-signal" style={{ width: `${(score[s.k] / s.max) * 100}%` }} />
+          <div key={s.k} className="h-2 rounded-[1px] bg-line overflow-hidden" style={{ flexGrow: s.max, flexBasis: 0 }}>
+            <div className="h-full rounded-[1px] bg-holo shadow-[0_0_8px_rgba(63,208,255,0.6)]" style={{ width: `${(score[s.k] / s.max) * 100}%` }} />
           </div>
         ))}
       </div>
@@ -111,7 +111,7 @@ export function ScoreChip({ value }: { value: number }) {
   const mid = value >= 50;
   return (
     <span
-      className={`inline-flex h-6 min-w-8 items-center justify-center rounded-[5px] px-1.5 font-mono text-[12px] font-medium tabular-nums ${hot ? "bg-crit text-ink" : mid ? "bg-signal text-signal-ink" : "border border-line-strong text-dim"}`}
+      className={`inline-flex h-6 min-w-9 items-center justify-center rounded-[2px] px-1.5 font-mono text-[12px] font-semibold tabular-nums ${hot ? "bg-signal text-signal-ink shadow-[0_0_12px_rgba(255,181,71,0.45)]" : mid ? "border border-holo/70 text-holo" : "border border-line-strong text-dim"}`}
       aria-label={`Score ${value}`}
       title="Priority score out of 100"
     >
@@ -120,7 +120,7 @@ export function ScoreChip({ value }: { value: number }) {
   );
 }
 
-const AVATAR_HUES = ["var(--jira)", "var(--github)", "var(--slack)", "var(--email)", "var(--signal)"];
+const AVATAR_HUES = ["var(--jira)", "var(--github)", "var(--slack)", "var(--email)", "var(--holo-2)"];
 export function Avatar({ name, id, size = 32 }: { name: string; id: string; size?: number }) {
   const initials = name.split(/\s+/).filter(Boolean).map((p) => p[0]).slice(0, 2).join("").toUpperCase();
   let h = 0;
@@ -138,32 +138,45 @@ export function Avatar({ name, id, size = 32 }: { name: string; id: string; size
 }
 
 export function Kbd({ children }: { children: ReactNode }) {
-  return <kbd className="inline-flex h-5 min-w-5 items-center justify-center rounded border border-line-strong bg-raised px-1 font-mono text-[11px] text-dim">{children}</kbd>;
+  return <kbd className="inline-flex h-5 min-w-5 items-center justify-center rounded-[2px] border border-line-strong bg-raised px-1 font-mono text-[11px] text-holo">{children}</kbd>;
 }
 
 export function RadarMark({ size = 24 }: { size?: number }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden className="shrink-0">
-      <circle cx="12" cy="12" r="10.5" fill="none" stroke="var(--line-strong)" strokeWidth="1.2" />
-      <circle cx="12" cy="12" r="6.5" fill="none" stroke="var(--line-strong)" strokeWidth="1" />
-      <circle cx="12" cy="12" r="2.5" fill="none" stroke="var(--line-strong)" strokeWidth="1" />
+    <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden className="shrink-0 drop-shadow-[0_0_6px_rgba(63,208,255,0.7)]">
+      <circle cx="12" cy="12" r="10.5" fill="none" stroke="var(--holo)" strokeWidth="1.2" />
+      <circle cx="12" cy="12" r="6.5" fill="none" stroke="var(--holo)" strokeOpacity="0.5" strokeWidth="1" />
+      <path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3" stroke="var(--holo)" strokeWidth="1" />
       <g className="mini-sweep">
-        <path d="M12 12 L12 1.5 A10.5 10.5 0 0 1 19.4 4.6 Z" fill="var(--signal)" opacity="0.28" />
-        <line x1="12" y1="12" x2="19.4" y2="4.6" stroke="var(--signal)" strokeWidth="1.4" strokeLinecap="round" />
+        <path d="M12 12 L12 1.5 A10.5 10.5 0 0 1 19.4 4.6 Z" fill="var(--holo)" opacity="0.3" />
+        <line x1="12" y1="12" x2="19.4" y2="4.6" stroke="var(--holo)" strokeWidth="1.4" strokeLinecap="round" />
       </g>
       <circle cx="15.8" cy="8.6" r="1.6" fill="var(--signal)" />
     </svg>
   );
 }
 
+/** Contact glyph by item type: ticket diamond, incident diamond, PR triangle, thread circle, email square. */
+export function ContactShape({ type, r, ...rest }: { type: string; r: number } & React.SVGProps<SVGPathElement>) {
+  let d: string;
+  if (type === "pr") d = `M0 ${-r * 1.15} L${r * 1.05} ${r * 0.7} L${-r * 1.05} ${r * 0.7} Z`;
+  else if (type === "thread") d = `M${-r} 0 a${r} ${r} 0 1 0 ${2 * r} 0 a${r} ${r} 0 1 0 ${-2 * r} 0`;
+  else if (type === "email") d = `M${-r * 0.85} ${-r * 0.85} h${r * 1.7} v${r * 1.7} h${-r * 1.7} Z`;
+  else d = `M0 ${-r * 1.2} L${r * 1.2} 0 L0 ${r * 1.2} L${-r * 1.2} 0 Z`;
+  return <path d={d} {...rest} />;
+}
+
+export function HudLabel({ children, className = "" }: { children: ReactNode; className?: string }) {
+  return <span className={`hud text-[10.5px] text-holo/90 ${className}`}>{children}</span>;
+}
+
 export function PanelShell({ title, count, accent, children, hint, id }: { title: string; count: number; accent?: string; children: ReactNode; hint?: ReactNode; id?: string }) {
   return (
-    <section aria-labelledby={id} className="relative min-w-0 rounded-xl border border-line bg-panel/90 backdrop-blur-[2px]">
-      {accent && <div aria-hidden className="absolute inset-x-0 top-0 h-[2px] rounded-t-xl" style={{ background: accent }} />}
-      <header className="flex items-baseline justify-between gap-3 px-4 pt-4 pb-3">
-        <h2 id={id} className="flex items-baseline gap-2 text-[15px] font-semibold tracking-[-0.005em]">
-          {title}
-          <span className="font-mono text-[13px] font-medium" style={{ color: accent ?? "var(--dim)" }}>{count}</span>
+    <section aria-labelledby={id} className="relative min-w-0">
+      <header className="flex items-baseline justify-between gap-3 px-4 pt-1 pb-2">
+        <h2 id={id} className="flex items-baseline gap-2">
+          <span className="hud text-[13px] text-fg">{title}</span>
+          <span className="font-mono text-[13px] font-semibold" style={{ color: accent ?? "var(--holo)" }}>{count}</span>
         </h2>
         {hint && <div className="text-right text-[12px] text-faint max-sm:hidden">{hint}</div>}
       </header>

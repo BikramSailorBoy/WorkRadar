@@ -38,11 +38,8 @@ export const Ask = forwardRef<HTMLInputElement, { getBoard: () => { board: Compa
     }
 
     return (
-      <section aria-labelledby="ask-h" className="rounded-xl border border-line bg-panel/90 p-4">
-        <div className="flex items-baseline justify-between gap-3">
-          <h2 id="ask-h" className="flex items-center gap-2 text-[15px] font-semibold"><Sparkle /> Ask the board</h2>
-          <span className="hidden items-center gap-1.5 text-[12px] text-faint sm:flex">Press <Kbd>/</Kbd></span>
-        </div>
+      <section aria-label="Ask WorkRadar" className="px-4 pb-4">
+        <p className="flex items-center gap-1.5 text-[12.5px] text-dim"><Sparkle /> Answers come only from today&apos;s board and cite their sources. Press <Kbd>/</Kbd> to ask.</p>
         <form
           className="mt-3 flex gap-2"
           onSubmit={(e) => {
@@ -58,15 +55,15 @@ export const Ask = forwardRef<HTMLInputElement, { getBoard: () => { board: Compa
             onChange={(e) => setQ(e.target.value)}
             placeholder="Ask about today's work"
             autoComplete="off"
-            className="h-10 min-w-0 flex-1 rounded-lg border border-line-strong bg-ink/60 px-3 text-[14px] text-fg placeholder:text-faint focus:border-signal focus:outline-none"
+            className="h-10 min-w-0 flex-1 rounded-[2px] border border-line-strong bg-ink/70 px-3 text-[14px] text-fg placeholder:text-faint focus:border-holo focus:shadow-[0_0_12px_rgba(63,208,255,0.35)] focus:outline-none"
           />
-          <button type="submit" disabled={state.status === "loading" || !q.trim()} className="h-10 shrink-0 rounded-lg bg-signal px-4 text-[14px] font-semibold text-signal-ink transition-opacity disabled:opacity-40">
+          <button type="submit" disabled={state.status === "loading" || !q.trim()} className="hud h-10 shrink-0 rounded-[2px] bg-holo px-4 text-[12px] text-holo-ink transition-opacity disabled:opacity-40">
             Ask
           </button>
         </form>
         <div className="mt-2.5 flex flex-wrap gap-1.5" aria-label="Suggested questions">
           {SUGGESTED.map((s) => (
-            <button key={s} type="button" onClick={() => void ask(s)} className="rounded-full border border-line-strong px-2.5 py-1 text-left text-[12.5px] text-dim transition-colors hover:border-signal hover:text-fg">
+            <button key={s} type="button" onClick={() => void ask(s)} className="rounded-[2px] border border-line-strong px-2.5 py-1 text-left text-[12.5px] text-dim transition-colors hover:border-holo hover:text-fg">
               {s}
             </button>
           ))}
@@ -88,8 +85,8 @@ export const Ask = forwardRef<HTMLInputElement, { getBoard: () => { board: Compa
             <div className="mt-4 border-t border-line pt-4">
               <p className="text-[12.5px] text-faint">{state.q}</p>
               {state.data.notInData ? (
-                <div className="mt-2 rounded-lg border border-dashed border-line-strong px-3 py-2.5">
-                  <p className="text-[13px] font-semibold text-dim">Not in today&apos;s data</p>
+                <div className="mt-2 rounded-[2px] border border-dashed border-line-strong px-3 py-2.5">
+                  <p className="hud text-[11px] text-dim">Not in today&apos;s data</p>
                   <p className="mt-1 text-[14px] leading-relaxed text-dim">{state.data.answer}</p>
                 </div>
               ) : (

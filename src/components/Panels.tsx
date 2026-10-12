@@ -2,7 +2,7 @@
 import type { BoardItem, BoardState, HappenedEntry } from "@/lib/types";
 import { formatInManagerTz } from "@/lib/board";
 import { getItem, getPerson, items as ALL_ITEMS } from "@/lib/data";
-import { Avatar, KeyChip, PanelShell, ScoreChip, SourceIcon, Sparkle, fmtDuration, hoursSince } from "./ui";
+import { Avatar, KeyChip, ScoreChip, SourceIcon, Sparkle, fmtDuration, hoursSince } from "./ui";
 import type { Decision } from "./triage-store";
 import { decisionLabel } from "./triage-store";
 
@@ -11,7 +11,7 @@ export interface ReasonText {
   ai: boolean;
 }
 
-interface Common {
+export interface Common {
   selectedId: string | null;
   hoverId: string | null;
   onSelect: (id: string) => void;
@@ -23,7 +23,7 @@ interface Common {
 function DecisionChip({ d }: { d?: Decision }) {
   if (!d) return null;
   return (
-    <span className="inline-flex items-center gap-1 rounded-full border border-ok/40 bg-ok/10 px-2 py-[1px] text-[11px] font-medium text-ok whitespace-nowrap">
+    <span className="inline-flex items-center gap-1 rounded-[2px] border border-ok/40 bg-ok/10 px-1.5 py-[1px] text-[11px] font-medium text-ok whitespace-nowrap">
       <svg width="9" height="9" viewBox="0 0 10 10" aria-hidden><path d="M1.5 5.3 4 7.6 8.6 2.4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
       {decisionLabel(d)}
     </span>
@@ -54,7 +54,7 @@ function ItemRow({ b, rank, c, accent }: { b: BoardItem; rank?: number; c: Commo
         onBlur={() => c.onHover(null)}
         className={`group relative flex w-full gap-3 px-4 py-3 text-left transition-colors hover:bg-raised ${active ? "bg-raised" : ""}`}
       >
-        {active && <span aria-hidden className="absolute inset-y-2 left-0 w-[2px] rounded-full bg-signal" />}
+        {active && <span aria-hidden className="absolute inset-y-2 left-0 w-[2px] rounded-full bg-holo shadow-[0_0_8px_var(--holo)]" />}
         {rank !== undefined && <span className="w-4 shrink-0 pt-[3px] font-mono text-[13px] text-faint">{rank}</span>}
         <div className="min-w-0 flex-1">
           <div className="flex min-w-0 flex-wrap items-center gap-x-2 sm:flex-nowrap">
@@ -76,27 +76,27 @@ function ItemRow({ b, rank, c, accent }: { b: BoardItem; rank?: number; c: Commo
   );
 }
 
-export function AttentionPanel({ board, c }: { board: BoardState; c: Common }) {
+export function AttentionList({ board, c }: { board: BoardState; c: Common }) {
   return (
-    <PanelShell id="p-attention" title="Needs attention now" count={board.attention.length} accent="var(--crit)" hint="Incidents, escalations, decisions for you">
+    <>
       {board.attention.length ? (
-        <ul className="divide-y divide-line border-t border-line">{board.attention.map((b) => <ItemRow key={b.item.id} b={b} c={c} />)}</ul>
+        <ul className="divide-y divide-line">{board.attention.map((b) => <ItemRow key={b.item.id} b={b} c={c} />)}</ul>
       ) : (
         <Empty>Nothing needs you right now. Check Top work for what to push forward.</Empty>
       )}
-    </PanelShell>
+    </>
   );
 }
 
-export function TopPanel({ board, c }: { board: BoardState; c: Common }) {
+export function TopList({ board, c }: { board: BoardState; c: Common }) {
   return (
-    <PanelShell id="p-top" title="Top work today" count={board.top.length} accent="var(--signal)" hint="Ranked by score">
+    <>
       {board.top.length ? (
-        <ol className="divide-y divide-line border-t border-line">{board.top.map((b, i) => <ItemRow key={b.item.id} b={b} rank={i + 1} c={c} />)}</ol>
+        <ol className="divide-y divide-line">{board.top.map((b, i) => <ItemRow key={b.item.id} b={b} rank={i + 1} c={c} />)}</ol>
       ) : (
         <Empty>No open work is ranked yet at this point in the replay.</Empty>
       )}
-    </PanelShell>
+    </>
   );
 }
 
@@ -108,7 +108,7 @@ function ChainChip({ label, onSelect, last }: { label: string; onSelect: (id: st
     if (item) return <KeyChip id={item.id} onSelect={onSelect} size="xs" />;
   }
   return (
-    <span className={`inline-flex items-center rounded-[5px] border border-dashed px-1.5 py-[3px] text-[11.5px] leading-none ${last ? "border-crit/60 text-crit" : "border-line-strong text-dim"}`}>
+    <span className={`inline-flex items-center rounded-[2px] border border-dashed px-1.5 py-[3px] text-[11.5px] leading-none ${last ? "border-holo/70 text-fg" : "border-line-strong text-dim"}`}>
       {label}
     </span>
   );
@@ -124,19 +124,19 @@ function findByKey(key: string) {
   return id ? getItem(id) : undefined;
 }
 
-export function BlockedPanel({ board, c }: { board: BoardState; c: Common }) {
+export function BlockedList({ board, c }: { board: BoardState; c: Common }) {
   const n = board.blocked.length;
   return (
-    <PanelShell id="p-blocked" title="Who is blocked" count={n} accent="var(--crit)" hint="Longest chain shown">
+    <>
       {n ? (
-        <ul className="divide-y divide-line border-t border-line">
+        <ul className="divide-y divide-line">
           {board.blocked.map((bp) => {
             const since = bp.items.map((i) => i.blockedSinceTs).filter((x): x is string => !!x).sort()[0];
             const holding = since ? fmtDuration(hoursSince(since, board.at)) : null;
             const active = bp.items.some((i) => i.item.id === c.selectedId || i.item.id === c.hoverId);
             return (
               <li key={bp.person.id} className={`relative px-4 py-3 ${active ? "bg-raised" : ""}`}>
-                {active && <span aria-hidden className="absolute inset-y-2 left-0 w-[2px] rounded-full bg-signal" />}
+                {active && <span aria-hidden className="absolute inset-y-2 left-0 w-[2px] rounded-full bg-holo shadow-[0_0_8px_var(--holo)]" />}
                 <div className="flex items-start gap-3">
                   <Avatar name={bp.person.name} id={bp.person.id} />
                   <div className="min-w-0 flex-1">
@@ -144,7 +144,7 @@ export function BlockedPanel({ board, c }: { board: BoardState; c: Common }) {
                       <span className="text-[14px] font-medium text-fg">{bp.person.name}</span>
                       {holding && (
                         <span className="text-[12px] text-dim">
-                          holding for <span className="font-mono text-crit">{holding}</span>
+                          <span className="hud text-[10px] text-faint">Holding</span> <span className="font-mono text-signal">{holding}</span>
                           <span className="text-faint"> since {formatInManagerTz(since!)}</span>
                         </span>
                       )}
@@ -170,7 +170,7 @@ export function BlockedPanel({ board, c }: { board: BoardState; c: Common }) {
                             onClick={() => c.onSelect(b.item.id)}
                             onMouseEnter={() => c.onHover(b.item.id)}
                             onMouseLeave={() => c.onHover(null)}
-                            className="flex w-full min-w-0 items-start gap-2 rounded-md px-1.5 py-1 -mx-1.5 text-left hover:bg-raised"
+                            className="flex w-full min-w-0 items-start gap-2 rounded-[2px] px-1.5 py-1 -mx-1.5 text-left hover:bg-raised"
                           >
                             <SourceIcon source={b.item.source} className="mt-[2px]" />
                             <span className="min-w-0 flex-1">
@@ -195,7 +195,7 @@ export function BlockedPanel({ board, c }: { board: BoardState; c: Common }) {
       ) : (
         <Empty>Nobody is blocked at this point.</Empty>
       )}
-    </PanelShell>
+    </>
   );
 }
 
@@ -207,12 +207,12 @@ const KIND_VERB: Record<string, string> = {
   email_received: "Escalation",
 };
 
-export function HappenedPanel({ board, c }: { board: BoardState; c: Common }) {
+export function HappenedList({ board, c }: { board: BoardState; c: Common }) {
   const list: HappenedEntry[] = board.happened;
   return (
-    <PanelShell id="p-happened" title="What happened today" count={list.length} hint="Since 08:00 team time, newest first">
+    <>
       {list.length ? (
-        <ol className="relative border-t border-line py-2">
+        <ol className="relative py-1">
           <span aria-hidden className="absolute bottom-4 top-4 left-[78px] w-px bg-line" />
           {list.map((h) => {
             const actor = getPerson(h.event.actorId)?.name ?? h.event.actorId;
@@ -227,7 +227,7 @@ export function HappenedPanel({ board, c }: { board: BoardState; c: Common }) {
                   className={`relative flex w-full items-start gap-3 px-4 py-2 text-left hover:bg-raised ${active ? "bg-raised" : ""}`}
                 >
                   <span className="w-[46px] shrink-0 pt-[1px] font-mono text-[12px] text-dim">{formatInManagerTz(h.event.ts).slice(4)}</span>
-                  <span className="relative z-10 mt-[3px] flex h-[14px] w-[14px] items-center justify-center rounded-full bg-panel">
+                  <span className="relative z-10 mt-[3px] flex h-[14px] w-[14px] items-center justify-center rounded-full bg-panel-solid">
                     <span className="h-[7px] w-[7px] rounded-full" style={{ background: `var(--${h.item.source})` }} />
                   </span>
                   <span className="min-w-0 flex-1">
@@ -244,10 +244,10 @@ export function HappenedPanel({ board, c }: { board: BoardState; c: Common }) {
       ) : (
         <Empty>Quiet so far today. Nothing merged, shipped, opened or escalated since 08:00 team time.</Empty>
       )}
-    </PanelShell>
+    </>
   );
 }
 
 function Empty({ children }: { children: React.ReactNode }) {
-  return <p className="border-t border-line px-4 py-6 text-[13px] text-faint">{children}</p>;
+  return <p className="px-4 py-6 text-[13px] text-faint">{children}</p>;
 }

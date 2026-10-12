@@ -67,8 +67,8 @@ export function Drawer({ id, board, aiReason, decision, onClose, onSelect }: Pro
 
   return (
     <div className="fixed inset-0 z-40 flex justify-end" role="presentation">
-      <div className="absolute inset-0 bg-ink/50 backdrop-blur-[1px]" onClick={onClose} aria-hidden />
-      <aside role="dialog" aria-modal="true" aria-labelledby="drawer-title" className="sheet-in relative flex h-full w-full max-w-[520px] flex-col border-l border-line-strong bg-panel shadow-[-24px_0_60px_-30px_rgba(0,0,0,0.7)]">
+      <div className="absolute inset-0 bg-[rgba(2,8,18,0.45)]" onClick={onClose} aria-hidden />
+      <aside role="dialog" aria-modal="true" aria-labelledby="drawer-title" className="sheet-in relative flex h-full w-full max-w-[520px] flex-col border-l border-holo/50 bg-[linear-gradient(180deg,#081c34,#040f1f)] shadow-[-20px_0_60px_-20px_rgba(63,208,255,0.25)]">
         <header className="border-b border-line px-5 pb-4 pt-4">
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-2 text-[13px]" style={{ color: SOURCE_META[item.source].color }}>
@@ -94,12 +94,12 @@ export function Drawer({ id, board, aiReason, decision, onClose, onSelect }: Pro
           {bi ? (
             <section aria-label="Why it ranks here">
               <div className="flex items-center justify-between">
-                <h3 className="text-[13px] font-semibold text-dim">Why it ranks here</h3>
+                <h3 className="hud text-[11px] text-holo/90">Why it ranks here</h3>
                 <ScoreChip value={bi.score.total} />
               </div>
               <div className="mt-3"><ScoreBar score={bi.score} showLabels /></div>
               {aiReason && (
-                <p className="mt-4 flex gap-2 rounded-lg border border-signal/25 bg-signal/[0.06] px-3 py-2 text-[14px] leading-snug text-fg">
+                <p className="mt-4 flex gap-2 rounded-[2px] border border-holo/30 bg-holo/[0.06] px-3 py-2 text-[14px] leading-snug text-fg">
                   <Sparkle className="mt-[4px]" />
                   <span>{aiReason}</span>
                 </p>
@@ -110,13 +110,13 @@ export function Drawer({ id, board, aiReason, decision, onClose, onSelect }: Pro
                 ))}
               </ul>
               {bi.blocked && (
-                <p className="mt-3 rounded-lg border border-dashed border-crit/50 px-3 py-2 text-[13px] text-crit">
+                <p className="mt-3 rounded-[2px] border border-dashed border-holo/60 px-3 py-2 text-[13px] text-holo">
                   Blocked{bi.blockedSinceTs ? ` since ${formatInManagerTz(bi.blockedSinceTs)}` : ""}: {bi.blockedReason ?? bi.waitingOn}
                 </p>
               )}
               {bi.signals.length > 0 && (
                 <div className="mt-4">
-                  <h3 className="text-[13px] font-semibold text-dim">Signals read from Slack and email</h3>
+                  <h3 className="hud text-[11px] text-holo/90">Signals read from Slack and email</h3>
                   <ul className="mt-2 space-y-1.5">
                     {bi.signals.map((s, i) => (
                       <li key={i} className="text-[13px] leading-snug text-dim">
@@ -134,13 +134,13 @@ export function Drawer({ id, board, aiReason, decision, onClose, onSelect }: Pro
 
           {linked.length > 0 && (
             <section className="mt-5">
-              <h3 className="text-[13px] font-semibold text-dim">Linked</h3>
+              <h3 className="hud text-[11px] text-holo/90">Linked</h3>
               <div className="mt-2 flex flex-wrap gap-1.5">{linked.map((l) => <KeyChip key={l} id={l} onSelect={onSelect} />)}</div>
             </section>
           )}
 
           <section className="mt-5">
-            <h3 className="text-[13px] font-semibold text-dim">Trail <span className="font-normal text-faint">newest first, Cologne time</span></h3>
+            <h3 className="hud text-[11px] text-holo/90">Trail <span className="font-normal text-faint">newest first, Cologne time</span></h3>
             {trail.length === 0 ? (
               <p className="mt-2 text-[13px] text-faint">No events yet.</p>
             ) : (

@@ -1,11 +1,17 @@
 import type { Metadata, Viewport } from "next";
-import { Archivo, IBM_Plex_Mono } from "next/font/google";
+import { Chakra_Petch, IBM_Plex_Mono, Inter } from "next/font/google";
 import "./globals.css";
 
-const archivo = Archivo({
-  variable: "--font-archivo",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
-  axes: ["wdth"],
+  display: "swap",
+});
+
+const chakra = Chakra_Petch({
+  variable: "--font-chakra",
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
   display: "swap",
 });
 
@@ -22,16 +28,14 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#08111f" },
-    { media: "(prefers-color-scheme: light)", color: "#eef1f5" },
-  ],
+  themeColor: "#030914",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${archivo.variable} ${plexMono.variable} antialiased`}>{children}</body>
+      <body className={`${inter.variable} ${chakra.variable} ${plexMono.variable} antialiased`}>{children}</body>
     </html>
   );
 }

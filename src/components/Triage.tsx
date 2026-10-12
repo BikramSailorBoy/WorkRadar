@@ -111,31 +111,31 @@ export function Triage({ queue, at, decisions, onDecide, onClose, aiReasons }: P
   const owner = cur ? getPerson(cur.b.item.ownerId) : undefined;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-ink/85 backdrop-blur-md" role="dialog" aria-modal="true" aria-labelledby="triage-h" ref={dialogRef} tabIndex={-1}>
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-[rgba(2,8,18,0.86)] backdrop-blur-md" role="dialog" aria-modal="true" aria-labelledby="triage-h" ref={dialogRef} tabIndex={-1}>
       <div className="mx-auto flex min-h-full max-w-[720px] flex-col px-4 py-6 sm:py-10">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <h2 id="triage-h" className="text-[18px] font-semibold">Triage</h2>
+            <h2 id="triage-h" className="hud text-[16px] text-fg glow-text">Triage</h2>
             <p className="text-[13px] text-dim">Attention items, then blocked work. One decision each.</p>
           </div>
           <div className="flex items-center gap-3">
             <span className="font-mono text-[13px] text-dim" aria-live="polite">{triaged} of {queue.length} triaged</span>
-            <button type="button" onClick={onClose} className="h-9 rounded-lg border border-line-strong px-3 text-[13px] text-fg hover:border-signal">Exit <span className="ml-1 text-faint">Esc</span></button>
+            <button type="button" onClick={onClose} className="h-9 rounded-[2px] border border-line-strong px-3 text-[13px] text-fg hover:border-holo">Exit <span className="ml-1 text-faint">Esc</span></button>
           </div>
         </div>
         <div className="mt-4 flex gap-1" aria-hidden>
           {queue.map((q, i) => (
-            <button key={q.b.item.id} tabIndex={-1} onClick={() => setIdx(i)} className={`h-1.5 flex-1 rounded-full ${decisions[q.b.item.id] ? "bg-ok" : i === idx ? "bg-signal" : "bg-line-strong"}`} />
+            <button key={q.b.item.id} tabIndex={-1} onClick={() => setIdx(i)} className={`h-1.5 flex-1 rounded-full ${decisions[q.b.item.id] ? "bg-ok" : i === idx ? "bg-holo shadow-[0_0_8px_var(--holo)]" : "bg-line-strong"}`} />
           ))}
         </div>
 
         {cur ? (
-          <article key={cur.b.item.id} className="card-in mt-6 rounded-2xl border border-line-strong bg-panel p-5 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.8)] sm:p-6">
+          <article key={cur.b.item.id} className="card-in frame brackets mt-6 p-5 sm:p-6">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-2 text-[13px]">
                 <SourceIcon source={cur.b.item.source} />
                 <span className="font-mono" style={{ color: SOURCE_META[cur.b.item.source].color }}>{cur.b.item.key}</span>
-                <span className={`rounded-full px-2 py-[1px] text-[11.5px] font-medium ${cur.why === "attention" ? "bg-crit/15 text-crit" : "border border-dashed border-crit/60 text-crit"}`}>
+                <span className={`hud rounded-[2px] px-2 py-[2px] text-[10px] ${cur.why === "attention" ? "bg-signal/15 text-signal" : "border border-dashed border-holo/70 text-holo"}`}>
                   {cur.why === "attention" ? "Needs attention" : "Blocked"}
                 </span>
               </div>
@@ -173,12 +173,12 @@ export function Triage({ queue, at, decisions, onDecide, onClose, aiReasons }: P
             )}
 
             {delegating && (
-              <div className="mt-5 rounded-xl border border-line-strong p-3">
+              <div className="mt-5 rounded-[2px] border border-line-strong p-3">
                 <p className="text-[12.5px] text-dim">Delegate to. Press a number.</p>
                 <ul className="mt-2 grid gap-1 sm:grid-cols-2">
                   {team.map((p, i) => (
                     <li key={p.id}>
-                      <button type="button" onClick={() => decide("delegate", { to: p.id })} className="flex w-full items-center gap-2 rounded-lg px-2 py-1.5 text-left text-[13px] hover:bg-raised">
+                      <button type="button" onClick={() => decide("delegate", { to: p.id })} className="flex w-full items-center gap-2 rounded-[2px] px-2 py-1.5 text-left text-[13px] hover:bg-raised">
                         <Kbd>{i + 1}</Kbd>
                         <span className="text-fg">{p.name}</span>
                         <span className="truncate text-faint">{p.role}</span>
@@ -200,7 +200,7 @@ export function Triage({ queue, at, decisions, onDecide, onClose, aiReasons }: P
                       id="nudge-text"
                       defaultValue={nd.text}
                       rows={4}
-                      className="mt-2 w-full resize-y rounded-lg border border-line-strong bg-ink/60 p-3 text-[14px] leading-relaxed text-fg focus:border-signal focus:outline-none"
+                      className="mt-2 w-full resize-y rounded-[2px] border border-line-strong bg-ink/60 p-3 text-[14px] leading-relaxed text-fg focus:border-holo focus:outline-none"
                     />
                     <div className="mt-2 flex items-center justify-between gap-3">
                       <span className="font-mono text-[11px] text-faint">{metaLine(nd.meta)}</span>
@@ -215,7 +215,7 @@ export function Triage({ queue, at, decisions, onDecide, onClose, aiReasons }: P
                             setCopied(false);
                           }
                         }}
-                        className="h-8 rounded-lg border border-line-strong px-3 text-[13px] text-fg hover:border-signal"
+                        className="h-8 rounded-[2px] border border-line-strong px-3 text-[13px] text-fg hover:border-holo"
                       >
                         {copied ? "Copied" : "Copy message"}
                       </button>
@@ -246,7 +246,7 @@ export function Triage({ queue, at, decisions, onDecide, onClose, aiReasons }: P
 
 function Action({ k, label, onClick, active }: { k: string; label: string; onClick: () => void; active?: boolean }) {
   return (
-    <button type="button" onClick={onClick} className={`flex h-11 items-center justify-center gap-2 rounded-xl border text-[13.5px] font-medium transition-colors ${active ? "border-signal bg-signal/10 text-fg" : "border-line-strong text-fg hover:border-signal"}`}>
+    <button type="button" onClick={onClick} className={`flex h-11 items-center justify-center gap-2 rounded-[2px] border text-[13.5px] font-medium transition-colors ${active ? "border-holo bg-holo/10 text-fg" : "border-line-strong text-fg hover:border-holo"}`}>
       <Kbd>{k}</Kbd>{label}
     </button>
   );
@@ -257,7 +257,7 @@ function Finish({ queue, decisions, onClose, onRestart }: { queue: Props["queue"
   const open = queue.length - decided.length;
   const by = (a: DecisionAction) => decided.filter((q) => decisions[q.b.item.id].action === a).length;
   return (
-    <div className="card-in mt-6 rounded-2xl border border-line-strong bg-panel p-6">
+    <div className="card-in frame brackets mt-6 p-6">
       <h3 className="text-[22px] font-semibold">{open === 0 ? "Everything triaged." : `${decided.length} decided, ${open} left open.`}</h3>
       <p className="mt-1 text-[14px] text-dim">
         {by("ack")} acknowledged, {by("delegate")} delegated, {by("snooze")} snoozed, {by("nudge")} nudged.
@@ -273,8 +273,8 @@ function Finish({ queue, decisions, onClose, onRestart }: { queue: Props["queue"
         ))}
       </ul>
       <div className="mt-5 flex gap-2">
-        <button type="button" onClick={onClose} className="h-10 rounded-lg bg-signal px-4 text-[14px] font-semibold text-signal-ink">Back to radar</button>
-        <button type="button" onClick={onRestart} className="h-10 rounded-lg border border-line-strong px-4 text-[14px] text-fg hover:border-signal">Review again</button>
+        <button type="button" onClick={onClose} className="hud h-10 rounded-[2px] bg-holo px-4 text-[12px] text-holo-ink">Back to radar</button>
+        <button type="button" onClick={onRestart} className="h-10 rounded-[2px] border border-line-strong px-4 text-[14px] text-fg hover:border-holo">Review again</button>
       </div>
     </div>
   );
